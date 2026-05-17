@@ -1,0 +1,37 @@
+{
+  "private": true,
+  "name": "opti-cmp-sdk",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build:js": "pnpm run --filter=opti-cmp build",
+    "generate": "pnpm run generate:spec && pnpm run generate:endpoint-names",
+    "generate:spec": "tsx scripts/generate-specification.ts",
+    "generate:endpoint-names": "tsx scripts/generate-endpoint-names.ts",
+    "generate:js": "pnpm run generate && pnpm run --filter=opti-cmp generate",
+    "lint:commit:current": "commitlint --edit",
+    "lint:staged": "lint-staged",
+    "prepare": "husky",
+    "test:js": "pnpm run --filter=opti-cmp test"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/js": "^10.0.1",
+    "@tsconfig/recommended": "^1.0.13",
+    "@types/node": "^25.8.0",
+    "eslint": "^10.4.0",
+    "eslint-plugin-perfectionist": "^5.9.0",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "prettier": "^3.8.3",
+    "tsx": "^4.22.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.3",
+    "unrun": "^0.3.0",
+    "yaml": "^2.9.0"
+  },
+  "packageManager": "pnpm@10.33.4"
+}

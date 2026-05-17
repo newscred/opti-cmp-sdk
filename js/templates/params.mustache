@@ -1,0 +1,25 @@
+// Auto-generated - DO NOT EDIT
+
+import type * as Schema from "./schema.js";
+
+{{#namespaces}}
+{{#endpoints}}
+{{#isEmpty}}
+export type {{paramsType}} = Record<string, never>;
+{{/isEmpty}}
+{{^isEmpty}}
+export interface {{paramsType}} {
+{{#params}}
+{{#description}}
+  /** {{{description}}} */
+{{/description}}
+  {{name}}{{^required}}?{{/required}}: {{{type}}};
+{{/params}}
+{{#hasBody}}
+  body{{^bodyRequired}}?{{/bodyRequired}}: {{{bodyType}}};
+{{/hasBody}}
+}
+{{/isEmpty}}
+
+{{/endpoints}}
+{{/namespaces}}

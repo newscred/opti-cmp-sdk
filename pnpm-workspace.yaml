@@ -1,0 +1,4 @@
+packages:
+  - js
+allowBuilds:
+  esbuild: true

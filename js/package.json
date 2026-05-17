@@ -1,0 +1,66 @@
+{
+  "name": "opti-cmp",
+  "version": "0.0.0",
+  "description": "SDK for Optimizely CMP API",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "generate": "pnpm run generate:openapi-types && pnpm run generate:schema-exports && pnpm run generate:endpoints",
+    "generate:openapi-types": "tsx scripts/generate-openapi-types.ts",
+    "generate:schema-exports": "tsx scripts/generate-schema-exports.ts",
+    "generate:endpoints": "tsx scripts/generate-endpoints.ts",
+    "build": "tsdown",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "pnpm run generate && pnpm run build"
+  },
+  "keywords": [
+    "optimizely",
+    "cmp",
+    "content-marketing-platform",
+    "sdk",
+    "api-client"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/mustache": "^4.2.5",
+    "@types/node": "^20.14.0",
+    "mustache": "^4.2.0",
+    "openapi-typescript": "^7.13.0",
+    "tsdown": "^0.22.0",
+    "vitest": "^4.1.6",
+    "yaml": "^2.4.5"
+  },
+  "dependencies": {
+    "before-after-hook": "^4.0.0",
+    "deepmerge": "^4.3.1",
+    "url-template": "^3.1.1"
+  },
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.cts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./lib/index.js",
+        "require": "./lib/index.cjs"
+      },
+      "./package.json": "./package.json"
+    }
+  },
+  "inlinedDependencies": {
+    "before-after-hook": "4.0.0",
+    "deepmerge": "4.3.1",
+    "url-template": "3.1.1"
+  }
+}
