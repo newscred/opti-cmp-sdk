@@ -1,0 +1,7 @@
+js/src/types/endpoints.ts
+js/src/types/openapi.d.ts
+js/src/types/params.ts
+js/src/types/schema.ts
+js/src/types/schema-public.ts
+
+specification/

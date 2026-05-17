@@ -1,0 +1,22 @@
+# Build output
+lib/
+*.tgz
+
+# Generated Artifacts
+*.tsbuildinfo
+.eslintcache
+
+# Node / pnpm
+node_modules/
+
+# Logs
+*.log
+
+# Editor
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store

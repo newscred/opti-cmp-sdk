@@ -1,0 +1,60 @@
+[
+  {
+    "name": "Uploader"
+  },
+  {
+    "name": "Library"
+  },
+  {
+    "name": "Labels"
+  },
+  {
+    "name": "Brand Compliance"
+  },
+  {
+    "name": "Tasks",
+    "description": "Facilitates the integration of external systems with Optimizely CMP through the following use cases:\n1. **External Work Management** – Use the endpoints to link Optimizely CMP with an external system (such as Jira or Aha). The external system can send status updates back to Optimizely CMP so that the Optimizely CMP user receives in-app updates for the status of the 'ticket' in the external system.\n2. **External Document Approval** – (a.k.a. Marketing Legal Review) Use the endpoints to link Optimizely CMP with an external system (such as Veeva PromoMats) to review, annotate, update, and approve marketing assets through the external system. The approval status can be sent back to Optimizely CMP so that the Optimizely CMP user receives in-app updates for the final approval status of the documents from the external system.\nFor information on these use cases, contact Optimizely CMP Support.\n"
+  },
+  {
+    "name": "Campaigns"
+  },
+  {
+    "name": "Publishing"
+  },
+  {
+    "name": "Templates"
+  },
+  {
+    "name": "Users"
+  },
+  {
+    "name": "Work Requests"
+  },
+  {
+    "name": "Structured Contents"
+  },
+  {
+    "name": "Assets"
+  },
+  {
+    "name": "Events"
+  },
+  {
+    "name": "Fields"
+  },
+  {
+    "name": "Milestones"
+  },
+  {
+    "name": "Teams"
+  },
+  {
+    "name": "Settings"
+  },
+  {
+    "name": "Workflows"
+  },
+  {
+    "name": "Task Step"
+  }
+]

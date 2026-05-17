@@ -1,0 +1,890 @@
+{
+  "/articles/{id}": {
+    "get": {
+      "name": "getArticle",
+      "namespace": "library"
+    }
+  },
+  "/asset-lineages": {
+    "get": {
+      "name": "listAssetLineages",
+      "namespace": "library"
+    }
+  },
+  "/asset-urls/{asset_id}": {
+    "get": {
+      "name": "getAssetUrl",
+      "namespace": "asset"
+    }
+  },
+  "/assets": {
+    "get": {
+      "name": "listAssets",
+      "namespace": "library"
+    },
+    "post": {
+      "name": "createAsset",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/fields": {
+    "get": {
+      "name": "listAssetFields",
+      "namespace": "library"
+    },
+    "put": {
+      "name": "updateAssetFields",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/fields/{field_id}": {
+    "put": {
+      "name": "updateAssetField",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/lineages": {
+    "post": {
+      "name": "createAssetLineage",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/lineages/{lineage_id}": {
+    "delete": {
+      "name": "deleteAssetLineage",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/permissions": {
+    "get": {
+      "name": "listAssetPermissions",
+      "namespace": "library"
+    },
+    "post": {
+      "name": "addAssetPermissions",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/permissions/{accessor_id}": {
+    "patch": {
+      "name": "updateAssetPermission",
+      "namespace": "library"
+    },
+    "delete": {
+      "name": "removeAssetPermission",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/renditions": {
+    "get": {
+      "name": "listAssetRenditions",
+      "namespace": "library"
+    }
+  },
+  "/assets/{asset_id}/versions": {
+    "post": {
+      "name": "createAssetVersion",
+      "namespace": "library"
+    }
+  },
+  "/brand-compliance/categories": {
+    "get": {
+      "name": "listBrandComplianceCategories",
+      "namespace": "brandCompliance"
+    }
+  },
+  "/campaigns": {
+    "get": {
+      "name": "listCampaigns",
+      "namespace": "campaign"
+    },
+    "post": {
+      "name": "createCampaign",
+      "namespace": "campaign"
+    }
+  },
+  "/campaigns/{campaign_id}/fields/{field_id}": {
+    "put": {
+      "name": "updateCampaignField",
+      "namespace": "campaign"
+    }
+  },
+  "/campaigns/{id}": {
+    "get": {
+      "name": "getCampaign",
+      "namespace": "campaign"
+    },
+    "patch": {
+      "name": "updateCampaign",
+      "namespace": "campaign"
+    }
+  },
+  "/campaigns/{id}/attachments": {
+    "post": {
+      "name": "addAttachmentToCampaign",
+      "namespace": "campaign"
+    }
+  },
+  "/campaigns/{id}/brief": {
+    "get": {
+      "name": "getCampaignBrief",
+      "namespace": "campaign"
+    }
+  },
+  "/campaigns/{id}/comments": {
+    "post": {
+      "name": "addCommentToCampaign",
+      "namespace": "campaign"
+    }
+  },
+  "/campaigns/{id}/fields": {
+    "get": {
+      "name": "listCampaignFields",
+      "namespace": "campaign"
+    },
+    "post": {
+      "name": "addFieldToCampaign",
+      "namespace": "campaign"
+    }
+  },
+  "/events": {
+    "get": {
+      "name": "listEvents",
+      "namespace": "event"
+    },
+    "post": {
+      "name": "createEvent",
+      "namespace": "event"
+    }
+  },
+  "/events/{id}": {
+    "get": {
+      "name": "getEvent",
+      "namespace": "event"
+    },
+    "patch": {
+      "name": "updateEvent",
+      "namespace": "event"
+    }
+  },
+  "/events/{id}/fields": {
+    "get": {
+      "name": "listEventFields",
+      "namespace": "event"
+    },
+    "put": {
+      "name": "updateEventFields",
+      "namespace": "event"
+    }
+  },
+  "/fields": {
+    "get": {
+      "name": "listFields",
+      "namespace": "field"
+    },
+    "post": {
+      "name": "createField",
+      "namespace": "field"
+    }
+  },
+  "/fields/{field_id}/choices/{choice_id}": {
+    "patch": {
+      "name": "updateFieldChoice",
+      "namespace": "field"
+    },
+    "delete": {
+      "name": "deleteFieldChoice",
+      "namespace": "field"
+    }
+  },
+  "/fields/{id}": {
+    "patch": {
+      "name": "updateField",
+      "namespace": "field"
+    }
+  },
+  "/fields/{id}/choices": {
+    "post": {
+      "name": "createFieldChoices",
+      "namespace": "field"
+    }
+  },
+  "/file-urls": {
+    "post": {
+      "name": "createFileUrls",
+      "namespace": "library"
+    }
+  },
+  "/folders": {
+    "get": {
+      "name": "listFolders",
+      "namespace": "library"
+    },
+    "post": {
+      "name": "createFolder",
+      "namespace": "library"
+    }
+  },
+  "/folders/{id}": {
+    "get": {
+      "name": "getFolder",
+      "namespace": "library"
+    },
+    "patch": {
+      "name": "updateFolder",
+      "namespace": "library"
+    },
+    "delete": {
+      "name": "deleteFolder",
+      "namespace": "library"
+    }
+  },
+  "/folders/{id}/permissions": {
+    "get": {
+      "name": "listFolderPermissions",
+      "namespace": "library"
+    },
+    "post": {
+      "name": "addFolderPermissions",
+      "namespace": "library"
+    }
+  },
+  "/folders/{id}/permissions/{accessor_id}": {
+    "patch": {
+      "name": "updateFolderPermission",
+      "namespace": "library"
+    },
+    "delete": {
+      "name": "removeFolderPermission",
+      "namespace": "library"
+    }
+  },
+  "/images/{id}": {
+    "get": {
+      "name": "getImage",
+      "namespace": "library"
+    },
+    "patch": {
+      "name": "updateImage",
+      "namespace": "library"
+    },
+    "delete": {
+      "name": "deleteImage",
+      "namespace": "library"
+    }
+  },
+  "/label-groups": {
+    "get": {
+      "name": "listLabelGroups",
+      "namespace": "label"
+    }
+  },
+  "/milestones": {
+    "get": {
+      "name": "listMilestones",
+      "namespace": "milestone"
+    },
+    "post": {
+      "name": "createMilestone",
+      "namespace": "milestone"
+    }
+  },
+  "/milestones/{id}": {
+    "get": {
+      "name": "getMilestone",
+      "namespace": "milestone"
+    },
+    "patch": {
+      "name": "updateMilestone",
+      "namespace": "milestone"
+    }
+  },
+  "/multipart-uploads": {
+    "post": {
+      "name": "createMultipartUpload",
+      "namespace": "uploader"
+    }
+  },
+  "/multipart-uploads/{id}/complete": {
+    "post": {
+      "name": "completeMultipartUpload",
+      "namespace": "uploader"
+    }
+  },
+  "/multipart-uploads/{id}/status": {
+    "get": {
+      "name": "getMultipartUploadStatus",
+      "namespace": "uploader"
+    }
+  },
+  "/publishing-events/{publishing_event_id}": {
+    "get": {
+      "name": "getPublishingEvent",
+      "namespace": "publishing"
+    }
+  },
+  "/publishing-events/{publishing_event_id}/assets/{asset_id}/publishing-metadata/{publishing_metadata_id}": {
+    "get": {
+      "name": "getPublishingEventAssetMetadata",
+      "namespace": "publishing"
+    }
+  },
+  "/publishing-events/{publishing_event_id}/publishing-metadata": {
+    "get": {
+      "name": "listPublishingEventMetadata",
+      "namespace": "publishing"
+    },
+    "post": {
+      "name": "bulkCreatePublishingEventMetadata",
+      "namespace": "publishing"
+    }
+  },
+  "/raw-files/{id}": {
+    "get": {
+      "name": "getRawFile",
+      "namespace": "library"
+    },
+    "patch": {
+      "name": "updateRawFile",
+      "namespace": "library"
+    },
+    "delete": {
+      "name": "deleteRawFile",
+      "namespace": "library"
+    }
+  },
+  "/rendition-configs/{id}": {
+    "get": {
+      "name": "getRenditionConfig",
+      "namespace": "library"
+    }
+  },
+  "/renditions/{id}": {
+    "get": {
+      "name": "getRendition",
+      "namespace": "library"
+    }
+  },
+  "/settings": {
+    "get": {
+      "name": "getSettings",
+      "namespace": "settings"
+    },
+    "post": {
+      "name": "updateSettings",
+      "namespace": "settings"
+    }
+  },
+  "/structured-content/content-types": {
+    "get": {
+      "name": "listSCContentTypes",
+      "namespace": "structuredContent"
+    },
+    "post": {
+      "name": "createSCContentType",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/content-types/{content_type_id}": {
+    "get": {
+      "name": "getSCContentType",
+      "namespace": "structuredContent"
+    },
+    "post": {
+      "name": "updateSCContentType",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/content-types/{content_type_id}/managed-migrations": {
+    "get": {
+      "name": "listSCContentTypeManagedMigrations",
+      "namespace": "structuredContent"
+    },
+    "post": {
+      "name": "createSCContentTypeManagedMigration",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/content-types/{content_type_id}/managed-migrations/validate": {
+    "post": {
+      "name": "validateSCContentTypeManagedMigration",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}": {
+    "get": {
+      "name": "getSCContentTypeManagedMigration",
+      "namespace": "structuredContent"
+    },
+    "patch": {
+      "name": "updateSCContentTypeManagedMigration",
+      "namespace": "structuredContent"
+    },
+    "delete": {
+      "name": "deleteSCContentTypeManagedMigration",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}/start": {
+    "post": {
+      "name": "startSCContentTypeManagedMigration",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/content-types/{content_type_id}/versions": {
+    "get": {
+      "name": "listSCContentTypeVersions",
+      "namespace": "structuredContent"
+    },
+    "post": {
+      "name": "createSCContentTypeVersion",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/content-types/{content_type_id}/versions/{version_id}": {
+    "get": {
+      "name": "getSCContentTypeVersion",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/contents/{content_id}/migration": {
+    "post": {
+      "name": "migrateSCContent",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/acknowledge": {
+    "post": {
+      "name": "acknowledgeSCContentPreview",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/complete": {
+    "post": {
+      "name": "completeSCContentPreview",
+      "namespace": "structuredContent"
+    }
+  },
+  "/structured-contents": {
+    "post": {
+      "name": "createStructuredContent",
+      "namespace": "library"
+    }
+  },
+  "/structured-contents/{id}": {
+    "get": {
+      "name": "getStructuredContent",
+      "namespace": "library"
+    },
+    "patch": {
+      "name": "updateStructuredContent",
+      "namespace": "library"
+    }
+  },
+  "/tasks": {
+    "get": {
+      "name": "listTasks",
+      "namespace": "task"
+    },
+    "post": {
+      "name": "createTask",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{id}": {
+    "get": {
+      "name": "getTask",
+      "namespace": "task"
+    },
+    "patch": {
+      "name": "updateTask",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{id}/assets": {
+    "get": {
+      "name": "listTaskAssets",
+      "namespace": "task"
+    },
+    "post": {
+      "name": "addAssetToTask",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{id}/attachments": {
+    "get": {
+      "name": "listTaskAttachments",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{id}/brief": {
+    "get": {
+      "name": "getTaskBrief",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{id}/custom-fields": {
+    "get": {
+      "name": "listTaskCustomFields",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/articles/{article_id}": {
+    "get": {
+      "name": "getTaskArticle",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/assets/{asset_id}/comments": {
+    "get": {
+      "name": "listTaskAssetComments",
+      "namespace": "task"
+    },
+    "post": {
+      "name": "addCommentToTaskAsset",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/assets/{asset_id}/drafts": {
+    "get": {
+      "name": "listTaskAssetDrafts",
+      "namespace": "task"
+    },
+    "post": {
+      "name": "addDraftToTaskAsset",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance": {
+    "get": {
+      "name": "getTaskAssetDraftBrandCompliance",
+      "namespace": "brandCompliance"
+    },
+    "put": {
+      "name": "updateTaskAssetDraftBrandCompliance",
+      "namespace": "brandCompliance"
+    }
+  },
+  "/tasks/{task_id}/assets/{asset_id}/fields": {
+    "get": {
+      "name": "listTaskAssetFields",
+      "namespace": "task"
+    },
+    "put": {
+      "name": "updateTaskAssetFields",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/comments": {
+    "post": {
+      "name": "addCommentToTask",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/custom-fields/{custom_field_id}": {
+    "get": {
+      "name": "getTaskCustomField",
+      "namespace": "task"
+    },
+    "patch": {
+      "name": "updateTaskCustomField",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/custom-fields/{custom_field_id}/choices": {
+    "get": {
+      "name": "listTaskCustomFieldChoices",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/fields": {
+    "get": {
+      "name": "listTaskFields",
+      "namespace": "task"
+    },
+    "post": {
+      "name": "addFieldToTask",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/fields/{field_id}": {
+    "put": {
+      "name": "updateTaskField",
+      "namespace": "task"
+    },
+    "delete": {
+      "name": "removeTaskField",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/images/{image_id}": {
+    "get": {
+      "name": "getTaskImage",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/raw-files/{raw_file_id}": {
+    "get": {
+      "name": "getTaskRawFile",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/steps/{step_id}": {
+    "patch": {
+      "name": "updateTaskStep",
+      "namespace": "taskStep"
+    }
+  },
+  "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}": {
+    "get": {
+      "name": "getTaskSubStep",
+      "namespace": "task"
+    },
+    "patch": {
+      "name": "updateTaskSubStep",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/comments": {
+    "get": {
+      "name": "listTaskSubStepComments",
+      "namespace": "task"
+    },
+    "post": {
+      "name": "addCommentToTaskSubStep",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/comments/{comment_id}": {
+    "get": {
+      "name": "getTaskSubStepComment",
+      "namespace": "task"
+    },
+    "patch": {
+      "name": "updateTaskSubStepComment",
+      "namespace": "task"
+    },
+    "delete": {
+      "name": "deleteTaskSubStepComment",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/external-work": {
+    "get": {
+      "name": "getTaskSubStepExternalWork",
+      "namespace": "task"
+    },
+    "patch": {
+      "name": "updateTaskSubStepExternalWork",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/fields": {
+    "get": {
+      "name": "listTaskSubStepFields",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/structured-contents": {
+    "post": {
+      "name": "addStructuredContentToTask",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/structured-contents/{content_id}": {
+    "get": {
+      "name": "getTaskStructuredContent",
+      "namespace": "task"
+    },
+    "patch": {
+      "name": "updateTaskStructuredContent",
+      "namespace": "task"
+    },
+    "delete": {
+      "name": "deleteTaskStructuredContent",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/structured-contents/{content_id}/drafts": {
+    "post": {
+      "name": "createTaskStructuredContentDraft",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/urls": {
+    "post": {
+      "name": "addUrlToTask",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/videos/{video_id}": {
+    "get": {
+      "name": "getTaskVideo",
+      "namespace": "task"
+    }
+  },
+  "/teams": {
+    "get": {
+      "name": "listTeams",
+      "namespace": "team"
+    }
+  },
+  "/teams/{id}": {
+    "get": {
+      "name": "getTeam",
+      "namespace": "team"
+    }
+  },
+  "/templates": {
+    "get": {
+      "name": "listTemplates",
+      "namespace": "template"
+    }
+  },
+  "/templates/{template_id}": {
+    "get": {
+      "name": "getTemplate",
+      "namespace": "template"
+    }
+  },
+  "/upload-url": {
+    "get": {
+      "name": "getUploadUrl",
+      "namespace": "uploader"
+    }
+  },
+  "/userlist": {
+    "get": {
+      "name": "listUsers",
+      "namespace": "user"
+    }
+  },
+  "/users": {
+    "get": {
+      "name": "findUserByEmail",
+      "namespace": "user"
+    }
+  },
+  "/users/{id}": {
+    "get": {
+      "name": "getUser",
+      "namespace": "user"
+    }
+  },
+  "/videos/{id}": {
+    "get": {
+      "name": "getVideo",
+      "namespace": "library"
+    },
+    "patch": {
+      "name": "updateVideo",
+      "namespace": "library"
+    },
+    "delete": {
+      "name": "deleteVideo",
+      "namespace": "library"
+    }
+  },
+  "/work-requests": {
+    "get": {
+      "name": "listWorkRequests",
+      "namespace": "workRequest"
+    },
+    "post": {
+      "name": "createWorkRequest",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}": {
+    "get": {
+      "name": "getWorkRequest",
+      "namespace": "workRequest"
+    },
+    "patch": {
+      "name": "updateWorkRequest",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}/approved-assets": {
+    "get": {
+      "name": "listWorkRequestApprovedAssets",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}/attachments": {
+    "post": {
+      "name": "addAttachmentToWorkRequest",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}/campaigns": {
+    "post": {
+      "name": "createCampaignFromWorkRequest",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}/comments": {
+    "get": {
+      "name": "listWorkRequestComments",
+      "namespace": "workRequest"
+    },
+    "post": {
+      "name": "addCommentToWorkRequest",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}/creative-assets": {
+    "post": {
+      "name": "createWorkRequestCreativeAsset",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}/related-resources": {
+    "get": {
+      "name": "listWorkRequestRelatedResources",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{id}/tasks": {
+    "post": {
+      "name": "createTaskFromWorkRequest",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{work_request_id}/attachments/{attachment_id}": {
+    "delete": {
+      "name": "deleteWorkRequestAttachment",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{work_request_id}/comments/{comment_id}": {
+    "get": {
+      "name": "getWorkRequestComment",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{work_request_id}/creative-assets/{creative_asset_id}": {
+    "delete": {
+      "name": "deleteWorkRequestCreativeAsset",
+      "namespace": "workRequest"
+    }
+  },
+  "/work-requests/{work_request_id}/form-fields/{form_field_identifier}": {
+    "put": {
+      "name": "updateWorkRequestFormField",
+      "namespace": "workRequest"
+    }
+  },
+  "/workflows": {
+    "get": {
+      "name": "listWorkflows",
+      "namespace": "workflow"
+    }
+  },
+  "/workflows/{workflow_id}": {
+    "get": {
+      "name": "getWorkflow",
+      "namespace": "workflow"
+    }
+  }
+}

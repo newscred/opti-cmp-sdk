@@ -1,0 +1,20 @@
+// Auto-generated - DO NOT EDIT
+
+import type { Response } from "../request/types.js";
+import type * as Params from "./params.js";
+import type * as Schema from "./schema.js";
+
+export interface APIEndpoints {
+{{#namespaces}}
+  {{namespace}}: {
+{{#endpoints}}
+{{#deprecated}}
+    /** @deprecated */
+{{/deprecated}}
+    {{name}}: (
+      params: Params.{{paramsType}},
+    ) => Promise<{{{returnType}}}>;
+{{/endpoints}}
+  };
+{{/namespaces}}
+}
