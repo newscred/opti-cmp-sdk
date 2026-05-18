@@ -1,3 +1,4 @@
+js/src/plugins/register-api-endpoints/routes.json
 js/src/types/endpoints.ts
 js/src/types/openapi.d.ts
 js/src/types/params.ts
