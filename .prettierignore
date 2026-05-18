@@ -1,10 +1,12 @@
+pnpm-lock.yaml
+
+CHANGELOG.md
+
+specification/
+
 js/src/plugins/register-api-endpoints/routes.json
 js/src/types/endpoints.ts
 js/src/types/openapi.d.ts
 js/src/types/params.ts
 js/src/types/schema.ts
 js/src/types/schema-public.ts
-
-specification/
-
-pnpm-lock.yaml
