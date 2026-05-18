@@ -7,7 +7,13 @@ export default defineConfig({
     devExports: true,
   },
   format: {
-    cjs: {},
+    cjs: {
+      deps: {
+        alwaysBundle: () => true,
+        neverBundle: ["is-mergeable-object"],
+        skipNodeModulesBundle: false,
+      },
+    },
     esm: {},
     umd: {
       deps: {
