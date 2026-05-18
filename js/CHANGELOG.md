@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.2](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.1...js-0.0.2) (2026-05-18)
+
+
+### Bug Fixes
+
+* **js:** fix cjs build ([4728516](https://github.com/newscred/opti-cmp-sdk/commit/4728516a015e87ed195991eb0c92b0d27822a1c1))
+
 ## 0.0.1 (2026-05-18)
 
 
