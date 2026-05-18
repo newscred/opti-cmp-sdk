@@ -14,8 +14,8 @@
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "test:js": "pnpm run --filter=opti-cmp test",
-    "prerelease:js": "pnpm run build:js",
-    "release:js": "./scripts/release-js.sh"
+    "release:js": "./scripts/release-js.sh",
+    "publish:js": "./scripts/publish-js.sh"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
