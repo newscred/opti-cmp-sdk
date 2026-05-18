@@ -10,7 +10,7 @@ npx release-please github-release \
   --target-branch=main
 
 REMOTE=$(git remote -v | grep 'newscred.*push' | awk '{print $1}')
-git fetch "$REMOTE" --tags
+git pull "$REMOTE" main --tags
 
 LATEST_TAG=$(git describe --tags --match "js-*" --abbrev=0)
 echo "Latest tag: $LATEST_TAG"
