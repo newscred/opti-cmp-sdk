@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.2...js-0.0.3) (2026-05-19)
+
+
+### Features
+
+* **js:** add support for request adapter ([2bf3662](https://github.com/newscred/opti-cmp-sdk/commit/2bf36625a80c57ddaf4afd647aa55d3c9be4f9b8))
+
 ## [0.0.2](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.1...js-0.0.2) (2026-05-18)
 
 
