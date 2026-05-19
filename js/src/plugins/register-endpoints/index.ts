@@ -3,19 +3,31 @@ import type { Routes } from "./types.js";
 
 export function registerEndpointsPlugin(
   client: APIClient,
-  _options: Options,
+  options: Options,
 ): void {
   client.registerEndpoints = function registerEndpoints(routes: Routes): void {
+    const makeMethod = options.adapter?.request
+      ? (namespace: string, operation: string) => {
+          return (params: Record<string, unknown>) =>
+            options.adapter!.request!({ namespace, operation, params });
+        }
+      : (namespace: string, operation: string) => {
+          const route = routes[namespace][operation];
+          return client.request.defaults({
+            method: route.method.toUpperCase(),
+            url: route.url,
+          });
+        };
+
     for (const namespaceName of Object.keys(routes)) {
       if (!client[namespaceName]) {
         client[namespaceName] = {};
       }
-
-      for (const [methodName, route] of Object.entries(routes[namespaceName])) {
-        client[namespaceName][methodName] = client.request.defaults({
-          method: route.method.toUpperCase(),
-          url: route.url,
-        });
+      for (const methodName of Object.keys(routes[namespaceName])) {
+        client[namespaceName][methodName] = makeMethod(
+          namespaceName,
+          methodName,
+        );
       }
     }
   };

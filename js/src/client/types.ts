@@ -5,7 +5,7 @@ import type { HTTPError } from "../error/index.js";
 import type { AuthOptions } from "../plugins/auth/types.js";
 import type { AuthenticateOptions } from "../plugins/authenticate/types.js";
 import type { Routes } from "../plugins/register-endpoints/types.js";
-import type { Request, Response } from "../request/types.js";
+import type { Request, RequestAdapter, Response } from "../request/types.js";
 import type { APIEndpoints } from "../types/endpoints.js";
 import type { Pagination } from "../types/schema.js";
 
@@ -46,6 +46,9 @@ export interface Options {
   // Allow additional options for extensibility
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [option: string]: any;
+  adapter?: {
+    request?: RequestAdapter;
+  };
   auth?: AuthOptions;
   baseUrl?: string;
   request?: RequestOptions["request"];
