@@ -17,6 +17,6 @@ echo "Latest tag: $LATEST_TAG"
 
 git checkout "$LATEST_TAG"
 
-pnpm --filter=opti-cmp publish
+pnpm --filter=opti-cmp publish --no-git-checks
 
 git checkout main
