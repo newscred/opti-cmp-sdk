@@ -16,7 +16,9 @@ pnpm add opti-cmp
 import { OptiCMP } from "opti-cmp";
 
 const client = OptiCMP({
-  auth: { "<auth-token>" },
+  auth: {
+    token: "<auth-token>",
+  },
 });
 
 // List campaigns
