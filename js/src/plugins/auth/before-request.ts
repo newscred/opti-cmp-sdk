@@ -1,9 +1,19 @@
 import type { Options } from "../../client/types.js";
-import type { AuthPluginState } from "./types.js";
+import type { AuthState } from "./types.js";
 
-export function beforeRequest(
-  state: AuthPluginState,
+import { ensureToken } from "./oauth/refresh.js";
+
+export async function beforeRequest(
+  auth: AuthState,
   requestOptions: Options,
-): void {
-  requestOptions.headers.authorization = `Bearer ${state.auth.token}`;
+): Promise<void> {
+  if (auth.oauth) {
+    const token = await ensureToken(auth.oauth, requestOptions.request);
+    requestOptions.headers.authorization = `Bearer ${token.accessToken}`;
+    return;
+  }
+
+  if (auth.token) {
+    requestOptions.headers.authorization = `Bearer ${auth.token}`;
+  }
 }
