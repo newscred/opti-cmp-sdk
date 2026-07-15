@@ -2,8 +2,7 @@ import type { HookSingular } from "before-after-hook";
 
 import type { RequestOptions } from "../endpoint/types.js";
 import type { HTTPError } from "../error/index.js";
-import type { AuthOptions } from "../plugins/auth/types.js";
-import type { AuthenticateOptions } from "../plugins/authenticate/types.js";
+import type { AuthOptions, OAuthMethods } from "../plugins/auth/types.js";
 import type { Routes } from "../plugins/register-endpoints/types.js";
 import type { Request, RequestAdapter, Response } from "../request/types.js";
 import type { APIEndpoints } from "../types/endpoints.js";
@@ -14,7 +13,7 @@ export interface APIClient extends APIEndpoints {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 
-  authenticate: (options?: AuthenticateOptions) => void;
+  authenticate: (options?: AuthOptions) => void;
 
   getNextPage: <T extends { pagination: Pagination }>(
     response: Response<T>,
@@ -28,6 +27,8 @@ export interface APIClient extends APIEndpoints {
   hasPreviousPage: <T extends { pagination: Pagination }>(
     response: Response<T>,
   ) => boolean;
+
+  oauth: OAuthMethods;
 
   registerEndpoints: (routes: Routes) => void;
 
