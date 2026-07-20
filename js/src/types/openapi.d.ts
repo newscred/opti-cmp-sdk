@@ -30,7 +30,7 @@ export type paths = {
         };
         /**
          * GET /asset-lineages
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of asset lineage.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of asset lineage.
          */
         get: operations["listAssetLineages"];
         put?: never;
@@ -95,12 +95,12 @@ export type paths = {
         };
         /**
          * GET assets/{asset_id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of an asset.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of fields of an asset.
          */
         get: operations["listAssetFields"];
         /**
          * PUT /assets/{asset_id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Replace existing fields of an asset.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Replace existing fields of an asset.
          */
         put: operations["updateAssetFields"];
         post?: never;
@@ -120,7 +120,7 @@ export type paths = {
         get?: never;
         /**
          * PUT /assets/{asset_id}/fields/{field_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update the field value of an asset.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update the field value of an asset.
          */
         put: operations["updateAssetField"];
         post?: never;
@@ -141,7 +141,7 @@ export type paths = {
         put?: never;
         /**
          * POST /assets/{asset_id}/lineages
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a new external asset lineage.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add a new external asset lineage.
          */
         post: operations["createAssetLineage"];
         delete?: never;
@@ -162,7 +162,7 @@ export type paths = {
         post?: never;
         /**
          * DELETE /assets/{asset_id}/lineages/{lineage_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete an asset lineage.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete an asset lineage.
          */
         delete: operations["deleteAssetLineage"];
         options?: never;
@@ -179,13 +179,13 @@ export type paths = {
         };
         /**
          * GET /assets/{asset_id}/permissions
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ List of entities that have permission to access the asset
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> List of entities that have permission to access the asset
          */
         get: operations["listAssetPermissions"];
         put?: never;
         /**
          * POST /assets/{asset_id}/permissions
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Grant asset access to users or teams
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Grant asset access to users or teams
          */
         post: operations["addAssetPermissions"];
         delete?: never;
@@ -206,16 +206,40 @@ export type paths = {
         post?: never;
         /**
          * DELETE /asstes/{asset_id}/permissions/{accessor_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Remove accessor's access from an asset
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Remove accessor's access from an asset
          */
         delete: operations["removeAssetPermission"];
         options?: never;
         head?: never;
         /**
          * PATCH /assets/{asset_id}/permissions/{accessor_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update accessor's access level and ownership of asset
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update accessor's access level and ownership of asset
          */
         patch: operations["updateAssetPermission"];
+        trace?: never;
+    };
+    "/assets/{asset_id}/related-assets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /assets/{asset_id}/related-assets
+         * @description Returns a paginated list of related assets for the specified asset. Only supported for asset types: article, image, video, raw_file, and structured_content.
+         */
+        get: operations["listRelatedAssets"];
+        /**
+         * PUT /assets/{asset_id}/related-assets
+         * @description Replaces all related assets for the specified asset. Only supported for asset types: article, image, video, raw_file, and structured_content.
+         */
+        put: operations["replaceRelatedAssets"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/assets/{asset_id}/renditions": {
@@ -227,7 +251,7 @@ export type paths = {
         };
         /**
          * GET /assets/{asset_id}/renditions
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the renditions of an asset given its `id`.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the renditions of an asset given its `id`.
          */
         get: operations["listAssetRenditions"];
         put?: never;
@@ -267,7 +291,7 @@ export type paths = {
         };
         /**
          * GET /brand-compliance/categories
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of brand compliance categories.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of brand compliance categories.
          */
         get: operations["listBrandComplianceCategories"];
         put?: never;
@@ -287,13 +311,13 @@ export type paths = {
         };
         /**
          * GET /campaigns
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of campaigns.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of campaigns.
          */
         get: operations["listCampaigns"];
         put?: never;
         /**
          * POST /campaigns
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a campaign
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a campaign
          */
         post: operations["createCampaign"];
         delete?: never;
@@ -312,7 +336,7 @@ export type paths = {
         get?: never;
         /**
          * PUT /campaigns/{campaign_id}/fields/{field_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update the field value of a campaign.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update the field value of a campaign.
          */
         put: operations["updateCampaignField"];
         post?: never;
@@ -341,7 +365,7 @@ export type paths = {
         head?: never;
         /**
          * PATCH /campaigns/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a campaign
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update a campaign
          */
         patch: operations["updateCampaign"];
         trace?: never;
@@ -357,7 +381,7 @@ export type paths = {
         put?: never;
         /**
          * POST /campaigns/{id}/attachments
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Add an attachment to the campaign.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add an attachment to the campaign.
          */
         post: operations["addAttachmentToCampaign"];
         delete?: never;
@@ -397,7 +421,7 @@ export type paths = {
         put?: never;
         /**
          * POST /campaigns/{id}/comments
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Post a comment on a campaign.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Post a comment on a campaign.
          */
         post: operations["addCommentToCampaign"];
         delete?: never;
@@ -415,13 +439,13 @@ export type paths = {
         };
         /**
          * GET campaigns/{id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of a campaign.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of fields of a campaign.
          */
         get: operations["listCampaignFields"];
         put?: never;
         /**
          * POST campaigns/{id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a field to a campaign.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add a field to a campaign.
          */
         post: operations["addFieldToCampaign"];
         delete?: never;
@@ -439,13 +463,13 @@ export type paths = {
         };
         /**
          * GET /events
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of events.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of events.
          */
         get: operations["listEvents"];
         put?: never;
         /**
          * POST /events
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create an event.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create an event.
          */
         post: operations["createEvent"];
         delete?: never;
@@ -463,7 +487,7 @@ export type paths = {
         };
         /**
          * GET /events/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get an event.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get an event.
          */
         get: operations["getEvent"];
         put?: never;
@@ -473,7 +497,7 @@ export type paths = {
         head?: never;
         /**
          * PATCH /events/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update an event.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update an event.
          */
         patch: operations["updateEvent"];
         trace?: never;
@@ -487,12 +511,12 @@ export type paths = {
         };
         /**
          * GET events/{id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of an event.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of fields of an event.
          */
         get: operations["listEventFields"];
         /**
          * PUT /events/{id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Replace existing fields of an event.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Replace existing fields of an event.
          */
         put: operations["updateEventFields"];
         post?: never;
@@ -511,13 +535,13 @@ export type paths = {
         };
         /**
          * GET /fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of an Organization.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of fields of an Organization.
          */
         get: operations["listFields"];
         put?: never;
         /**
          * POST /fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a new field to an Organization.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add a new field to an Organization.
          */
         post: operations["createField"];
         delete?: never;
@@ -538,14 +562,14 @@ export type paths = {
         post?: never;
         /**
          * DELETE /fields/{field_id}/choices/{choice_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a choice from a field.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a choice from a field.
          */
         delete: operations["deleteFieldChoice"];
         options?: never;
         head?: never;
         /**
          * PATCH /fields/{field_id}/choices/{choice_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a choice of a field.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update a choice of a field.
          */
         patch: operations["updateFieldChoice"];
         trace?: never;
@@ -565,7 +589,7 @@ export type paths = {
         head?: never;
         /**
          * PATCH /fields/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a field in an Organization.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update a field in an Organization.
          */
         patch: operations["updateField"];
         trace?: never;
@@ -581,7 +605,7 @@ export type paths = {
         put?: never;
         /**
          * POST /fields/{id}/choices
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create choices in a field.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create choices in a field.
          */
         post: operations["createFieldChoices"];
         delete?: never;
@@ -650,14 +674,14 @@ export type paths = {
         post?: never;
         /**
          * DELETE /folders/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a folder.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a folder.
          */
         delete: operations["deleteFolder"];
         options?: never;
         head?: never;
         /**
          * PATCH /folders/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a folder's name and/or parent.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update a folder's name and/or parent.
          */
         patch: operations["updateFolder"];
         trace?: never;
@@ -671,13 +695,13 @@ export type paths = {
         };
         /**
          * GET /folders/{id}/permissions
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ List of entities that have permission to access the folder
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> List of entities that have permission to access the folder
          */
         get: operations["listFolderPermissions"];
         put?: never;
         /**
          * POST /folders/{id}/permissions
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Grant folder access to users or teams
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Grant folder access to users or teams
          */
         post: operations["addFolderPermissions"];
         delete?: never;
@@ -698,14 +722,14 @@ export type paths = {
         post?: never;
         /**
          * DELETE /folders/{id}/permissions/{accessor_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Remove accessor's access from a folder
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Remove accessor's access from a folder
          */
         delete: operations["removeFolderPermission"];
         options?: never;
         head?: never;
         /**
          * PATCH /folders/{id}/permissions/{accessor_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update accessor's access level and ownership of folder
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update accessor's access level and ownership of folder
          */
         patch: operations["updateFolderPermission"];
         trace?: never;
@@ -767,13 +791,13 @@ export type paths = {
         };
         /**
          * GET /milestones
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of milestones.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of milestones.
          */
         get: operations["listMilestones"];
         put?: never;
         /**
          * POST /milestones
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Creates a milestone. Defaults to the organization's campaign if campaign_id is omitted. Tasks are validated against the selected campaign and must belong to it.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Creates a milestone. Defaults to the organization's campaign if campaign_id is omitted. Tasks are validated against the selected campaign and must belong to it.
          */
         post: operations["createMilestone"];
         delete?: never;
@@ -791,7 +815,7 @@ export type paths = {
         };
         /**
          * GET /milestones/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a milestone by ID.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a milestone by ID.
          */
         get: operations["getMilestone"];
         put?: never;
@@ -801,7 +825,7 @@ export type paths = {
         head?: never;
         /**
          * PATCH /milestones/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a milestone. All fields are optional. Only provided fields will be updated. Note: If tasks array is empty, it will remove all task associations for that milestone.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Updates a milestone. All fields are optional. Only provided fields will be updated. Note: If tasks array is empty, it will remove all task associations for that milestone.
          */
         patch: operations["updateMilestone"];
         trace?: never;
@@ -817,7 +841,7 @@ export type paths = {
         put?: never;
         /**
          * POST /v3/multipart-uploads
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create pre-signed URLs for multipart upload of large files
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create pre-signed URLs for multipart upload of large files
          */
         post: operations["createMultipartUpload"];
         delete?: never;
@@ -837,7 +861,7 @@ export type paths = {
         put?: never;
         /**
          * POST /v3/multipart-uploads/{id}/complete
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Initiate completion of a multipart upload after all parts have been uploaded
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Initiate completion of a multipart upload after all parts have been uploaded
          */
         post: operations["completeMultipartUpload"];
         delete?: never;
@@ -855,9 +879,29 @@ export type paths = {
         };
         /**
          * GET /v3/multipart-uploads/{id}/status
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Retrieve the current status of a multipart upload
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Retrieve the current status of a multipart upload
          */
         get: operations["getMultipartUploadStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/publishing-channels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /publishing-channels
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of publishing channels available in the organization. Use this to populate a channel picker before creating a publishing intent for a task.
+         */
+        get: operations["listPublishingChannels"];
         put?: never;
         post?: never;
         delete?: never;
@@ -967,7 +1011,7 @@ export type paths = {
         };
         /**
          * GET /rendition-configs/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a rendition configuration of an organization given its `id`.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a rendition configuration of an organization given its `id`.
          */
         get: operations["getRenditionConfig"];
         put?: never;
@@ -987,7 +1031,7 @@ export type paths = {
         };
         /**
          * GET /renditions/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a rendition given its `id`.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a rendition given its `id`.
          */
         get: operations["getRendition"];
         put?: never;
@@ -1007,13 +1051,13 @@ export type paths = {
         };
         /**
          * GET /settings
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get settings.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get settings.
          */
         get: operations["getSettings"];
         put?: never;
         /**
          * POST /settings
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create or update settings.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create or update settings.
          *     ## Import behavior:
          *     - Label:
          *         - If a label-group with the same name exists, the label-group is updated.
@@ -1059,13 +1103,13 @@ export type paths = {
         };
         /**
          * GET /structured-content/content-types
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content types.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get content types.
          */
         get: operations["listSCContentTypes"];
         put?: never;
         /**
          * POST /structured-content/content-types
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create content type.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create content type.
          */
         post: operations["createSCContentType"];
         delete?: never;
@@ -1083,13 +1127,13 @@ export type paths = {
         };
         /**
          * GET /structured-content/content-types/{content_type_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content type.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get content type.
          */
         get: operations["getSCContentType"];
         put?: never;
         /**
          * POST /structured-content/content-types/{content_type_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update content type.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update content type.
          */
         post: operations["updateSCContentType"];
         delete?: never;
@@ -1107,13 +1151,13 @@ export type paths = {
         };
         /**
          * GET /structured-content/content-types/{content_type_id}/managed-migrations
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Retrieves a list of managed migration jobs for a specific content type.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Retrieves a list of managed migration jobs for a specific content type.
          */
         get: operations["listSCContentTypeManagedMigrations"];
         put?: never;
         /**
          * POST /structured-content/content-types/{content_type_id}/managed-migrations
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a new managed migration job.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a new managed migration job.
          */
         post: operations["createSCContentTypeManagedMigration"];
         delete?: never;
@@ -1133,7 +1177,7 @@ export type paths = {
         put?: never;
         /**
          * POST /structured-content/content-types/{content_type_id}/managed-migrations/validate
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Check managed migration possible or not.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Check managed migration possible or not.
          */
         post: operations["validateSCContentTypeManagedMigration"];
         delete?: never;
@@ -1151,21 +1195,21 @@ export type paths = {
         };
         /**
          * GET /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get details of a specific managed migration job.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get details of a specific managed migration job.
          */
         get: operations["getSCContentTypeManagedMigration"];
         put?: never;
         post?: never;
         /**
          * DELETE /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a managed migration job with not_started status.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a managed migration job with not_started status.
          */
         delete: operations["deleteSCContentTypeManagedMigration"];
         options?: never;
         head?: never;
         /**
          * PATCH /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a managed migration job.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update a managed migration job.
          */
         patch: operations["updateSCContentTypeManagedMigration"];
         trace?: never;
@@ -1181,7 +1225,7 @@ export type paths = {
         put?: never;
         /**
          * POST /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}/start
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Start managed migration job.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Start managed migration job.
          */
         post: operations["startSCContentTypeManagedMigration"];
         delete?: never;
@@ -1199,13 +1243,13 @@ export type paths = {
         };
         /**
          * GET /structured-content/content-types/{content_type_id}/versions
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content type versions.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get content type versions.
          */
         get: operations["listSCContentTypeVersions"];
         put?: never;
         /**
          * POST /structured-content/content-types/{content_type_id}/versions
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Add Content Type Version.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add Content Type Version.
          */
         post: operations["createSCContentTypeVersion"];
         delete?: never;
@@ -1223,7 +1267,7 @@ export type paths = {
         };
         /**
          * GET /structured-content/content-types/{content_type_id}/versions/{version_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content type version.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get content type version.
          */
         get: operations["getSCContentTypeVersion"];
         put?: never;
@@ -1245,7 +1289,7 @@ export type paths = {
         put?: never;
         /**
          * POST /structured-content/contents/{content_id}/migration
-         * @description Migrate content to a specific content type version. @EXPERIMENTAL@BADGE@PLACEHOLDER@
+         * @description Migrate content to a specific content type version. <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span>
          */
         post: operations["migrateSCContent"];
         delete?: never;
@@ -1265,7 +1309,7 @@ export type paths = {
         put?: never;
         /**
          * POST /structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/acknowledge
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Acknowledge content preview. Content preview can be acknowledged only once. So make sure you are acknowledging only the content previews targeted for your integration. Otherwise it will stall acknowledgment from other integrations.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Acknowledge content preview. Content preview can be acknowledged only once. So make sure you are acknowledging only the content previews targeted for your integration. Otherwise it will stall acknowledgment from other integrations.
          */
         post: operations["acknowledgeSCContentPreview"];
         delete?: never;
@@ -1285,7 +1329,7 @@ export type paths = {
         put?: never;
         /**
          * POST /structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/complete
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Complete content preview.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Complete content preview.
          */
         post: operations["completeSCContentPreview"];
         delete?: never;
@@ -1305,7 +1349,7 @@ export type paths = {
         put?: never;
         /**
          * POST /structured-contents
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Creates a structured content.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Creates a structured content.
          */
         post: operations["createStructuredContent"];
         delete?: never;
@@ -1323,7 +1367,7 @@ export type paths = {
         };
         /**
          * GET /structured-contents/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the structured content.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the structured content.
          */
         get: operations["getStructuredContent"];
         put?: never;
@@ -1333,7 +1377,7 @@ export type paths = {
         head?: never;
         /**
          * PATCH /structured-contents/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a structured content.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Updates a structured content.
          */
         patch: operations["updateStructuredContent"];
         trace?: never;
@@ -1347,13 +1391,13 @@ export type paths = {
         };
         /**
          * GET /tasks
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of tasks.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of tasks.
          */
         get: operations["listTasks"];
         put?: never;
         /**
          * POST /tasks
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a task
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a task
          */
         post: operations["createTask"];
         delete?: never;
@@ -1523,7 +1567,7 @@ export type paths = {
         };
         /**
          * GET /tasks/{task_id}/assets/{asset_id}/drafts
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of drafts on an asset of a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of drafts on an asset of a task.
          */
         get: operations["listTaskAssetDrafts"];
         put?: never;
@@ -1547,12 +1591,12 @@ export type paths = {
         };
         /**
          * GET /tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the brand compliance details of a draft of an asset of a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the brand compliance details of a draft of an asset of a task.
          */
         get: operations["getTaskAssetDraftBrandCompliance"];
         /**
          * PUT /tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update the brand compliance details of a draft of an asset of a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update the brand compliance details of a draft of an asset of a task.
          */
         put: operations["updateTaskAssetDraftBrandCompliance"];
         post?: never;
@@ -1571,12 +1615,12 @@ export type paths = {
         };
         /**
          * GET /tasks/{task_id}/assets/{asset_id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ List all the fields of a task asset.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> List all the fields of a task asset.
          */
         get: operations["listTaskAssetFields"];
         /**
          * PUT tasks/{task_id}/assets/{asset_id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Replace fields of an asset in a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Replace fields of an asset in a task.
          */
         put: operations["updateTaskAssetFields"];
         post?: never;
@@ -1597,7 +1641,7 @@ export type paths = {
         put?: never;
         /**
          * POST /tasks/{task_id}/comments
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Post a comment on a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Post a comment on a task.
          */
         post: operations["addCommentToTask"];
         delete?: never;
@@ -1660,13 +1704,13 @@ export type paths = {
         };
         /**
          * GET tasks/{task_id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of fields of a task.
          */
         get: operations["listTaskFields"];
         put?: never;
         /**
          * POST tasks/{task_id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a field to a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add a field to a task.
          */
         post: operations["addFieldToTask"];
         delete?: never;
@@ -1685,13 +1729,13 @@ export type paths = {
         get?: never;
         /**
          * PUT tasks/{taks_id}/fields/{field_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a field of a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update a field of a task.
          */
         put: operations["updateTaskField"];
         post?: never;
         /**
          * DELETE tasks/{task_id}/fields/{field_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Remove a field of a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Remove a field of a task.
          */
         delete: operations["removeTaskField"];
         options?: never;
@@ -1713,6 +1757,26 @@ export type paths = {
         get: operations["getTaskImage"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tasks/{task_id}/publishing-intents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * POST /tasks/{task_id}/publishing-intents
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a publishing intent for a task on the specified publishing channel.
+         */
+        post: operations["createTaskPublishingIntent"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1754,7 +1818,7 @@ export type paths = {
         head?: never;
         /**
          * PATCH /tasks/{task_id}/steps/{step_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a step in a task
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update a step in a task
          */
         patch: operations["updateTaskStep"];
         trace?: never;
@@ -1868,7 +1932,7 @@ export type paths = {
         };
         /**
          * GET /tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/fields
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of a substep of a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of fields of a substep of a task.
          */
         get: operations["listTaskSubStepFields"];
         put?: never;
@@ -1890,7 +1954,7 @@ export type paths = {
         put?: never;
         /**
          * POST /tasks/{task_id}/structured-contents
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a new structured content to task
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add a new structured content to task
          */
         post: operations["addStructuredContentToTask"];
         delete?: never;
@@ -1908,21 +1972,21 @@ export type paths = {
         };
         /**
          * GET /tasks/{task_id}/structured-contents/{content_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a task structured content by its guid.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a task structured content by its guid.
          */
         get: operations["getTaskStructuredContent"];
         put?: never;
         post?: never;
         /**
          * DELETE /tasks/{task_id}/structured-contents/{content_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a structured content from task
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a structured content from task
          */
         delete: operations["deleteTaskStructuredContent"];
         options?: never;
         head?: never;
         /**
          * PATCH /tasks/{task_id}/structured-contents/{content_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Update structured content using a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update structured content using a task.
          */
         patch: operations["updateTaskStructuredContent"];
         trace?: never;
@@ -1938,7 +2002,7 @@ export type paths = {
         put?: never;
         /**
          * POST /tasks/{task_id}/structured-contents/{content_id}/drafts
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create structured content draft using a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create structured content draft using a task.
          */
         post: operations["createTaskStructuredContentDraft"];
         delete?: never;
@@ -1958,7 +2022,7 @@ export type paths = {
         put?: never;
         /**
          * POST /tasks/{task_id}/urls
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Adds a URL to a task.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Adds a URL to a task.
          */
         post: operations["addUrlToTask"];
         delete?: never;
@@ -1996,7 +2060,7 @@ export type paths = {
         };
         /**
          * GET /teams
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of teams.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of teams.
          */
         get: operations["listTeams"];
         put?: never;
@@ -2016,7 +2080,7 @@ export type paths = {
         };
         /**
          * GET /teams/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a team.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a team.
          */
         get: operations["getTeam"];
         put?: never;
@@ -2036,7 +2100,7 @@ export type paths = {
         };
         /**
          * GET /templates
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of templates.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of templates.
          */
         get: operations["listTemplates"];
         put?: never;
@@ -2056,7 +2120,7 @@ export type paths = {
         };
         /**
          * GET /templates/{template_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a template by ID.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a template by ID.
          */
         get: operations["getTemplate"];
         put?: never;
@@ -2184,13 +2248,13 @@ export type paths = {
         };
         /**
          * GET /work-requests
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of work requests.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of work requests.
          */
         get: operations["listWorkRequests"];
         put?: never;
         /**
          * POST /work-requests
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a work request.
          */
         post: operations["createWorkRequest"];
         delete?: never;
@@ -2208,7 +2272,7 @@ export type paths = {
         };
         /**
          * GET /work-requests/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a work request by ID.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a work request by ID.
          */
         get: operations["getWorkRequest"];
         put?: never;
@@ -2218,7 +2282,7 @@ export type paths = {
         head?: never;
         /**
          * PATCH /work-requests/{id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Updates a work request.
          */
         patch: operations["updateWorkRequest"];
         trace?: never;
@@ -2232,7 +2296,7 @@ export type paths = {
         };
         /**
          * GET /work-requests/{id}/approved-assets
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of approved assets of a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of approved assets of a work request.
          */
         get: operations["listWorkRequestApprovedAssets"];
         put?: never;
@@ -2254,7 +2318,7 @@ export type paths = {
         put?: never;
         /**
          * POST /work-requests/{id}/attachments
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create attachments for a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create attachments for a work request.
          */
         post: operations["addAttachmentToWorkRequest"];
         delete?: never;
@@ -2274,7 +2338,7 @@ export type paths = {
         put?: never;
         /**
          * POST /work-requests/{id}/campaigns
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a new campaign from a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a new campaign from a work request.
          */
         post: operations["createCampaignFromWorkRequest"];
         delete?: never;
@@ -2292,13 +2356,13 @@ export type paths = {
         };
         /**
          * GET /work-requests/{id}/comments
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get list of comments for a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get list of comments for a work request.
          */
         get: operations["listWorkRequestComments"];
         put?: never;
         /**
          * POST /work-requests/{id}/comments
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Post a comment on a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Post a comment on a work request.
          */
         post: operations["addCommentToWorkRequest"];
         delete?: never;
@@ -2318,7 +2382,7 @@ export type paths = {
         put?: never;
         /**
          * POST /work-requests/{id}/creative-assets
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create creative assets for a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create creative assets for a work request.
          */
         post: operations["createWorkRequestCreativeAsset"];
         delete?: never;
@@ -2336,7 +2400,7 @@ export type paths = {
         };
         /**
          * GET /work-requests/{id}/related-resources
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of work request related resources.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of work request related resources.
          */
         get: operations["listWorkRequestRelatedResources"];
         put?: never;
@@ -2358,7 +2422,7 @@ export type paths = {
         put?: never;
         /**
          * POST /work-requests/{id}/tasks
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a new task from a work request.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a new task from a work request.
          */
         post: operations["createTaskFromWorkRequest"];
         delete?: never;
@@ -2379,7 +2443,7 @@ export type paths = {
         post?: never;
         /**
          * DELETE /work-requests/{work_request_id}/attachments/{attachment_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a work request attachment.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a work request attachment.
          */
         delete: operations["deleteWorkRequestAttachment"];
         options?: never;
@@ -2396,7 +2460,7 @@ export type paths = {
         };
         /**
          * GET /work-requests/{work_request_id}/comments/{comment_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a work request comment by ID.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a work request comment by ID.
          */
         get: operations["getWorkRequestComment"];
         put?: never;
@@ -2419,7 +2483,7 @@ export type paths = {
         post?: never;
         /**
          * DELETE /work-requests/{work_request_id}/creative-assets/{creative_asset_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a work request creative asset.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a work request creative asset.
          */
         delete: operations["deleteWorkRequestCreativeAsset"];
         options?: never;
@@ -2437,7 +2501,7 @@ export type paths = {
         get?: never;
         /**
          * PUT /work-requests/{work_request_id}/form-fields/{form_field_identifier}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a work request form field.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Updates a work request form field.
          */
         put: operations["updateWorkRequestFormField"];
         post?: never;
@@ -2456,7 +2520,7 @@ export type paths = {
         };
         /**
          * GET /workflows
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of workflows.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of workflows.
          */
         get: operations["listWorkflows"];
         put?: never;
@@ -2476,7 +2540,7 @@ export type paths = {
         };
         /**
          * GET /workflows/{workflow_id}
-         * @description @EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a workflow by ID.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a workflow by ID.
          */
         get: operations["getWorkflow"];
         put?: never;
@@ -3148,6 +3212,11 @@ export type components = {
              */
             identifier: string;
             /**
+             * @description True when this form field is read-only and only organization admins can modify it. Absent or false for editable fields.
+             * @example false
+             */
+            is_protected?: boolean;
+            /**
              * @description Type of the form field
              * @example brief
              */
@@ -3297,6 +3366,11 @@ export type components = {
              * @example attachment
              */
             identifier: string;
+            /**
+             * @description True when this form field is read-only and only organization admins can modify it. Absent or false for editable fields.
+             * @example false
+             */
+            is_protected?: boolean;
             /**
              * @description Specify if the field can be used to create any resource
              * @example false
@@ -3453,7 +3527,7 @@ export type components = {
                  */
                 self: string;
             };
-            template?: (components["schemas"]["CampaignBriefTemplateValue"] | components["schemas"]["NullValue"]) | null;
+            template?: components["schemas"]["CampaignBriefTemplateValue"] | null;
             /**
              * @description Title of the campaign brief
              * @example Awesome Campaign Brief
@@ -3671,7 +3745,7 @@ export type components = {
             title: string;
         };
         CampaignResponse: {
-            budget: (components["schemas"]["BudgetResponse"] | components["schemas"]["NullValue"]) | null;
+            budget: components["schemas"]["BudgetResponse"] | null;
             /**
              * Format: date-time
              * @description Creation date and time of the campaign,  in ISO 8601 UTC format (`2035-02-10T10:40:45Z`)
@@ -6413,7 +6487,6 @@ export type components = {
              */
             label: string;
         };
-        NullValue: unknown;
         NumberCustomField: {
             /**
              * @description Value of decimal places
@@ -6516,6 +6589,31 @@ export type components = {
              * @example A Percentage Custom Field
              */
             label: string;
+        };
+        PublishingChannelListResponse: {
+            /** @description List of publishing channels */
+            data: components["schemas"]["PublishingChannelResponse"][];
+            pagination: components["schemas"]["Pagination"] & {
+                /** @example https://api.cmp.optimizely.com/v3/publishing-channels?offset=10&page_size=10 */
+                next?: string | null;
+            };
+        };
+        PublishingChannelResponse: {
+            /**
+             * @description Whether the publishing channel is currently disabled
+             * @example false
+             */
+            disabled: boolean | null;
+            /**
+             * @description Unique identifier of the publishing channel
+             * @example 6a2fd16faec3bed9c72f7d4f
+             */
+            id: string;
+            /**
+             * @description Human-readable name of the publishing channel
+             * @example My Drupal
+             */
+            name: string | null;
         };
         PublishingEventAssets: {
             /**
@@ -6838,6 +6936,63 @@ export type components = {
         } & {
             [key: string]: components["schemas"]["LocalizedFieldValuesWithEmbeddedContent"][];
         };
+        RelatedAssetItem: {
+            content: {
+                /**
+                 * @description Type of the content.
+                 *      - article  – `html_body`
+                 *      - image, raw_file, video  – `url`
+                 *      - structured_content  – `api_url`
+                 * @example url
+                 * @enum {string}
+                 */
+                type: "url" | "api_url" | "html_body";
+                /** @description Content of the asset. - article – the html body - image, raw_file, video – the download URL - structured_content – api url */
+                value: string;
+            };
+            /**
+             * @description File extension of the asset
+             * @example png
+             */
+            file_extension: string | null;
+            /**
+             * @description Unique identifier for the asset
+             * @example 5d7f910551b00a722e0418830cee6631
+             */
+            id: string;
+            /** @description Meta links */
+            links: {
+                /**
+                 * @description URL of the asset (only GET is supported)
+                 * @example https://api.cmp.optimizely.com/v3/images/5d7f910551b00a722e0418830cee6631
+                 */
+                self: string;
+            };
+            /**
+             * @description MIME type of the asset
+             * @example image/png
+             */
+            mime_type: string | null;
+            /**
+             * @description Title of the asset
+             * @example sample_image.png
+             */
+            title: string;
+            /**
+             * @description Type of the asset
+             * @example image
+             * @enum {string}
+             */
+            type: "article" | "image" | "video" | "raw_file" | "structured_content";
+        };
+        RelatedAssetsListResponse: {
+            /** @description List of related assets */
+            data: components["schemas"]["RelatedAssetItem"][];
+            pagination: components["schemas"]["Pagination"] & {
+                /** @example https://api.cmp.optimizely.com/v3/assets/5d7f910551b00a722e0418830cee6631/related-assets?offset=10&page_size=10 */
+                next?: string | null;
+            };
+        };
         RenditionConfigResponse: {
             /**
              * @description The asset type this config applies to
@@ -6879,6 +7034,29 @@ export type components = {
              * @example 600
              */
             width: number | null;
+        };
+        ReplaceRelatedAssetsRequest: {
+            related_assets: {
+                /**
+                 * @description Unique identifier for the asset
+                 * @example 5d7f910551b00a722e0418830cee6631
+                 */
+                id: string;
+            }[];
+        };
+        ReplaceRelatedAssetsResponse: {
+            /**
+             * @description Unique identifier for the asset
+             * @example 5d7f910551b00a722e0418830cee6631
+             */
+            id: string;
+            related_assets: {
+                /**
+                 * @description Unique identifier for the asset
+                 * @example 5d7f910551b00a722e0418830cee6631
+                 */
+                id: string;
+            }[];
         };
         ResourceChoiceResponse: {
             /**
@@ -7498,6 +7676,11 @@ export type components = {
             id: string;
             /** @description Labels associated with the article */
             labels: components["schemas"]["ResourceLabelResponse"][];
+            /**
+             * @description Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.
+             * @example 6a8b2c3d4e5f6071829a3b4c
+             */
+            library_asset_id?: string | null;
             /** @description Meta links */
             links: {
                 /**
@@ -7975,7 +8158,7 @@ export type components = {
                  */
                 task: string;
             };
-            template?: (components["schemas"]["TaskBriefTemplateValue"] | components["schemas"]["NullValue"]) | null;
+            template?: components["schemas"]["TaskBriefTemplateValue"] | null;
             /**
              * @description Title of the task brief
              * @example Awesome Task Brief
@@ -8251,6 +8434,11 @@ export type components = {
             };
             /** @description Labels associated with the image */
             labels: components["schemas"]["ResourceLabelResponse"][];
+            /**
+             * @description Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.
+             * @example 6a8b2c3d4e5f6071829a3b4c
+             */
+            library_asset_id?: string | null;
             /** @description Meta links */
             links: {
                 /**
@@ -8314,7 +8502,7 @@ export type components = {
              * @description Unique identifier of the campaign
              * @example 8n7f910o51b00b722o0418n30cie8211
              */
-            campaign_id: Record<string, never>;
+            campaign_id: string | null;
             /**
              * @description Due date of the task in ISO 8601 UTC format
              * @example 2024-06-01T06:00:00Z
@@ -8370,7 +8558,7 @@ export type components = {
              * @description Unique identifier of the milestone
              * @example 8n7f910o51b00b722o0418n30cie8211
              */
-            milestone_id: Record<string, never>;
+            milestone_id: string | null;
             /**
              * @description Modified date of the task in ISO 8601 UTC format
              * @example 2024-06-01T06:00:00Z
@@ -8401,7 +8589,21 @@ export type components = {
              * @description Unique identifier of the workflow
              * @example 8n7f910o51b00b722o0418n30cie8211
              */
-            workflow_id: Record<string, never>;
+            workflow_id: string | null;
+        };
+        TaskPublishingIntentCreateRequest: {
+            /**
+             * @description Unique identifier of the target publishing channel
+             * @example 6a2fd16faec3bed9c72f7d4f
+             */
+            channel_id: string;
+        };
+        TaskPublishingIntentResponse: {
+            /**
+             * @description Unique identifier of the publishing intent
+             * @example 6a3a61f8c201c660b84bbfff
+             */
+            id: string;
         };
         TaskRawFile: {
             /**
@@ -8422,6 +8624,11 @@ export type components = {
             id: string;
             /** @description Labels associated to the raw file */
             labels: components["schemas"]["ResourceLabelResponse"][];
+            /**
+             * @description Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.
+             * @example 6a8b2c3d4e5f6071829a3b4c
+             */
+            library_asset_id?: string | null;
             /** @description Meta links */
             links: {
                 /**
@@ -8481,6 +8688,11 @@ export type components = {
             url: string;
         };
         TaskResponse: {
+            /**
+             * @description Unique identifier of the campaign
+             * @example 8n7f910o51b00b722o0418n30cie8211
+             */
+            campaign_id: string | null;
             /**
              * Format: date-time
              * @description Due date and time of the task, in ISO 8601 UTC format (2020-02-10T10:40:45Z)
@@ -8555,6 +8767,16 @@ export type components = {
                     self: string;
                 };
             };
+            /**
+             * @description Unique identifier of the milestone
+             * @example 8n7f910o51b00b722o0418n30cie8211
+             */
+            milestone_id: string | null;
+            /**
+             * @description Modified date of the task in ISO 8601 UTC format
+             * @example 2024-06-01T06:00:00Z
+             */
+            modified_at: string | null;
             /**
              * @description Reference ID of the task
              * @example TSK-123
@@ -8961,6 +9183,11 @@ export type components = {
             id: string;
             /** @description Labels associated with the video */
             labels: components["schemas"]["ResourceLabelResponse"][];
+            /**
+             * @description Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.
+             * @example 6a8b2c3d4e5f6071829a3b4c
+             */
+            library_asset_id?: string | null;
             /** @description Meta links */
             links: {
                 /**
@@ -11420,6 +11647,76 @@ export interface operations {
             422: components["responses"]["UnprocessableEntity"];
         };
     };
+    listRelatedAssets: {
+        parameters: {
+            query?: {
+                /**
+                 * @description Starting index of results (zero indexed)
+                 * @example 5
+                 */
+                offset?: components["parameters"]["offset"];
+                /**
+                 * @description Number of results to return per page
+                 * @example 15
+                 */
+                page_size?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @example 5d7f910551b00a722e0418830cee6631 */
+                asset_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of related assets */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RelatedAssetsListResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    replaceRelatedAssets: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example 5d7f910551b00a722e0418830cee6631 */
+                asset_id: string;
+            };
+            cookie?: never;
+        };
+        /** @description List of related assets to set for the specified asset */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplaceRelatedAssetsRequest"];
+            };
+        };
+        responses: {
+            /** @description Successfully replaced related assets */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReplaceRelatedAssetsResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
     listAssetRenditions: {
         parameters: {
             query?: never;
@@ -13048,6 +13345,40 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
+    listPublishingChannels: {
+        parameters: {
+            query?: {
+                /**
+                 * @description Starting index of results (zero indexed)
+                 * @example 5
+                 */
+                offset?: components["parameters"]["offset"];
+                /**
+                 * @description Number of results to return per page
+                 * @example 15
+                 */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of fetched publishing channels */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublishingChannelListResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
     getPublishingEvent: {
         parameters: {
             query?: never;
@@ -14176,6 +14507,13 @@ export interface operations {
                 /** @example 2022-08-24T00:00:00.000Z */
                 due_date?: string;
                 /**
+                 * @example [
+                 *       "In Progress",
+                 *       "Not Started"
+                 *     ]
+                 */
+                status?: ("Archived" | "Completed" | "Overdue" | "Not Started" | "In Progress" | "On Hold")[];
+                /**
                  * @description Starting index of results (zero indexed)
                  * @example 5
                  */
@@ -14331,7 +14669,13 @@ export interface operations {
                 content: {
                     "application/json": {
                         /** @description List of assets */
-                        data: components["schemas"]["TaskAssetResponse"][];
+                        data: (components["schemas"]["TaskAssetResponse"] & {
+                            /**
+                             * @description Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.
+                             * @example 6a8b2c3d4e5f6071829a3b4c
+                             */
+                            library_asset_id?: string | null;
+                        })[];
                         pagination: components["schemas"]["Pagination"] & {
                             /** @example https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9/assets?offset=10&page_size=10 */
                             next?: string | null;
@@ -15105,6 +15449,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TaskImage"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    createTaskPublishingIntent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example 6a311afa4234a8b03875306c */
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        /** @description Payload to create a publishing intent */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskPublishingIntentCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Created publishing intent for the task */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskPublishingIntentResponse"];
                 };
             };
             400: components["responses"]["ClientError"];

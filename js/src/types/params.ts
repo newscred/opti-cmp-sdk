@@ -306,6 +306,10 @@ export interface ListFoldersParams {
   page_size?: number;
 }
 
+export interface ListRelatedAssetsParams {
+  asset_id: string;
+}
+
 export interface RemoveAssetPermissionParams {
   asset_id: string;
   accessor_id: string;
@@ -314,6 +318,11 @@ export interface RemoveAssetPermissionParams {
 export interface RemoveFolderPermissionParams {
   id: string;
   accessor_id: string;
+}
+
+export interface ReplaceRelatedAssetsParams {
+  asset_id: string;
+  body: Schema.ReplaceRelatedAssetsRequest;
 }
 
 export interface UpdateAssetFieldParams {
@@ -403,6 +412,11 @@ export interface GetPublishingEventAssetMetadataParams {
   asset_id: string;
   /** Unique identifier of the publishing metadata */
   publishing_metadata_id: string;
+}
+
+export interface ListPublishingChannelsParams {
+  /** Number of results to return per page */
+  page_size?: number;
 }
 
 export interface ListPublishingEventMetadataParams {
@@ -569,6 +583,11 @@ export interface CreateTaskParams {
   body: Schema.TaskCreateRequest;
 }
 
+export interface CreateTaskPublishingIntentParams {
+  task_id: string;
+  body: Schema.TaskPublishingIntentCreateRequest;
+}
+
 export interface CreateTaskStructuredContentDraftParams {
   task_id: string;
   content_id: string;
@@ -703,6 +722,7 @@ export interface ListTasksParams {
   milestone?: string;
   start_date?: string;
   due_date?: string;
+  status?: 'Archived' | 'Completed' | 'Overdue' | 'Not Started' | 'In Progress' | 'On Hold'[];
   offset?: number;
   page_size?: number;
 }

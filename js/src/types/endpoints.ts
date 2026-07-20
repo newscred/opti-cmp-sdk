@@ -183,12 +183,18 @@ export interface APIEndpoints {
     listFolders: (
       params: Params.ListFoldersParams,
     ) => Promise<Response<Schema.ListFoldersResponse>>;
+    listRelatedAssets: (
+      params: Params.ListRelatedAssetsParams,
+    ) => Promise<Response<Schema.RelatedAssetsListResponse>>;
     removeAssetPermission: (
       params: Params.RemoveAssetPermissionParams,
     ) => Promise<void>;
     removeFolderPermission: (
       params: Params.RemoveFolderPermissionParams,
     ) => Promise<void>;
+    replaceRelatedAssets: (
+      params: Params.ReplaceRelatedAssetsParams,
+    ) => Promise<Response<Schema.ReplaceRelatedAssetsResponse>>;
     updateAssetField: (
       params: Params.UpdateAssetFieldParams,
     ) => Promise<Response<Schema.AssetFieldUpdateResponse>>;
@@ -241,6 +247,9 @@ export interface APIEndpoints {
     getPublishingEventAssetMetadata: (
       params: Params.GetPublishingEventAssetMetadataParams,
     ) => Promise<Response<Schema.PublishingEventMetadataResponse>>;
+    listPublishingChannels: (
+      params: Params.ListPublishingChannelsParams,
+    ) => Promise<Response<Schema.PublishingChannelListResponse>>;
     listPublishingEventMetadata: (
       params: Params.ListPublishingEventMetadataParams,
     ) => Promise<Response<Schema.PublishingEventMetadataListResponse>>;
@@ -334,6 +343,9 @@ export interface APIEndpoints {
     createTask: (
       params: Params.CreateTaskParams,
     ) => Promise<Response<Schema.TaskResponse>>;
+    createTaskPublishingIntent: (
+      params: Params.CreateTaskPublishingIntentParams,
+    ) => Promise<Response<Schema.TaskPublishingIntentResponse>>;
     createTaskStructuredContentDraft: (
       params: Params.CreateTaskStructuredContentDraftParams,
     ) => Promise<Response<Record<string, unknown>>>;
