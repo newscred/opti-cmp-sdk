@@ -13,10 +13,14 @@ REMOTE=$(git remote -v | grep 'newscred.*push' | awk '{print $1}')
 git pull "$REMOTE" main --tags
 
 LATEST_TAG=$(git describe --tags --match "js-*" --abbrev=0)
-echo "Latest tag: $LATEST_TAG"
+VERSION="${LATEST_TAG#js-}"
+echo "Latest tag: $LATEST_TAG (version $VERSION)"
 
-git checkout "$LATEST_TAG"
-
-pnpm --filter=opti-cmp publish --no-git-checks
+if [ -n "$(npm view "opti-cmp@$VERSION" version 2>/dev/null)" ]; then
+  echo "opti-cmp@$VERSION already published, skipping publish"
+else
+  git checkout "$LATEST_TAG"
+  pnpm --filter=opti-cmp publish --no-git-checks
+fi
 
 git checkout main
