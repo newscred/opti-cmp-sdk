@@ -75,6 +75,16 @@
       "namespace": "library"
     }
   },
+  "/assets/{asset_id}/related-assets": {
+    "get": {
+      "name": "listRelatedAssets",
+      "namespace": "library"
+    },
+    "put": {
+      "name": "replaceRelatedAssets",
+      "namespace": "library"
+    }
+  },
   "/assets/{asset_id}/renditions": {
     "get": {
       "name": "listAssetRenditions",
@@ -315,6 +325,12 @@
     "get": {
       "name": "getMultipartUploadStatus",
       "namespace": "uploader"
+    }
+  },
+  "/publishing-channels": {
+    "get": {
+      "name": "listPublishingChannels",
+      "namespace": "publishing"
     }
   },
   "/publishing-events/{publishing_event_id}": {
@@ -620,6 +636,12 @@
   "/tasks/{task_id}/images/{image_id}": {
     "get": {
       "name": "getTaskImage",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/publishing-intents": {
+    "post": {
+      "name": "createTaskPublishingIntent",
       "namespace": "task"
     }
   },

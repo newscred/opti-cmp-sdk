@@ -1397,6 +1397,11 @@
             "example": "brief",
             "type": "string"
           },
+          "is_protected": {
+            "description": "True when this form field is read-only and only organization admins can modify it. Absent or false for editable fields.",
+            "example": false,
+            "type": "boolean"
+          },
           "type": {
             "description": "Type of the form field",
             "example": "brief",
@@ -1644,6 +1649,11 @@
             "description": "Identifier of the field",
             "example": "attachment",
             "type": "string"
+          },
+          "is_protected": {
+            "description": "True when this form field is read-only and only organization admins can modify it. Absent or false for editable fields.",
+            "example": false,
+            "type": "boolean"
           },
           "is_readonly": {
             "description": "Specify if the field can be used to create any resource",
@@ -1958,15 +1968,13 @@
             "type": "object"
           },
           "template": {
-            "nullable": true,
-            "oneOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/CampaignBriefTemplateValue"
-              },
-              {
-                "$ref": "#/components/schemas/NullValue"
               }
-            ]
+            ],
+            "nullable": true,
+            "type": "object"
           },
           "title": {
             "description": "Title of the campaign brief",
@@ -2448,15 +2456,13 @@
         "additionalProperties": false,
         "properties": {
           "budget": {
-            "nullable": true,
-            "oneOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/BudgetResponse"
-              },
-              {
-                "$ref": "#/components/schemas/NullValue"
               }
-            ]
+            ],
+            "nullable": true,
+            "type": "object"
           },
           "created_at": {
             "description": "Creation date and time of the campaign,  in ISO 8601 UTC format (`2035-02-10T10:40:45Z`)",
@@ -7277,29 +7283,6 @@
         ],
         "type": "object"
       },
-      "NullValue": {
-        "not": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "object"
-            },
-            {
-              "items": {},
-              "type": "array"
-            }
-          ]
-        },
-        "nullable": true
-      },
       "NumberCustomField": {
         "additionalProperties": false,
         "properties": {
@@ -7642,6 +7625,68 @@
         "required": [
           "label",
           "decimal_places"
+        ],
+        "type": "object"
+      },
+      "PublishingChannelListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "description": "List of publishing channels",
+            "items": {
+              "$ref": "#/components/schemas/PublishingChannelResponse"
+            },
+            "type": "array"
+          },
+          "pagination": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Pagination"
+              },
+              {
+                "properties": {
+                  "next": {
+                    "example": "https://api.cmp.optimizely.com/v3/publishing-channels?offset=10&page_size=10",
+                    "nullable": true,
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "pagination"
+        ],
+        "type": "object"
+      },
+      "PublishingChannelResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "disabled": {
+            "description": "Whether the publishing channel is currently disabled",
+            "example": false,
+            "nullable": true,
+            "type": "boolean"
+          },
+          "id": {
+            "description": "Unique identifier of the publishing channel",
+            "example": "6a2fd16faec3bed9c72f7d4f",
+            "type": "string"
+          },
+          "name": {
+            "description": "Human-readable name of the publishing channel",
+            "example": "My Drupal",
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "disabled"
         ],
         "type": "object"
       },
@@ -8218,6 +8263,128 @@
         ],
         "type": "object"
       },
+      "RelatedAssetItem": {
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "description": "Type of the content.\n - article  – `html_body`\n - image, raw_file, video  – `url`\n - structured_content  – `api_url`",
+                "enum": [
+                  "url",
+                  "api_url",
+                  "html_body"
+                ],
+                "example": "url",
+                "type": "string"
+              },
+              "value": {
+                "description": "Content of the asset. - article – the html body - image, raw_file, video – the download URL - structured_content – api url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "type",
+              "value"
+            ],
+            "type": "object"
+          },
+          "file_extension": {
+            "description": "File extension of the asset",
+            "example": "png",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the asset",
+            "example": "5d7f910551b00a722e0418830cee6631",
+            "type": "string"
+          },
+          "links": {
+            "additionalProperties": false,
+            "description": "Meta links",
+            "properties": {
+              "self": {
+                "description": "URL of the asset (only GET is supported)",
+                "example": "https://api.cmp.optimizely.com/v3/images/5d7f910551b00a722e0418830cee6631",
+                "type": "string"
+              }
+            },
+            "required": [
+              "self"
+            ],
+            "type": "object"
+          },
+          "mime_type": {
+            "description": "MIME type of the asset",
+            "example": "image/png",
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the asset",
+            "example": "sample_image.png",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of the asset",
+            "enum": [
+              "article",
+              "image",
+              "video",
+              "raw_file",
+              "structured_content"
+            ],
+            "example": "image",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "type",
+          "mime_type",
+          "file_extension",
+          "content",
+          "links"
+        ],
+        "type": "object"
+      },
+      "RelatedAssetsListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "description": "List of related assets",
+            "items": {
+              "$ref": "#/components/schemas/RelatedAssetItem"
+            },
+            "type": "array"
+          },
+          "pagination": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Pagination"
+              },
+              {
+                "properties": {
+                  "next": {
+                    "example": "https://api.cmp.optimizely.com/v3/assets/5d7f910551b00a722e0418830cee6631/related-assets?offset=10&page_size=10",
+                    "nullable": true,
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "pagination"
+        ],
+        "type": "object"
+      },
       "RenditionConfigResponse": {
         "additionalProperties": false,
         "properties": {
@@ -8276,6 +8443,64 @@
           "height",
           "output_format",
           "quality"
+        ],
+        "type": "object"
+      },
+      "ReplaceRelatedAssetsRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "related_assets": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "description": "Unique identifier for the asset",
+                  "example": "5d7f910551b00a722e0418830cee6631",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "related_assets"
+        ],
+        "type": "object"
+      },
+      "ReplaceRelatedAssetsResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "Unique identifier for the asset",
+            "example": "5d7f910551b00a722e0418830cee6631",
+            "type": "string"
+          },
+          "related_assets": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "description": "Unique identifier for the asset",
+                  "example": "5d7f910551b00a722e0418830cee6631",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "related_assets"
         ],
         "type": "object"
       },
@@ -9825,6 +10050,12 @@
             },
             "type": "array"
           },
+          "library_asset_id": {
+            "description": "Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.",
+            "example": "6a8b2c3d4e5f6071829a3b4c",
+            "nullable": true,
+            "type": "string"
+          },
           "links": {
             "additionalProperties": false,
             "description": "Meta links",
@@ -10704,15 +10935,13 @@
             "type": "object"
           },
           "template": {
-            "nullable": true,
-            "oneOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/TaskBriefTemplateValue"
-              },
-              {
-                "$ref": "#/components/schemas/NullValue"
               }
-            ]
+            ],
+            "nullable": true,
+            "type": "object"
           },
           "title": {
             "description": "Title of the task brief",
@@ -11209,6 +11438,12 @@
             },
             "type": "array"
           },
+          "library_asset_id": {
+            "description": "Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.",
+            "example": "6a8b2c3d4e5f6071829a3b4c",
+            "nullable": true,
+            "type": "string"
+          },
           "links": {
             "additionalProperties": false,
             "description": "Meta links",
@@ -11306,7 +11541,8 @@
           "campaign_id": {
             "description": "Unique identifier of the campaign",
             "example": "8n7f910o51b00b722o0418n30cie8211",
-            "type": "object"
+            "nullable": true,
+            "type": "string"
           },
           "due_at": {
             "description": "Due date of the task in ISO 8601 UTC format",
@@ -11384,7 +11620,8 @@
           "milestone_id": {
             "description": "Unique identifier of the milestone",
             "example": "8n7f910o51b00b722o0418n30cie8211",
-            "type": "object"
+            "nullable": true,
+            "type": "string"
           },
           "modified_at": {
             "description": "Modified date of the task in ISO 8601 UTC format",
@@ -11424,7 +11661,8 @@
           "workflow_id": {
             "description": "Unique identifier of the workflow",
             "example": "8n7f910o51b00b722o0418n30cie8211",
-            "type": "object"
+            "nullable": true,
+            "type": "string"
           }
         },
         "required": [
@@ -11441,6 +11679,34 @@
           "is_archived",
           "status",
           "links"
+        ],
+        "type": "object"
+      },
+      "TaskPublishingIntentCreateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "channel_id": {
+            "description": "Unique identifier of the target publishing channel",
+            "example": "6a2fd16faec3bed9c72f7d4f",
+            "type": "string"
+          }
+        },
+        "required": [
+          "channel_id"
+        ],
+        "type": "object"
+      },
+      "TaskPublishingIntentResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "description": "Unique identifier of the publishing intent",
+            "example": "6a3a61f8c201c660b84bbfff",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
         ],
         "type": "object"
       },
@@ -11469,6 +11735,12 @@
               "$ref": "#/components/schemas/ResourceLabelResponse"
             },
             "type": "array"
+          },
+          "library_asset_id": {
+            "description": "Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.",
+            "example": "6a8b2c3d4e5f6071829a3b4c",
+            "nullable": true,
+            "type": "string"
           },
           "links": {
             "additionalProperties": false,
@@ -11563,6 +11835,12 @@
       "TaskResponse": {
         "additionalProperties": false,
         "properties": {
+          "campaign_id": {
+            "description": "Unique identifier of the campaign",
+            "example": "8n7f910o51b00b722o0418n30cie8211",
+            "nullable": true,
+            "type": "string"
+          },
           "due_at": {
             "description": "Due date and time of the task, in ISO 8601 UTC format (2020-02-10T10:40:45Z)",
             "example": "2020-10-06T13:15:30Z",
@@ -11668,6 +11946,18 @@
             ],
             "type": "object"
           },
+          "milestone_id": {
+            "description": "Unique identifier of the milestone",
+            "example": "8n7f910o51b00b722o0418n30cie8211",
+            "nullable": true,
+            "type": "string"
+          },
+          "modified_at": {
+            "description": "Modified date of the task in ISO 8601 UTC format",
+            "example": "2024-06-01T06:00:00Z",
+            "nullable": true,
+            "type": "string"
+          },
           "reference_id": {
             "description": "Reference ID of the task",
             "example": "TSK-123",
@@ -11721,6 +12011,9 @@
           "is_archived",
           "reference_id",
           "status",
+          "campaign_id",
+          "milestone_id",
+          "modified_at",
           "labels",
           "steps",
           "links"
@@ -12270,6 +12563,12 @@
               "$ref": "#/components/schemas/ResourceLabelResponse"
             },
             "type": "array"
+          },
+          "library_asset_id": {
+            "description": "Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.",
+            "example": "6a8b2c3d4e5f6071829a3b4c",
+            "nullable": true,
+            "type": "string"
           },
           "links": {
             "additionalProperties": false,
@@ -15787,7 +16086,7 @@
     },
     "/asset-lineages": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of asset lineage.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of asset lineage.",
         "operationId": "listAssetLineages",
         "parameters": [
           {
@@ -16298,7 +16597,7 @@
     },
     "/assets/{asset_id}/fields": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of an asset.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of fields of an asset.",
         "operationId": "listAssetFields",
         "parameters": [
           {
@@ -16379,7 +16678,7 @@
         ]
       },
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Replace existing fields of an asset.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Replace existing fields of an asset.",
         "operationId": "updateAssetFields",
         "parameters": [
           {
@@ -16471,7 +16770,7 @@
     },
     "/assets/{asset_id}/fields/{field_id}": {
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update the field value of an asset. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update the field value of an asset. ",
         "operationId": "updateAssetField",
         "parameters": [
           {
@@ -16538,7 +16837,7 @@
     },
     "/assets/{asset_id}/lineages": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a new external asset lineage.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a new external asset lineage.",
         "operationId": "createAssetLineage",
         "parameters": [
           {
@@ -16598,7 +16897,7 @@
     },
     "/assets/{asset_id}/lineages/{lineage_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete an asset lineage.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete an asset lineage.",
         "operationId": "deleteAssetLineage",
         "parameters": [
           {
@@ -16650,7 +16949,7 @@
     },
     "/assets/{asset_id}/permissions": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ List of entities that have permission to access the asset",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> List of entities that have permission to access the asset",
         "operationId": "listAssetPermissions",
         "parameters": [
           {
@@ -16739,7 +17038,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Grant asset access to users or teams",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Grant asset access to users or teams",
         "operationId": "addAssetPermissions",
         "parameters": [
           {
@@ -16789,7 +17088,7 @@
     },
     "/assets/{asset_id}/permissions/{accessor_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Remove accessor's access from an asset",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Remove accessor's access from an asset",
         "operationId": "removeAssetPermission",
         "parameters": [
           {
@@ -16839,7 +17138,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update accessor's access level and ownership of asset",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update accessor's access level and ownership of asset",
         "operationId": "updateAssetPermission",
         "parameters": [
           {
@@ -16900,9 +17199,116 @@
         ]
       }
     },
+    "/assets/{asset_id}/related-assets": {
+      "get": {
+        "description": "Returns a paginated list of related assets for the specified asset. Only supported for asset types: article, image, video, raw_file, and structured_content.",
+        "operationId": "listRelatedAssets",
+        "parameters": [
+          {
+            "example": "5d7f910551b00a722e0418830cee6631",
+            "in": "path",
+            "name": "asset_id",
+            "required": true,
+            "schema": {
+              "description": "Unique identifier of the asset",
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/page_size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelatedAssetsListResponse"
+                }
+              }
+            },
+            "description": "List of related assets"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "summary": "GET /assets/{asset_id}/related-assets",
+        "tags": [
+          "Library"
+        ]
+      },
+      "put": {
+        "description": "Replaces all related assets for the specified asset. Only supported for asset types: article, image, video, raw_file, and structured_content.",
+        "operationId": "replaceRelatedAssets",
+        "parameters": [
+          {
+            "example": "5d7f910551b00a722e0418830cee6631",
+            "in": "path",
+            "name": "asset_id",
+            "required": true,
+            "schema": {
+              "description": "Unique identifier of the asset",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceRelatedAssetsRequest"
+              }
+            }
+          },
+          "description": "List of related assets to set for the specified asset",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplaceRelatedAssetsResponse"
+                }
+              }
+            },
+            "description": "Successfully replaced related assets"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "summary": "PUT /assets/{asset_id}/related-assets",
+        "tags": [
+          "Library"
+        ]
+      }
+    },
     "/assets/{asset_id}/renditions": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the renditions of an asset given its `id`. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the renditions of an asset given its `id`. ",
         "operationId": "listAssetRenditions",
         "parameters": [
           {
@@ -17039,7 +17445,7 @@
     },
     "/brand-compliance/categories": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of brand compliance categories.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of brand compliance categories.",
         "operationId": "listBrandComplianceCategories",
         "parameters": [
           {
@@ -17106,7 +17512,7 @@
     },
     "/campaigns": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of campaigns.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of campaigns.",
         "operationId": "listCampaigns",
         "parameters": [
           {
@@ -17198,7 +17604,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a campaign",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a campaign",
         "operationId": "createCampaign",
         "requestBody": {
           "content": {
@@ -17246,7 +17652,7 @@
     },
     "/campaigns/{campaign_id}/fields/{field_id}": {
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update the field value of a campaign. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update the field value of a campaign. ",
         "operationId": "updateCampaignField",
         "parameters": [
           {
@@ -17357,7 +17763,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a campaign ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a campaign ",
         "operationId": "updateCampaign",
         "parameters": [
           {
@@ -17407,7 +17813,7 @@
     },
     "/campaigns/{id}/attachments": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Add an attachment to the campaign. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add an attachment to the campaign. ",
         "operationId": "addAttachmentToCampaign",
         "parameters": [
           {
@@ -17510,7 +17916,7 @@
     },
     "/campaigns/{id}/comments": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Post a comment on a campaign. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Post a comment on a campaign. ",
         "operationId": "addCommentToCampaign",
         "parameters": [
           {
@@ -17567,7 +17973,7 @@
     },
     "/campaigns/{id}/fields": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of a campaign. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of fields of a campaign. ",
         "operationId": "listCampaignFields",
         "parameters": [
           {
@@ -17648,7 +18054,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a field to a campaign.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a field to a campaign.",
         "operationId": "addFieldToCampaign",
         "parameters": [
           {
@@ -17708,7 +18114,7 @@
     },
     "/events": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of events.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of events.",
         "operationId": "listEvents",
         "parameters": [
           {
@@ -17800,7 +18206,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create an event.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create an event.",
         "operationId": "createEvent",
         "requestBody": {
           "content": {
@@ -17848,7 +18254,7 @@
     },
     "/events/{id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get an event.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get an event.",
         "operationId": "getEvent",
         "parameters": [
           {
@@ -17892,7 +18298,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update an event.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update an event.",
         "operationId": "updateEvent",
         "parameters": [
           {
@@ -17952,7 +18358,7 @@
     },
     "/events/{id}/fields": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of an event.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of fields of an event.",
         "operationId": "listEventFields",
         "parameters": [
           {
@@ -18033,7 +18439,7 @@
         ]
       },
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Replace existing fields of an event.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Replace existing fields of an event.",
         "operationId": "updateEventFields",
         "parameters": [
           {
@@ -18086,7 +18492,7 @@
     },
     "/fields": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of an Organization.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of fields of an Organization.",
         "operationId": "listFields",
         "parameters": [
           {
@@ -18203,7 +18609,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a new field to an Organization.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a new field to an Organization.",
         "operationId": "createField",
         "requestBody": {
           "content": {
@@ -18262,7 +18668,7 @@
     },
     "/fields/{field_id}/choices/{choice_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a choice from a field.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a choice from a field.",
         "operationId": "deleteFieldChoice",
         "parameters": [
           {
@@ -18312,7 +18718,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a choice of a field.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a choice of a field.",
         "operationId": "updateFieldChoice",
         "parameters": [
           {
@@ -18375,7 +18781,7 @@
     },
     "/fields/{id}": {
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a field in an Organization.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a field in an Organization.",
         "operationId": "updateField",
         "parameters": [
           {
@@ -18428,7 +18834,7 @@
     },
     "/fields/{id}/choices": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create choices in a field.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create choices in a field.",
         "operationId": "createFieldChoices",
         "parameters": [
           {
@@ -18656,7 +19062,7 @@
     },
     "/folders/{id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a folder.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a folder.",
         "operationId": "deleteFolder",
         "parameters": [
           {
@@ -18737,7 +19143,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a folder's name and/or parent.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a folder's name and/or parent.",
         "operationId": "updateFolder",
         "parameters": [
           {
@@ -18794,7 +19200,7 @@
     },
     "/folders/{id}/permissions": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ List of entities that have permission to access the folder",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> List of entities that have permission to access the folder",
         "operationId": "listFolderPermissions",
         "parameters": [
           {
@@ -18883,7 +19289,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Grant folder access to users or teams",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Grant folder access to users or teams",
         "operationId": "addFolderPermissions",
         "parameters": [
           {
@@ -18933,7 +19339,7 @@
     },
     "/folders/{id}/permissions/{accessor_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Remove accessor's access from a folder",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Remove accessor's access from a folder",
         "operationId": "removeFolderPermission",
         "parameters": [
           {
@@ -18983,7 +19389,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update accessor's access level and ownership of folder",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update accessor's access level and ownership of folder",
         "operationId": "updateFolderPermission",
         "parameters": [
           {
@@ -19273,7 +19679,7 @@
     },
     "/milestones": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of milestones.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of milestones.",
         "operationId": "listMilestones",
         "parameters": [
           {
@@ -19368,7 +19774,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Creates a milestone. Defaults to the organization's campaign if campaign_id is omitted. Tasks are validated against the selected campaign and must belong to it.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Creates a milestone. Defaults to the organization's campaign if campaign_id is omitted. Tasks are validated against the selected campaign and must belong to it.",
         "operationId": "createMilestone",
         "requestBody": {
           "content": {
@@ -19413,7 +19819,7 @@
     },
     "/milestones/{id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a milestone by ID.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a milestone by ID.",
         "operationId": "getMilestone",
         "parameters": [
           {
@@ -19457,7 +19863,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a milestone. All fields are optional. Only provided fields will be updated. Note: If tasks array is empty, it will remove all task associations for that milestone.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Updates a milestone. All fields are optional. Only provided fields will be updated. Note: If tasks array is empty, it will remove all task associations for that milestone.",
         "operationId": "updateMilestone",
         "parameters": [
           {
@@ -19517,7 +19923,7 @@
     },
     "/multipart-uploads": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create pre-signed URLs for multipart upload of large files",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create pre-signed URLs for multipart upload of large files",
         "operationId": "createMultipartUpload",
         "requestBody": {
           "content": {
@@ -19651,7 +20057,7 @@
     },
     "/multipart-uploads/{id}/complete": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Initiate completion of a multipart upload after all parts have been uploaded",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Initiate completion of a multipart upload after all parts have been uploaded",
         "operationId": "completeMultipartUpload",
         "parameters": [
           {
@@ -19722,7 +20128,7 @@
     },
     "/multipart-uploads/{id}/status": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Retrieve the current status of a multipart upload",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Retrieve the current status of a multipart upload",
         "operationId": "getMultipartUploadStatus",
         "parameters": [
           {
@@ -19817,6 +20223,54 @@
         "summary": "GET /v3/multipart-uploads/{id}/status",
         "tags": [
           "Uploader"
+        ]
+      }
+    },
+    "/publishing-channels": {
+      "get": {
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of publishing channels available in the organization. Use this to populate a channel picker before creating a publishing intent for a task.",
+        "operationId": "listPublishingChannels",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "description": "Number of results to return per page",
+            "example": 15,
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "default": 10,
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishingChannelListResponse"
+                }
+              }
+            },
+            "description": "List of fetched publishing channels"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        },
+        "summary": "GET /publishing-channels",
+        "tags": [
+          "Publishing"
         ]
       }
     },
@@ -20232,7 +20686,7 @@
     },
     "/rendition-configs/{id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a rendition configuration of an organization given its `id`. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a rendition configuration of an organization given its `id`. ",
         "operationId": "getRenditionConfig",
         "parameters": [
           {
@@ -20278,7 +20732,7 @@
     },
     "/renditions/{id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a rendition given its `id`. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a rendition given its `id`. ",
         "operationId": "getRendition",
         "parameters": [
           {
@@ -20324,7 +20778,7 @@
     },
     "/settings": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get settings.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get settings.",
         "operationId": "getSettings",
         "responses": {
           "200": {
@@ -20350,7 +20804,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create or update settings.\n## Import behavior:\n- Label:\n    - If a label-group with the same name exists, the label-group is updated.\n      - Labels are merged.\n      - If a label with the same name exists, it is overwritten.\n    - If no label-group with the same name exists, a new label-group is created.\n- Custom Fields:\n    - If a custom field with the same name exists, the custom field is updated and its choices are merged.\n    - If no custom field with the same name exists, a new custom field will be created.\n- Workflows:\n    - If the query param overwrite_workflows=true the existing workflows are overwritten.\n      Otherwise, a new workflow will be created where the prefix `Copy of` is added to the name of the workflow.\n- Webhooks:\n    - If a webhook with the same name exists, the webhook is updated and its events are merged.\n    - If multiple webhooks with the same name exist, a new webhook is created.\n    - If no webhook with the same name exists, a new webhook is created.\n- Apps:\n    - If an app with the same name exists, the app is updated and its authorization callback URLs are merged.\n    - If multiple apps with the same name exist, a new app is created.\n    - If no app with the same name exists, a new app is created.\n- Templates:\n    - If a template with the same name exists, the template is updated.\n    - If multiple templates with the same name exist, a new template is created.\n    - If no template with the same name exists, a new template is created.\n- Routing Rules:\n    - If one single routing rule with the same name exists, the routing rule is updated.\n    - If multiple routing rules with the same name exist, a new routing rule is created.\n    - If no routing rule with the same name exists, a new routing rule is created.\n",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create or update settings.\n## Import behavior:\n- Label:\n    - If a label-group with the same name exists, the label-group is updated.\n      - Labels are merged.\n      - If a label with the same name exists, it is overwritten.\n    - If no label-group with the same name exists, a new label-group is created.\n- Custom Fields:\n    - If a custom field with the same name exists, the custom field is updated and its choices are merged.\n    - If no custom field with the same name exists, a new custom field will be created.\n- Workflows:\n    - If the query param overwrite_workflows=true the existing workflows are overwritten.\n      Otherwise, a new workflow will be created where the prefix `Copy of` is added to the name of the workflow.\n- Webhooks:\n    - If a webhook with the same name exists, the webhook is updated and its events are merged.\n    - If multiple webhooks with the same name exist, a new webhook is created.\n    - If no webhook with the same name exists, a new webhook is created.\n- Apps:\n    - If an app with the same name exists, the app is updated and its authorization callback URLs are merged.\n    - If multiple apps with the same name exist, a new app is created.\n    - If no app with the same name exists, a new app is created.\n- Templates:\n    - If a template with the same name exists, the template is updated.\n    - If multiple templates with the same name exist, a new template is created.\n    - If no template with the same name exists, a new template is created.\n- Routing Rules:\n    - If one single routing rule with the same name exists, the routing rule is updated.\n    - If multiple routing rules with the same name exist, a new routing rule is created.\n    - If no routing rule with the same name exists, a new routing rule is created.\n",
         "operationId": "updateSettings",
         "parameters": [
           {
@@ -20414,7 +20868,7 @@
     },
     "/structured-content/content-types": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content types. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get content types. ",
         "operationId": "listSCContentTypes",
         "parameters": [
           {
@@ -20477,7 +20931,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create content type. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create content type. ",
         "operationId": "createSCContentType",
         "parameters": [],
         "requestBody": {
@@ -20538,7 +20992,7 @@
     },
     "/structured-content/content-types/{content_type_id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content type. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get content type. ",
         "operationId": "getSCContentType",
         "parameters": [
           {
@@ -20579,7 +21033,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update content type. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update content type. ",
         "operationId": "updateSCContentType",
         "parameters": [
           {
@@ -20632,7 +21086,7 @@
     },
     "/structured-content/content-types/{content_type_id}/managed-migrations": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Retrieves a list of managed migration jobs for a specific content type.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Retrieves a list of managed migration jobs for a specific content type.",
         "operationId": "listSCContentTypeManagedMigrations",
         "parameters": [
           {
@@ -20702,7 +21156,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a new managed migration job.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a new managed migration job.",
         "operationId": "createSCContentTypeManagedMigration",
         "parameters": [
           {
@@ -20784,7 +21238,7 @@
     },
     "/structured-content/content-types/{content_type_id}/managed-migrations/validate": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Check managed migration possible or not.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Check managed migration possible or not.",
         "operationId": "validateSCContentTypeManagedMigration",
         "parameters": [
           {
@@ -20859,7 +21313,7 @@
     },
     "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a managed migration job with not_started status.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a managed migration job with not_started status.",
         "operationId": "deleteSCContentTypeManagedMigration",
         "parameters": [
           {
@@ -20899,7 +21353,7 @@
         ]
       },
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get details of a specific managed migration job.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get details of a specific managed migration job.",
         "operationId": "getSCContentTypeManagedMigration",
         "parameters": [
           {
@@ -20956,7 +21410,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a managed migration job.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a managed migration job.",
         "operationId": "updateSCContentTypeManagedMigration",
         "parameters": [
           {
@@ -21036,7 +21490,7 @@
     },
     "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}/start": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Start managed migration job.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Start managed migration job.",
         "operationId": "startSCContentTypeManagedMigration",
         "parameters": [
           {
@@ -21108,7 +21562,7 @@
     },
     "/structured-content/content-types/{content_type_id}/versions": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content type versions. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get content type versions. ",
         "operationId": "listSCContentTypeVersions",
         "parameters": [
           {
@@ -21152,7 +21606,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Add Content Type Version. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add Content Type Version. ",
         "operationId": "createSCContentTypeVersion",
         "parameters": [
           {
@@ -21223,7 +21677,7 @@
     },
     "/structured-content/content-types/{content_type_id}/versions/{version_id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get content type version. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get content type version. ",
         "operationId": "getSCContentTypeVersion",
         "parameters": [
           {
@@ -21275,7 +21729,7 @@
     },
     "/structured-content/contents/{content_id}/migration": {
       "post": {
-        "description": "Migrate content to a specific content type version. @EXPERIMENTAL@BADGE@PLACEHOLDER@",
+        "description": "Migrate content to a specific content type version. <span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span>",
         "operationId": "migrateSCContent",
         "parameters": [
           {
@@ -21355,7 +21809,7 @@
     },
     "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/acknowledge": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Acknowledge content preview. Content preview can be acknowledged only once. So make sure you are acknowledging only the content previews targeted for your integration. Otherwise it will stall acknowledgment from other integrations.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Acknowledge content preview. Content preview can be acknowledged only once. So make sure you are acknowledging only the content previews targeted for your integration. Otherwise it will stall acknowledgment from other integrations.",
         "operationId": "acknowledgeSCContentPreview",
         "parameters": [
           {
@@ -21424,7 +21878,7 @@
     },
     "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/complete": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Complete content preview. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Complete content preview. ",
         "operationId": "completeSCContentPreview",
         "parameters": [
           {
@@ -21493,7 +21947,7 @@
     },
     "/structured-contents": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Creates a structured content.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Creates a structured content.",
         "operationId": "createStructuredContent",
         "requestBody": {
           "content": {
@@ -21541,7 +21995,7 @@
     },
     "/structured-contents/{id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the structured content. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the structured content. ",
         "operationId": "getStructuredContent",
         "parameters": [
           {
@@ -21585,7 +22039,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a structured content. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Updates a structured content. ",
         "operationId": "updateStructuredContent",
         "parameters": [
           {
@@ -21645,7 +22099,7 @@
     },
     "/tasks": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of tasks.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of tasks.",
         "operationId": "listTasks",
         "parameters": [
           {
@@ -21700,6 +22154,29 @@
             "schema": {
               "description": "Due date of the tasks, in ISO 8601 UTC format",
               "type": "string"
+            }
+          },
+          {
+            "example": [
+              "In Progress",
+              "Not Started"
+            ],
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "description": "Filter tasks by status. Provide multiple statuses to filter tasks across multiple statuses.",
+              "items": {
+                "enum": [
+                  "Archived",
+                  "Completed",
+                  "Overdue",
+                  "Not Started",
+                  "In Progress",
+                  "On Hold"
+                ],
+                "type": "string"
+              },
+              "type": "array"
             }
           },
           {
@@ -21764,7 +22241,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a task",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a task",
         "operationId": "createTask",
         "requestBody": {
           "content": {
@@ -21940,7 +22417,22 @@
                     "data": {
                       "description": "List of assets",
                       "items": {
-                        "$ref": "#/components/schemas/TaskAssetResponse"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/TaskAssetResponse"
+                          },
+                          {
+                            "properties": {
+                              "library_asset_id": {
+                                "description": "Unique identifier of the corresponding library asset — the library asset this task asset was forked from, or the one it was released to.",
+                                "example": "6a8b2c3d4e5f6071829a3b4c",
+                                "nullable": true,
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        ]
                       },
                       "type": "array"
                     },
@@ -22470,7 +22962,7 @@
     },
     "/tasks/{task_id}/assets/{asset_id}/drafts": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of drafts on an asset of a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of drafts on an asset of a task.",
         "operationId": "listTaskAssetDrafts",
         "parameters": [
           {
@@ -22625,7 +23117,7 @@
     },
     "/tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the brand compliance details of a draft of an asset of a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the brand compliance details of a draft of an asset of a task.",
         "operationId": "getTaskAssetDraftBrandCompliance",
         "parameters": [
           {
@@ -22695,7 +23187,7 @@
         ]
       },
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update the brand compliance details of a draft of an asset of a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update the brand compliance details of a draft of an asset of a task.",
         "operationId": "updateTaskAssetDraftBrandCompliance",
         "parameters": [
           {
@@ -22778,7 +23270,7 @@
     },
     "/tasks/{task_id}/assets/{asset_id}/fields": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ List all the fields of a task asset.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> List all the fields of a task asset.",
         "operationId": "listTaskAssetFields",
         "parameters": [
           {
@@ -22859,7 +23351,7 @@
         ]
       },
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Replace fields of an asset in a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Replace fields of an asset in a task.",
         "operationId": "updateTaskAssetFields",
         "parameters": [
           {
@@ -22919,7 +23411,7 @@
     },
     "/tasks/{task_id}/comments": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Post a comment on a task. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Post a comment on a task. ",
         "operationId": "addCommentToTask",
         "parameters": [
           {
@@ -23193,7 +23685,7 @@
     },
     "/tasks/{task_id}/fields": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of a task. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of fields of a task. ",
         "operationId": "listTaskFields",
         "parameters": [
           {
@@ -23274,7 +23766,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a field to a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a field to a task.",
         "operationId": "addFieldToTask",
         "parameters": [
           {
@@ -23334,7 +23826,7 @@
     },
     "/tasks/{task_id}/fields/{field_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Remove a field of a task. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Remove a field of a task. ",
         "operationId": "removeTaskField",
         "parameters": [
           {
@@ -23381,7 +23873,7 @@
         ]
       },
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a field of a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a field of a task.",
         "operationId": "updateTaskField",
         "parameters": [
           {
@@ -23498,6 +23990,63 @@
         ]
       }
     },
+    "/tasks/{task_id}/publishing-intents": {
+      "post": {
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a publishing intent for a task on the specified publishing channel.",
+        "operationId": "createTaskPublishingIntent",
+        "parameters": [
+          {
+            "example": "6a311afa4234a8b03875306c",
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "description": "Unique identifier of the task",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskPublishingIntentCreateRequest"
+              }
+            }
+          },
+          "description": "Payload to create a publishing intent",
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskPublishingIntentResponse"
+                }
+              }
+            },
+            "description": "Created publishing intent for the task"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "summary": "POST /tasks/{task_id}/publishing-intents",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
     "/tasks/{task_id}/raw-files/{raw_file_id}": {
       "get": {
         "description": "Get a raw file associated with the task identified by `task_id`.",
@@ -23556,7 +24105,7 @@
     },
     "/tasks/{task_id}/steps/{step_id}": {
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update a step in a task",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a step in a task",
         "operationId": "updateTaskStep",
         "parameters": [
           {
@@ -24351,7 +24900,7 @@
     },
     "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/fields": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get the list of fields of a substep of a task. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of fields of a substep of a task. ",
         "operationId": "listTaskSubStepFields",
         "parameters": [
           {
@@ -24476,7 +25025,7 @@
     },
     "/tasks/{task_id}/structured-contents": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Add a new structured content to task",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a new structured content to task",
         "operationId": "addStructuredContentToTask",
         "parameters": [
           {
@@ -24536,7 +25085,7 @@
     },
     "/tasks/{task_id}/structured-contents/{content_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a structured content from task",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a structured content from task",
         "operationId": "deleteTaskStructuredContent",
         "parameters": [
           {
@@ -24586,7 +25135,7 @@
         ]
       },
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a task structured content by its guid.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a task structured content by its guid.",
         "operationId": "getTaskStructuredContent",
         "parameters": [
           {
@@ -24640,7 +25189,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Update structured content using a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update structured content using a task.",
         "operationId": "updateTaskStructuredContent",
         "parameters": [
           {
@@ -24710,7 +25259,7 @@
     },
     "/tasks/{task_id}/structured-contents/{content_id}/drafts": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create structured content draft using a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create structured content draft using a task.",
         "operationId": "createTaskStructuredContentDraft",
         "parameters": [
           {
@@ -24781,7 +25330,7 @@
     },
     "/tasks/{task_id}/urls": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Adds a URL to a task.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Adds a URL to a task.",
         "operationId": "addUrlToTask",
         "parameters": [
           {
@@ -24897,7 +25446,7 @@
     },
     "/teams": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of teams.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of teams.",
         "operationId": "listTeams",
         "parameters": [
           {
@@ -24964,7 +25513,7 @@
     },
     "/teams/{id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a team. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a team. ",
         "operationId": "getTeam",
         "parameters": [
           {
@@ -25010,7 +25559,7 @@
     },
     "/templates": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of templates.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of templates.",
         "operationId": "listTemplates",
         "parameters": [
           {
@@ -25082,7 +25631,7 @@
     },
     "/templates/{template_id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a template by ID. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a template by ID. ",
         "operationId": "getTemplate",
         "parameters": [
           {
@@ -25655,7 +26204,7 @@
     },
     "/work-requests": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of work requests. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of work requests. ",
         "operationId": "listWorkRequests",
         "parameters": [
           {
@@ -25815,7 +26364,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a work request. ",
         "operationId": "createWorkRequest",
         "requestBody": {
           "content": {
@@ -25969,7 +26518,7 @@
     },
     "/work-requests/{id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a work request by ID. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a work request by ID. ",
         "operationId": "getWorkRequest",
         "parameters": [
           {
@@ -26010,7 +26559,7 @@
         ]
       },
       "patch": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Updates a work request. ",
         "operationId": "updateWorkRequest",
         "parameters": [
           {
@@ -26063,7 +26612,7 @@
     },
     "/work-requests/{id}/approved-assets": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of approved assets of a work request.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of approved assets of a work request.",
         "operationId": "listWorkRequestApprovedAssets",
         "parameters": [
           {
@@ -26146,7 +26695,7 @@
     },
     "/work-requests/{id}/attachments": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create attachments for a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create attachments for a work request. ",
         "operationId": "addAttachmentToWorkRequest",
         "parameters": [
           {
@@ -26203,7 +26752,7 @@
     },
     "/work-requests/{id}/campaigns": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a new campaign from a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a new campaign from a work request. ",
         "operationId": "createCampaignFromWorkRequest",
         "parameters": [
           {
@@ -26260,7 +26809,7 @@
     },
     "/work-requests/{id}/comments": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get list of comments for a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get list of comments for a work request. ",
         "operationId": "listWorkRequestComments",
         "parameters": [
           {
@@ -26341,7 +26890,7 @@
         ]
       },
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Post a comment on a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Post a comment on a work request. ",
         "operationId": "addCommentToWorkRequest",
         "parameters": [
           {
@@ -26398,7 +26947,7 @@
     },
     "/work-requests/{id}/creative-assets": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create creative assets for a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create creative assets for a work request. ",
         "operationId": "createWorkRequestCreativeAsset",
         "parameters": [
           {
@@ -26455,7 +27004,7 @@
     },
     "/work-requests/{id}/related-resources": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of work request related resources.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of work request related resources.",
         "operationId": "listWorkRequestRelatedResources",
         "parameters": [
           {
@@ -26532,7 +27081,7 @@
     },
     "/work-requests/{id}/tasks": {
       "post": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Create a new task from a work request. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a new task from a work request. ",
         "operationId": "createTaskFromWorkRequest",
         "parameters": [
           {
@@ -26592,7 +27141,7 @@
     },
     "/work-requests/{work_request_id}/attachments/{attachment_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a work request attachment.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a work request attachment.",
         "operationId": "deleteWorkRequestAttachment",
         "parameters": [
           {
@@ -26644,7 +27193,7 @@
     },
     "/work-requests/{work_request_id}/comments/{comment_id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a work request comment by ID.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a work request comment by ID.",
         "operationId": "getWorkRequestComment",
         "parameters": [
           {
@@ -26700,7 +27249,7 @@
     },
     "/work-requests/{work_request_id}/creative-assets/{creative_asset_id}": {
       "delete": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Delete a work request creative asset.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a work request creative asset.",
         "operationId": "deleteWorkRequestCreativeAsset",
         "parameters": [
           {
@@ -26752,7 +27301,7 @@
     },
     "/work-requests/{work_request_id}/form-fields/{form_field_identifier}": {
       "put": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Updates a work request form field.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Updates a work request form field.",
         "operationId": "updateWorkRequestFormField",
         "parameters": [
           {
@@ -26822,7 +27371,7 @@
     },
     "/workflows": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a list of workflows.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of workflows.",
         "operationId": "listWorkflows",
         "parameters": [
           {
@@ -26889,7 +27438,7 @@
     },
     "/workflows/{workflow_id}": {
       "get": {
-        "description": "@EXPERIMENTAL@BADGE@PLACEHOLDER@ Get a workflow by ID.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a workflow by ID.",
         "operationId": "getWorkflow",
         "parameters": [
           {
