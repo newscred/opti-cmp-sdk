@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.4](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.3...js-0.0.4) (2026-07-20)
+
+
+### Features
+
+* **js:** generate from latest specification ([3878da3](https://github.com/newscred/opti-cmp-sdk/commit/3878da308b5679b5eae55c5245ed1bdc391215c9))
+* **js:** support oauth authentication ([299e5a5](https://github.com/newscred/opti-cmp-sdk/commit/299e5a5d4d57e69a285ad63d5e720231cfaf6eaf))
+
 ## [0.0.3](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.2...js-0.0.3) (2026-05-19)
 
 
