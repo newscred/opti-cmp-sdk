@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CMP API Reference
+    url: https://docs.developers.optimizely.com/content-marketing-platform/reference/api-reference
+    about: Documentation for the Optimizely CMP API itself.
