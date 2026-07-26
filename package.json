@@ -2,7 +2,15 @@
   "private": true,
   "name": "opti-cmp-sdk",
   "version": "0.0.0",
+  "description": "SDKs for the Optimizely CMP (Content Marketing Platform) API",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newscred/opti-cmp-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/newscred/opti-cmp-sdk/issues"
+  },
   "type": "module",
   "scripts": {
     "build:js": "pnpm run --filter=opti-cmp build",

@@ -3,6 +3,16 @@
   "version": "0.0.4",
   "description": "SDK for Optimizely CMP API",
   "license": "MIT",
+  "author": "Optimizely, Inc.",
+  "homepage": "https://github.com/newscred/opti-cmp-sdk/tree/main/js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newscred/opti-cmp-sdk.git",
+    "directory": "js"
+  },
+  "bugs": {
+    "url": "https://github.com/newscred/opti-cmp-sdk/issues"
+  },
   "type": "module",
   "files": [
     "lib"
@@ -26,7 +36,7 @@
     "api-client"
   ],
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "devDependencies": {
     "@types/mustache": "^4.2.5",
@@ -50,6 +60,7 @@
     "./package.json": "./package.json"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "import": "./lib/index.js",
