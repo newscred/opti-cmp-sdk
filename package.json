@@ -27,8 +27,9 @@
     "test:js": "pnpm run --filter=@optimizely/cmp-sdk test",
     "test:py": "uv run --directory py pytest",
     "typecheck:py": "uv run --directory py mypy",
-    "release:js": "./scripts/release-js.sh",
-    "publish:js": "./scripts/publish-js.sh"
+    "release": "./scripts/release.sh",
+    "publish:js": "./scripts/publish.sh js",
+    "publish:py": "./scripts/publish.sh py"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
