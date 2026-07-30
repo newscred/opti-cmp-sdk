@@ -5536,6 +5536,11 @@ export type components = {
         };
         LibraryImage: {
             /**
+             * @description Whether the image is allowed to be indexed by search engines
+             * @example true
+             */
+            allow_se_indexing: boolean;
+            /**
              * @description Alternative text for image
              * @example image title
              */
@@ -5676,6 +5681,11 @@ export type components = {
         };
         LibraryImageUpdateRequest: {
             /**
+             * @description Whether the image is allowed to be indexed by search engines
+             * @example true
+             */
+            allow_se_indexing?: boolean;
+            /**
              * @description Alt text of the image. Set an empty string to clear the alt text.
              * @example Sample alt text
              */
@@ -5732,6 +5742,11 @@ export type components = {
             title?: string;
         };
         LibraryRawFile: {
+            /**
+             * @description Whether the raw file is allowed to be indexed by search engines
+             * @example true
+             */
+            allow_se_indexing: boolean;
             /**
              * @description Attribution of raw file
              * @example Text
@@ -5841,6 +5856,11 @@ export type components = {
             version_number: number;
         };
         LibraryRawFileUpdateRequest: {
+            /**
+             * @description Whether the raw file is allowed to be indexed by search engines
+             * @example true
+             */
+            allow_se_indexing?: boolean;
             /**
              * @description Attribution text of the raw file. Set an empty string to clear the attribution text.
              * @example Sample attribution text
@@ -6049,6 +6069,11 @@ export type components = {
         };
         LibraryVideo: {
             /**
+             * @description Whether the video is allowed to be indexed by search engines
+             * @example true
+             */
+            allow_se_indexing: boolean;
+            /**
              * @description Alternative text for video
              * @example video title
              */
@@ -6162,6 +6187,11 @@ export type components = {
             version_number: number;
         };
         LibraryVideoUpdateRequest: {
+            /**
+             * @description Whether the video is allowed to be indexed by search engines
+             * @example true
+             */
+            allow_se_indexing?: boolean;
             /**
              * @description Alt text of the video. Set an empty string to clear the alt text.
              * @example Sample alt text
