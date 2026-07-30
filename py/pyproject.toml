@@ -1,0 +1,98 @@
+[project]
+name = "opti-cmp"
+version = "0.0.0"
+description = "SDK for Optimizely CMP API"
+readme = "README.md"
+license = "MIT"
+# A copy of the repo-root LICENSE: hatchling cannot include files from above
+# the project root, and the wheel has to carry its own.
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+keywords = [
+  "optimizely",
+  "cmp",
+  "content-marketing-platform",
+  "sdk",
+  "api-client",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
+]
+dependencies = [
+  "httpx>=0.27",
+  # Generated TypedDicts import NotRequired from typing_extensions on every
+  # version, because datamodel-code-generator targets the 3.10 floor.
+  "typing-extensions>=4.6",
+]
+
+[project.urls]
+Repository = "https://github.com/newscred/opti-cmp-sdk"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/opti_cmp"]
+
+[tool.hatch.build.targets.sdist]
+# The lockfile pins the dev toolchain and is meaningless to a consumer; the
+# rest is what someone would need to rebuild or verify the package.
+include = [
+  "src",
+  "tests",
+  "examples",
+  "scripts",
+  "README.md",
+  "LICENSE",
+  "pyproject.toml",
+]
+
+[dependency-groups]
+dev = [
+  "datamodel-code-generator>=0.26",
+  "mypy>=1.11",
+  "pytest>=8.3",
+  "pytest-asyncio>=0.24",
+  "ruff>=0.7",
+]
+
+[tool.ruff]
+target-version = "py310"
+src = ["src", "tests", "examples"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+# Generated from upstream prose: long lines and typographic dashes are theirs.
+"src/opti_cmp/_generated/**" = ["E501", "RUF002"]
+# Fixture URLs and route literals read better unwrapped, and separate `with`
+# blocks for a client and a `pytest.raises` say what they mean.
+"tests/**" = ["E501", "SIM117"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src", "tests", "examples"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+# The suite is already clean under -W error; locking it in catches httpx and
+# pytest-asyncio deprecations on the newest matrix leg before they break.
+filterwarnings = ["error"]
+markers = [
+    # Runs by default, including in CI. Deselect it locally with
+    # `-m "not slow"` when the regeneration round trip is too slow to sit
+    # through.
+    "slow: regenerates the whole tree",
+]
