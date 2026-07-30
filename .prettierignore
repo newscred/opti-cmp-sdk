@@ -4,6 +4,11 @@ CHANGELOG.md
 
 specification/
 
+py/.venv/
+py/dist/
+py/uv.lock
+py/src/opti_cmp/_generated/
+
 js/src/plugins/register-api-endpoints/routes.json
 js/src/types/endpoints.ts
 js/src/types/openapi.d.ts
