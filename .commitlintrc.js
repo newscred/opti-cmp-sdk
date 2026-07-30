@@ -1,4 +1,4 @@
-const scopes = Array.from(new Set(["js"])).toSorted();
+const scopes = Array.from(new Set(["js", "py"])).toSorted();
 
 export default {
   extends: ["@commitlint/config-conventional"],
