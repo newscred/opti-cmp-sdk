@@ -11,6 +11,12 @@
       "release-type": "node",
       "extra-files": ["src/version.ts"],
       "pull-request-title-pattern": "chore(js): release ${version}"
+    },
+    "py": {
+      "component": "py",
+      "release-type": "python",
+      "extra-files": ["src/opti_cmp/version.py"],
+      "pull-request-title-pattern": "chore(py): release ${version}"
     }
   }
 }
