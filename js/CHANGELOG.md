@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.4...js-0.0.5) (2026-08-11)
+
+
+### Features
+
+* **js:** generate from latest specification ([b1d7688](https://github.com/newscred/opti-cmp-sdk/commit/b1d7688ff29f5fcc0435504f78d978a8ee32ae40))
+* **js:** rename package to @optimizely/cmp-sdk ([bfad268](https://github.com/newscred/opti-cmp-sdk/commit/bfad268dde797bf7dcc9fcf73d76bf5ca34f1d62))
+
 ## [0.0.4](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.3...js-0.0.4) (2026-07-20)
 
 
