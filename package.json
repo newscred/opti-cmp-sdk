@@ -21,9 +21,7 @@
     "lint:commit:current": "commitlint --edit",
     "lint:staged": "lint-staged",
     "prepare": "husky",
-    "test:js": "pnpm run --filter=@optimizely/cmp-sdk test",
-    "release:js": "./scripts/release-js.sh",
-    "publish:js": "./scripts/publish-js.sh"
+    "test:js": "pnpm run --filter=@optimizely/cmp-sdk test"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",

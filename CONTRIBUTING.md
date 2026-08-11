@@ -78,6 +78,5 @@ part of the generation pipeline you are expected to edit by hand.
 
 ## Releases
 
-Releases are managed by [release-please](https://github.com/googleapis/release-please)
-and published to the public npm registry. Maintainers: see the scripts in
-`scripts/` (`release-js.sh`, `publish-js.sh`) for details.
+Releases are automated with [release-please](https://github.com/googleapis/release-please).
+Merging its release PR tags the release and publishes `@optimizely/cmp-sdk` to npm.
