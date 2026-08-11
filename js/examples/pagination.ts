@@ -3,7 +3,7 @@
  *
  *   CMP_TOKEN=<auth-token> npx tsx examples/pagination.ts
  */
-import { OptiCMP } from "opti-cmp";
+import { OptiCMP } from "@optimizely/cmp-sdk";
 
 const token = process.env.CMP_TOKEN;
 if (!token) throw new Error("Set CMP_TOKEN");

@@ -5,15 +5,15 @@ TypeScript SDK for the [Optimizely CMP](https://www.optimizely.com/products/cont
 ## Install
 
 ```bash
-npm install opti-cmp
+npm install @optimizely/cmp-sdk
 # or
-pnpm add opti-cmp
+pnpm add @optimizely/cmp-sdk
 ```
 
 ## Usage
 
 ```ts
-import { OptiCMP } from "opti-cmp";
+import { OptiCMP } from "@optimizely/cmp-sdk";
 
 const client = OptiCMP({
   auth: {

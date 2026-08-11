@@ -7,7 +7,7 @@ body:
     attributes:
       label: SDK Language
       options:
-        - JavaScript / TypeScript (opti-cmp)
+        - JavaScript / TypeScript (@optimizely/cmp-sdk)
     validations:
       required: true
   - type: textarea
@@ -34,7 +34,7 @@ body:
     id: sdk-version
     attributes:
       label: SDK Version
-      placeholder: e.g. opti-cmp@0.0.4
+      placeholder: e.g. @optimizely/cmp-sdk@0.0.0
     validations:
       required: true
   - type: input

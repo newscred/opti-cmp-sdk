@@ -13,15 +13,15 @@
   },
   "type": "module",
   "scripts": {
-    "build:js": "pnpm run --filter=opti-cmp build",
+    "build:js": "pnpm run --filter=@optimizely/cmp-sdk build",
     "generate": "pnpm run generate:spec && pnpm run generate:endpoint-names",
     "generate:spec": "tsx scripts/generate-specification.ts",
     "generate:endpoint-names": "tsx scripts/generate-endpoint-names.ts",
-    "generate:js": "pnpm run generate && pnpm run --filter=opti-cmp generate",
+    "generate:js": "pnpm run generate && pnpm run --filter=@optimizely/cmp-sdk generate",
     "lint:commit:current": "commitlint --edit",
     "lint:staged": "lint-staged",
     "prepare": "husky",
-    "test:js": "pnpm run --filter=opti-cmp test",
+    "test:js": "pnpm run --filter=@optimizely/cmp-sdk test",
     "release:js": "./scripts/release-js.sh",
     "publish:js": "./scripts/publish-js.sh"
   },

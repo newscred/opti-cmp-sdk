@@ -8,7 +8,7 @@ body:
       label: SDK Language
       options:
         - Other
-        - JavaScript / TypeScript (opti-cmp)
+        - JavaScript / TypeScript (@optimizely/cmp-sdk)
     validations:
       required: false
   - type: textarea

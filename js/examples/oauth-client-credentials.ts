@@ -4,7 +4,7 @@
  *   CMP_CLIENT_ID=<client-id> CMP_CLIENT_SECRET=<client-secret> \
  *     npx tsx examples/oauth-client-credentials.ts
  */
-import { OptiCMP } from "opti-cmp";
+import { OptiCMP } from "@optimizely/cmp-sdk";
 
 const clientId = process.env.CMP_CLIENT_ID;
 const clientSecret = process.env.CMP_CLIENT_SECRET;

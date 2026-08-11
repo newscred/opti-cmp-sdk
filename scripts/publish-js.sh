@@ -16,11 +16,11 @@ LATEST_TAG=$(git describe --tags --match "js-*" --abbrev=0)
 VERSION="${LATEST_TAG#js-}"
 echo "Latest tag: $LATEST_TAG (version $VERSION)"
 
-if [ -n "$(npm view "opti-cmp@$VERSION" version 2>/dev/null)" ]; then
-  echo "opti-cmp@$VERSION already published, skipping publish"
+if [ -n "$(npm view "@optimizely/cmp-sdk@$VERSION" version 2>/dev/null)" ]; then
+  echo "@optimizely/cmp-sdk@$VERSION already published, skipping publish"
 else
   git checkout "$LATEST_TAG"
-  pnpm --filter=opti-cmp publish --no-git-checks
+  pnpm --filter=@optimizely/cmp-sdk publish --no-git-checks
 fi
 
 git checkout main

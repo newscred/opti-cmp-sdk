@@ -1,6 +1,6 @@
 # Examples
 
-Runnable examples for the [`opti-cmp`](../) SDK.
+Runnable examples for the [`@optimizely/cmp-sdk`](../) SDK.
 
 | File                                                           | Description                              |
 | -------------------------------------------------------------- | ---------------------------------------- |
