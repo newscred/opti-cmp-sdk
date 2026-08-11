@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub Token
+        uses: actions/create-github-app-token@v2
+        id: gh-token
+        with:
+          app-id: ${{ secrets.OPTI_CMP_BOT_APP_CLIENT_ID }}
+          private-key: ${{ secrets.OPTI_CMP_BOT_APP_PRIVATE_KEY }}
+
+      - name: Release
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ steps.gh-token.outputs.token }}
+
+      - name: JS - Checkout
+        if: ${{ steps.release.outputs['js--release_created'] }}
+        uses: actions/checkout@v4
+      - name: JS - Setup pnpm
+        if: ${{ steps.release.outputs['js--release_created'] }}
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - name: JS - Setup Node.js
+        if: ${{ steps.release.outputs['js--release_created'] }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - name: JS - Install Dependencies
+        if: ${{ steps.release.outputs['js--release_created'] }}
+        run: pnpm install
+      - name: JS - Build
+        if: ${{ steps.release.outputs['js--release_created'] }}
+        run: pnpm run build:js
+      - name: JS - Publish
+        if: ${{ steps.release.outputs['js--release_created'] }}
+        working-directory: js
+        run: pnpm publish
