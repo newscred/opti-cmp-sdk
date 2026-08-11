@@ -18,12 +18,18 @@
     "generate:spec": "tsx scripts/generate-specification.ts",
     "generate:endpoint-names": "tsx scripts/generate-endpoint-names.ts",
     "generate:js": "pnpm run generate && pnpm run --filter=@optimizely/cmp-sdk generate",
+    "generate:py": "pnpm run generate && uv run --directory py python scripts/generate_schema_types.py && uv run --directory py python scripts/generate_endpoints.py",
+    "build:py": "uv build --project py",
     "lint:commit:current": "commitlint --edit",
     "lint:staged": "lint-staged",
+    "lint:py": "uv run --directory py ruff check .",
     "prepare": "husky",
     "test:js": "pnpm run --filter=@optimizely/cmp-sdk test",
-    "release:js": "./scripts/release-js.sh",
-    "publish:js": "./scripts/publish-js.sh"
+    "test:py": "uv run --directory py pytest",
+    "typecheck:py": "uv run --directory py mypy",
+    "release": "./scripts/release.sh",
+    "publish:js": "./scripts/publish.sh js",
+    "publish:py": "./scripts/publish.sh py"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",

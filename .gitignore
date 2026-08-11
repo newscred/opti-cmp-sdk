@@ -1,6 +1,15 @@
 # Build output
 lib/
 *.tgz
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
 
 # Generated Artifacts
 *.tsbuildinfo

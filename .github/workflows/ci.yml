@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  check:
+  check-js:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,6 +41,63 @@ jobs:
         run: pnpm run build:js
       - name: JS - Test
         run: pnpm run test:js
+
+  # Ruff and mypy are pinned to py310 in pyproject.toml and the wheel is pure
+  # Python, so every one of these produces the same answer on every interpreter
+  # in the test matrix. They run once rather than four times.
+  lint-py:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: py
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Py - Install Dependencies
+        # --locked so a uv.lock that has drifted from pyproject.toml fails the
+        # build, matching what pnpm install already does for the JS job.
+        run: uv sync --locked
+      - name: Py - Check Format
+        run: uv run ruff format --check .
+      - name: Py - Lint
+        run: uv run ruff check .
+      - name: Py - Type Check
+        run: uv run mypy
+      - name: Py - Build SDK
+        run: uv build
+      - name: Py - Check Distribution
+        # The wheel's contents are an invariant this package depends on: the
+        # marker makes the inline types visible to consumers, and the tests
+        # must not ship inside the importable package.
+        run: |
+          wheel=$(ls dist/*.whl)
+          unzip -l "$wheel" | grep -q 'opti_cmp/py.typed'
+          unzip -l "$wheel" | grep -q 'dist-info/licenses/LICENSE'
+          ! unzip -l "$wheel" | grep -q 'opti_cmp/tests/'
+
+  test-py:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: py
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Py - Install Dependencies
+        run: uv sync --locked --python ${{ matrix.python-version }}
+      - name: Py - Test
+        run: uv run pytest
 
   convention:
     runs-on: ubuntu-latest

@@ -5,7 +5,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["js/lib", "**/node_modules"]),
+  globalIgnores(["js/lib", "**/node_modules", "py"]),
   {
     extends: [js.configs.recommended, tseslint.configs.recommended],
     languageOptions: {

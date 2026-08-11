@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# One command for both components: `release-please release-pr` reads the whole
+# manifest, so it opens release PRs for every component at once.
+
 set -euo pipefail
 
 cd "$(dirname "$0")/.."

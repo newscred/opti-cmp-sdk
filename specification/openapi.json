@@ -5693,6 +5693,11 @@
       "LibraryImage": {
         "additionalProperties": false,
         "properties": {
+          "allow_se_indexing": {
+            "description": "Whether the image is allowed to be indexed by search engines",
+            "example": true,
+            "type": "boolean"
+          },
           "alt_text": {
             "description": "Alternative text for image",
             "example": "image title",
@@ -5884,6 +5889,7 @@
           "file_location",
           "is_archived",
           "is_public",
+          "allow_se_indexing",
           "url",
           "labels",
           "owner_organization_id",
@@ -5902,6 +5908,12 @@
       "LibraryImageUpdateRequest": {
         "additionalProperties": false,
         "properties": {
+          "allow_se_indexing": {
+            "description": "Whether the image is allowed to be indexed by search engines",
+            "example": true,
+            "nullable": false,
+            "type": "boolean"
+          },
           "alt_text": {
             "description": "Alt text of the image. Set an empty string to clear the alt text.",
             "example": "Sample alt text",
@@ -5989,6 +6001,11 @@
       "LibraryRawFile": {
         "additionalProperties": false,
         "properties": {
+          "allow_se_indexing": {
+            "description": "Whether the raw file is allowed to be indexed by search engines",
+            "example": true,
+            "type": "boolean"
+          },
           "attribution_text": {
             "description": "Attribution of raw file",
             "example": "Text",
@@ -6130,6 +6147,7 @@
           "file_location",
           "is_archived",
           "is_public",
+          "allow_se_indexing",
           "url",
           "labels",
           "owner_organization_id",
@@ -6146,6 +6164,12 @@
       "LibraryRawFileUpdateRequest": {
         "additionalProperties": false,
         "properties": {
+          "allow_se_indexing": {
+            "description": "Whether the raw file is allowed to be indexed by search engines",
+            "example": true,
+            "nullable": false,
+            "type": "boolean"
+          },
           "attribution_text": {
             "description": "Attribution text of the raw file. Set an empty string to clear the attribution text.",
             "example": "Sample attribution text",
@@ -6458,6 +6482,11 @@
       "LibraryVideo": {
         "additionalProperties": false,
         "properties": {
+          "allow_se_indexing": {
+            "description": "Whether the video is allowed to be indexed by search engines",
+            "example": true,
+            "type": "boolean"
+          },
           "alt_text": {
             "description": "Alternative text for video",
             "example": "video title",
@@ -6605,6 +6634,7 @@
           "file_location",
           "is_archived",
           "is_public",
+          "allow_se_indexing",
           "url",
           "labels",
           "owner_organization_id",
@@ -6622,6 +6652,12 @@
       "LibraryVideoUpdateRequest": {
         "additionalProperties": false,
         "properties": {
+          "allow_se_indexing": {
+            "description": "Whether the video is allowed to be indexed by search engines",
+            "example": true,
+            "nullable": false,
+            "type": "boolean"
+          },
           "alt_text": {
             "description": "Alt text of the video. Set an empty string to clear the alt text.",
             "example": "Sample alt text",
