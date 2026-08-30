@@ -2073,6 +2073,182 @@
       ]
     }
   },
+  "/content-graphs": {
+    "get": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of content graph instances provisioned for the organization. Use this to discover the `instance_id` of the instance to query, before running a query against it.\n\nAn organization with no content graph instance of the requested type gets an empty `data` list rather than an error.",
+      "operationId": "listContentGraphs",
+      "parameters": [
+        {
+          "description": "Type of the content graph instances to return. Use `dam` for instances holding library assets and `sc` for instances holding structured contents.",
+          "example": "dam",
+          "in": "query",
+          "name": "type",
+          "required": true,
+          "schema": {
+            "enum": [
+              "dam",
+              "sc"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/offset"
+        },
+        {
+          "description": "Number of results to return per page",
+          "example": 15,
+          "in": "query",
+          "name": "page_size",
+          "schema": {
+            "default": 10,
+            "maximum": 1000,
+            "minimum": 1,
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentGraphListResponse"
+              }
+            }
+          },
+          "description": "List of fetched content graph instances"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "GET /content-graphs",
+      "tags": [
+        "Content Graph"
+      ]
+    }
+  },
+  "/content-graphs/{cg_instance_id}/query": {
+    "post": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Run a GraphQL query against a content graph instance. Get the `cg_instance_id` from `GET /content-graphs`.\n\nUse this to check whether a given asset has synced to the graph, by querying for its identifier and seeing whether the graph returns it.\n\n**Reading the response.** A `200` carries the graph's JSON payload (`data`, and `extensions` when present) passed through unchanged. If the graph rejects a well-formed query, the endpoint returns the graph's own `4xx` status with its GraphQL `errors` body (for example `429` when the graph rate-limits). A `502` means the content graph is unavailable or returned a server error, and a `504` means it could not be reached in time — both are transient, so retry. A `500` is a server-side failure on our end and, unlike `502`/`504`, will not be resolved by retrying.",
+      "operationId": "queryContentGraph",
+      "parameters": [
+        {
+          "example": "00e3d1f85ceb41408b3e323a6b3b188d",
+          "in": "path",
+          "name": "cg_instance_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the content graph instance",
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ContentGraphQueryRequest"
+            }
+          }
+        },
+        "description": "GraphQL query to run against the content graph instance",
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "example": {
+                "data": {
+                  "cmp_PublicImageAsset": {
+                    "cursor": "FGluY2x1",
+                    "items": [
+                      {
+                        "Id": "03f47ac464bc11f18b0102420ac80022"
+                      }
+                    ],
+                    "total": 53
+                  }
+                },
+                "extensions": {
+                  "correlationId": "a18548eeeee29cba",
+                  "cost": 51
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/ContentGraphQueryResponse"
+              }
+            }
+          },
+          "description": "Query reached the content graph and succeeded. The body is the graph's JSON response, passed through unchanged."
+        },
+        "400": {
+          "content": {
+            "application/json": {
+              "example": {
+                "errors": [
+                  {
+                    "message": "Cannot query field \"Nope\" on type \"Query\"."
+                  }
+                ]
+              },
+              "schema": {
+                "$ref": "#/components/schemas/ContentGraphQueryResponse"
+              }
+            }
+          },
+          "description": "The request was invalid (for example a missing `query`), or the graph rejected a well-formed query. When it originates from the graph, the body is the graph's GraphQL `errors` payload."
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "429": {
+          "content": {
+            "application/json": {
+              "example": {
+                "errors": [
+                  {
+                    "message": "Too many requests."
+                  }
+                ]
+              },
+              "schema": {
+                "$ref": "#/components/schemas/ContentGraphQueryResponse"
+              }
+            }
+          },
+          "description": "The content graph rate-limited the request. Passed through with the graph's status and body unchanged. Retry after a short delay."
+        },
+        "502": {
+          "$ref": "#/components/responses/BadGateway"
+        },
+        "504": {
+          "$ref": "#/components/responses/GatewayTimeout"
+        }
+      },
+      "summary": "POST /content-graphs/{cg_instance_id}/query",
+      "tags": [
+        "Content Graph"
+      ]
+    }
+  },
   "/events": {
     "get": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of events.",

@@ -37,6 +37,10 @@
     "name": "Assets"
   },
   {
+    "name": "Content Graph",
+    "description": "Optimizely Graph indexes an organization's library assets and structured contents, and exposes them over GraphQL. Use these endpoints to discover the content graph instances provisioned for an organization and to run GraphQL queries against a chosen instance.\n"
+  },
+  {
     "name": "Events"
   },
   {

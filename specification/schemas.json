@@ -2954,6 +2954,146 @@
     },
     "type": "object"
   },
+  "ContentGraphListResponse": {
+    "additionalProperties": false,
+    "properties": {
+      "data": {
+        "description": "List of content graph instances",
+        "items": {
+          "$ref": "#/components/schemas/ContentGraphResponse"
+        },
+        "type": "array"
+      },
+      "pagination": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Pagination"
+          },
+          {
+            "properties": {
+              "next": {
+                "example": "https://api.cmp.optimizely.com/v3/content-graphs?type=dam&offset=10&page_size=10",
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "required": [
+      "data",
+      "pagination"
+    ],
+    "type": "object"
+  },
+  "ContentGraphQueryRequest": {
+    "additionalProperties": false,
+    "description": "GraphQL request envelope. Both properties are forwarded to Optimizely Graph verbatim, so they use the GraphQL protocol names rather than the snake_case convention used elsewhere in this API.",
+    "properties": {
+      "query": {
+        "description": "GraphQL query to execute against the content graph instance",
+        "example": "query MyQuery($after: String) { cmp_PublicImageAsset(limit: 50, cursor: $after) { total items { Id } cursor } }",
+        "minLength": 1,
+        "type": "string"
+      },
+      "variables": {
+        "additionalProperties": true,
+        "description": "Values for the variables declared by `query`",
+        "example": {
+          "after": null
+        },
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "type": "object"
+  },
+  "ContentGraphQueryResponse": {
+    "additionalProperties": true,
+    "description": "The content graph's GraphQL response, passed through unchanged. Its shape is determined by the submitted query: `data` (and `extensions`) for a successful query, or `errors` when the graph rejects it.",
+    "example": {
+      "data": {
+        "cmp_PublicImageAsset": {
+          "cursor": "FGluY2x1",
+          "items": [
+            {
+              "Id": "03f47ac464bc11f18b0102420ac80022"
+            }
+          ],
+          "total": 53
+        }
+      },
+      "extensions": {
+        "correlationId": "a18548eeeee29cba",
+        "cost": 51
+      }
+    },
+    "properties": {
+      "data": {
+        "additionalProperties": true,
+        "description": "Query result, shaped by the submitted GraphQL query.",
+        "properties": {},
+        "type": "object"
+      },
+      "errors": {
+        "description": "Present when the graph rejects the query.",
+        "items": {
+          "additionalProperties": true,
+          "properties": {},
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "extensions": {
+        "additionalProperties": true,
+        "description": "Graph metadata such as correlation id and query cost.",
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "object"
+  },
+  "ContentGraphResponse": {
+    "additionalProperties": false,
+    "properties": {
+      "instance_category": {
+        "description": "Category of the content graph instance, either `new` or `existing`. `existing` instances are used by CMS organizations.",
+        "enum": [
+          "existing",
+          "new"
+        ],
+        "example": "existing",
+        "type": "string"
+      },
+      "instance_id": {
+        "description": "Unique identifier of the content graph instance",
+        "example": "00e3d1f85ceb41408b3e323a6b3b188d",
+        "type": "string"
+      },
+      "name": {
+        "description": "Human-readable name of the content graph instance",
+        "example": "Staging",
+        "type": "string"
+      },
+      "source_id": {
+        "description": "Namespace within the content graph instance that holds the organization's content. `existing` instances use `cmp` for library assets and `cmpsc` for structured contents, `new` instances use `default`.",
+        "example": "cmp",
+        "type": "string"
+      }
+    },
+    "required": [
+      "instance_id",
+      "instance_category",
+      "name",
+      "source_id"
+    ],
+    "type": "object"
+  },
   "ContentMigrationSummary": {
     "properties": {
       "errored": {
