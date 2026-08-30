@@ -53,6 +53,14 @@ export interface APIEndpoints {
       params: Params.UpdateCampaignFieldParams,
     ) => Promise<Response<Schema.CampaignFieldUpdateResponse>>;
   };
+  contentGraph: {
+    listContentGraphs: (
+      params: Params.ListContentGraphsParams,
+    ) => Promise<Response<Schema.ContentGraphListResponse>>;
+    queryContentGraph: (
+      params: Params.QueryContentGraphParams,
+    ) => Promise<Response<Schema.ContentGraphQueryResponse>>;
+  };
   event: {
     createEvent: (
       params: Params.CreateEventParams,

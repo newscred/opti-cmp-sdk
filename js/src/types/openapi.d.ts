@@ -454,6 +454,52 @@ export type paths = {
         patch?: never;
         trace?: never;
     };
+    "/content-graphs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /content-graphs
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of content graph instances provisioned for the organization. Use this to discover the `instance_id` of the instance to query, before running a query against it.
+         *
+         *     An organization with no content graph instance of the requested type gets an empty `data` list rather than an error.
+         */
+        get: operations["listContentGraphs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/content-graphs/{cg_instance_id}/query": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * POST /content-graphs/{cg_instance_id}/query
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Run a GraphQL query against a content graph instance. Get the `cg_instance_id` from `GET /content-graphs`.
+         *
+         *     Use this to check whether a given asset has synced to the graph, by querying for its identifier and seeing whether the graph returns it.
+         *
+         *     **Reading the response.** A `200` carries the graph's JSON payload (`data`, and `extensions` when present) passed through unchanged. If the graph rejects a well-formed query, the endpoint returns the graph's own `4xx` status with its GraphQL `errors` body (for example `429` when the graph rate-limits). A `502` means the content graph is unavailable or returned a server error, and a `504` means it could not be reached in time — both are transient, so retry. A `500` is a server-side failure on our end and, unlike `502`/`504`, will not be resolved by retrying.
+         */
+        post: operations["queryContentGraph"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/events": {
         parameters: {
             query?: never;
@@ -4046,6 +4092,90 @@ export type components = {
                     [key: string]: components["schemas"]["error_reason"];
                 };
             };
+        };
+        ContentGraphListResponse: {
+            /** @description List of content graph instances */
+            data: components["schemas"]["ContentGraphResponse"][];
+            pagination: components["schemas"]["Pagination"] & {
+                /** @example https://api.cmp.optimizely.com/v3/content-graphs?type=dam&offset=10&page_size=10 */
+                next?: string | null;
+            };
+        };
+        /** @description GraphQL request envelope. Both properties are forwarded to Optimizely Graph verbatim, so they use the GraphQL protocol names rather than the snake_case convention used elsewhere in this API. */
+        ContentGraphQueryRequest: {
+            /**
+             * @description GraphQL query to execute against the content graph instance
+             * @example query MyQuery($after: String) { cmp_PublicImageAsset(limit: 50, cursor: $after) { total items { Id } cursor } }
+             */
+            query: string;
+            /**
+             * @description Values for the variables declared by `query`
+             * @example {
+             *       "after": null
+             *     }
+             */
+            variables?: {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * @description The content graph's GraphQL response, passed through unchanged. Its shape is determined by the submitted query: `data` (and `extensions`) for a successful query, or `errors` when the graph rejects it.
+         * @example {
+         *       "data": {
+         *         "cmp_PublicImageAsset": {
+         *           "cursor": "FGluY2x1",
+         *           "items": [
+         *             {
+         *               "Id": "03f47ac464bc11f18b0102420ac80022"
+         *             }
+         *           ],
+         *           "total": 53
+         *         }
+         *       },
+         *       "extensions": {
+         *         "correlationId": "a18548eeeee29cba",
+         *         "cost": 51
+         *       }
+         *     }
+         */
+        ContentGraphQueryResponse: {
+            /** @description Query result, shaped by the submitted GraphQL query. */
+            data?: {
+                [key: string]: unknown;
+            };
+            /** @description Present when the graph rejects the query. */
+            errors?: {
+                [key: string]: unknown;
+            }[];
+            /** @description Graph metadata such as correlation id and query cost. */
+            extensions?: {
+                [key: string]: unknown;
+            };
+        } & {
+            [key: string]: unknown;
+        };
+        ContentGraphResponse: {
+            /**
+             * @description Category of the content graph instance, either `new` or `existing`. `existing` instances are used by CMS organizations.
+             * @example existing
+             * @enum {string}
+             */
+            instance_category: "existing" | "new";
+            /**
+             * @description Unique identifier of the content graph instance
+             * @example 00e3d1f85ceb41408b3e323a6b3b188d
+             */
+            instance_id: string;
+            /**
+             * @description Human-readable name of the content graph instance
+             * @example Staging
+             */
+            name: string;
+            /**
+             * @description Namespace within the content graph instance that holds the organization's content. `existing` instances use `cmp` for library assets and `cmpsc` for structured contents, `new` instances use `default`.
+             * @example cmp
+             */
+            source_id: string;
         };
         ContentMigrationSummary: {
             /** @description The number of content items that failed to migrate. */
@@ -11026,6 +11156,20 @@ export type components = {
         error_reason: "REQUIRED_FIELD_ABSENT" | "LIST_EMPTY" | "INVALID_STATE" | "INVALID_SELF_REF" | "MIN_NOT_MET" | "MAX_NOT_MET" | "PATTERN_ERROR";
     };
     responses: {
+        /** @description The content graph is unavailable or returned an error that could not be passed through to the caller. Transient — retry. */
+        BadGateway: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                /**
+                 * @example {
+                 *       "message": "Content graph query failed upstream. Please retry."
+                 *     }
+                 */
+                "application/json": components["schemas"]["Error"];
+            };
+        };
         /** @description Client error */
         ClientError: {
             headers: {
@@ -11049,6 +11193,20 @@ export type components = {
                 /**
                  * @example {
                  *       "message": "You do not have the permission to perform this operation"
+                 *     }
+                 */
+                "application/json": components["schemas"]["Error"];
+            };
+        };
+        /** @description The content graph could not be reached within the timeout. Transient — retry. */
+        GatewayTimeout: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                /**
+                 * @example {
+                 *       "message": "Content graph is unreachable. Please retry."
                  *     }
                  */
                 "application/json": components["schemas"]["Error"];
@@ -12188,6 +12346,134 @@ export interface operations {
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
             422: components["responses"]["UnprocessableEntity"];
+        };
+    };
+    listContentGraphs: {
+        parameters: {
+            query: {
+                /**
+                 * @description Type of the content graph instances to return. Use `dam` for instances holding library assets and `sc` for instances holding structured contents.
+                 * @example dam
+                 */
+                type: "dam" | "sc";
+                /**
+                 * @description Starting index of results (zero indexed)
+                 * @example 5
+                 */
+                offset?: components["parameters"]["offset"];
+                /**
+                 * @description Number of results to return per page
+                 * @example 15
+                 */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of fetched content graph instances */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContentGraphListResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    queryContentGraph: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example 00e3d1f85ceb41408b3e323a6b3b188d */
+                cg_instance_id: string;
+            };
+            cookie?: never;
+        };
+        /** @description GraphQL query to run against the content graph instance */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ContentGraphQueryRequest"];
+            };
+        };
+        responses: {
+            /** @description Query reached the content graph and succeeded. The body is the graph's JSON response, passed through unchanged. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "data": {
+                     *         "cmp_PublicImageAsset": {
+                     *           "cursor": "FGluY2x1",
+                     *           "items": [
+                     *             {
+                     *               "Id": "03f47ac464bc11f18b0102420ac80022"
+                     *             }
+                     *           ],
+                     *           "total": 53
+                     *         }
+                     *       },
+                     *       "extensions": {
+                     *         "correlationId": "a18548eeeee29cba",
+                     *         "cost": 51
+                     *       }
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ContentGraphQueryResponse"];
+                };
+            };
+            /** @description The request was invalid (for example a missing `query`), or the graph rejected a well-formed query. When it originates from the graph, the body is the graph's GraphQL `errors` payload. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "errors": [
+                     *         {
+                     *           "message": "Cannot query field \"Nope\" on type \"Query\"."
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ContentGraphQueryResponse"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            /** @description The content graph rate-limited the request. Passed through with the graph's status and body unchanged. Retry after a short delay. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "errors": [
+                     *         {
+                     *           "message": "Too many requests."
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ContentGraphQueryResponse"];
+                };
+            };
+            502: components["responses"]["BadGateway"];
+            504: components["responses"]["GatewayTimeout"];
         };
     };
     listEvents: {

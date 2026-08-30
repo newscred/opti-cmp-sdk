@@ -76,6 +76,18 @@ export interface UpdateCampaignFieldParams {
   body: Schema.CampaignFieldUpdateRequest;
 }
 
+export interface ListContentGraphsParams {
+  /** Type of the content graph instances to return. Use `dam` for instances holding library assets and `sc` for instances holding structured contents. */
+  type: 'dam' | 'sc';
+  /** Number of results to return per page */
+  page_size?: number;
+}
+
+export interface QueryContentGraphParams {
+  cg_instance_id: string;
+  body: Schema.ContentGraphQueryRequest;
+}
+
 export interface CreateEventParams {
   body: Schema.EventCreateRequest;
 }
