@@ -157,6 +157,18 @@
       "namespace": "campaign"
     }
   },
+  "/content-graphs": {
+    "get": {
+      "name": "listContentGraphs",
+      "namespace": "contentGraph"
+    }
+  },
+  "/content-graphs/{cg_instance_id}/query": {
+    "post": {
+      "name": "queryContentGraph",
+      "namespace": "contentGraph"
+    }
+  },
   "/events": {
     "get": {
       "name": "listEvents",

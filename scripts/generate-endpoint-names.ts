@@ -48,6 +48,7 @@ const TAG_TO_NAMESPACE: Record<string, string> = {
   Assets: "asset",
   "Brand Compliance": "brandCompliance",
   Campaigns: "campaign",
+  "Content Graph": "contentGraph",
   Events: "event",
   Fields: "field",
   Labels: "label",
