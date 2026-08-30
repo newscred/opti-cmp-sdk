@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   release:
+    if: ${{ github.repository == 'newscred/opti-cmp-sdk' }}
     name: release
     runs-on: ubuntu-latest
     steps:
