@@ -1,6 +1,6 @@
 {
   "name": "@optimizely/cmp-sdk",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "SDK for Optimizely CMP API",
   "license": "MIT",
   "author": "Optimizely, Inc.",
