@@ -5,6 +5,7 @@ Thanks for your interest in contributing to `opti-cmp-sdk`!
 ## Development setup
 
 This is a [pnpm](https://pnpm.io/) monorepo. You'll need Node.js `>=20` and pnpm.
+The Go SDK additionally needs Go `>=1.24`.
 
 ```bash
 pnpm install
@@ -12,12 +13,15 @@ pnpm install
 
 Common commands (run from the repo root):
 
-| Command                        | Description           |
-| ------------------------------ | --------------------- |
-| `pnpm build:js`                | Build the JS SDK      |
-| `pnpm test:js`                 | Run the JS test suite |
-| `pnpm exec eslint .`           | Lint                  |
-| `pnpm exec prettier --check .` | Check formatting      |
+| Command                        | Description                     |
+| ------------------------------ | ------------------------------- |
+| `pnpm build:js`                | Build the JS SDK                |
+| `pnpm test:js`                 | Run the JS test suite           |
+| `pnpm build:go`                | Build the Go SDK                |
+| `pnpm test:go`                 | Run the Go test suite           |
+| `pnpm lint:go`                 | Vet and format-check the Go SDK |
+| `pnpm exec eslint .`           | Lint                            |
+| `pnpm exec prettier --check .` | Check formatting                |
 
 ## Commit messages
 
@@ -42,12 +46,16 @@ hand-edited. These include:
 - `specification/*.json` — the split/sorted OpenAPI spec snapshot
 - `js/src/types/*` — generated TypeScript types and endpoint definitions
 - `js/src/plugins/register-api-endpoints/routes.json` — the runtime routing table
+- `go/schema/schema.gen.go` — generated Go schema types (via oapi-codegen)
+- `go/*.gen.go` — generated Go namespaces, endpoint methods, and params
 
 ### Regenerating
 
 ```bash
 # Fetch the latest spec and regenerate endpoint names, then regenerate all JS artifacts:
 pnpm generate:js
+# The same, then regenerate the Go SDK:
+pnpm generate:go
 ```
 
 Broken down:
@@ -56,6 +64,9 @@ Broken down:
   derives endpoint names.
 - `pnpm generate:js` — runs `pnpm generate`, then regenerates the JS types,
   schema exports, and endpoints.
+- `pnpm generate:go` — runs `pnpm generate`, then runs the Go generator
+  (`go/internal/gen`, driven by `go generate ./...`), which runs oapi-codegen for
+  the schema types and emits the typed namespace surface.
 
 The spec source URL is defined in `scripts/generate-specification.ts` and can be
 overridden with the `OPENAPI_SPEC_URI` environment variable.

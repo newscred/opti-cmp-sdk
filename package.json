@@ -14,14 +14,18 @@
   "type": "module",
   "scripts": {
     "build:js": "pnpm run --filter=@optimizely/cmp-sdk build",
+    "build:go": "go -C go build ./...",
     "generate": "pnpm run generate:spec && pnpm run generate:endpoint-names",
     "generate:spec": "tsx scripts/generate-specification.ts",
     "generate:endpoint-names": "tsx scripts/generate-endpoint-names.ts",
     "generate:js": "pnpm run generate && pnpm run --filter=@optimizely/cmp-sdk generate",
+    "generate:go": "pnpm run generate && go -C go generate ./...",
     "lint:commit:current": "commitlint --edit",
     "lint:staged": "lint-staged",
+    "lint:go": "go -C go vet ./... && test -z \"$(gofmt -l go)\"",
     "prepare": "husky",
-    "test:js": "pnpm run --filter=@optimizely/cmp-sdk test"
+    "test:js": "pnpm run --filter=@optimizely/cmp-sdk test",
+    "test:go": "go -C go test ./..."
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",

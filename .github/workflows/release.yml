@@ -51,3 +51,11 @@ jobs:
         if: ${{ steps.release.outputs['js--release_created'] }}
         working-directory: js
         run: pnpm publish
+
+      # Go modules are published by the git tag alone (go/vX.Y.Z), which
+      # release-please creates. Warm the module proxy so the new version is
+      # immediately installable.
+      - name: Go - Warm module proxy
+        if: ${{ steps.release.outputs['go--release_created'] }}
+        run: |
+          curl -fsS "https://proxy.golang.org/github.com/newscred/opti-cmp-sdk/go/@v/v${{ steps.release.outputs['go--version'] }}.info" || true

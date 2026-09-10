@@ -8,9 +8,10 @@ Client SDKs for the [Optimizely CMP](https://www.optimizely.com/products/content
 
 ## Packages
 
-| Language              | Package                                                                    | Docs                    |
-| --------------------- | -------------------------------------------------------------------------- | ----------------------- |
-| TypeScript/JavaScript | [`@optimizely/cmp-sdk`](https://www.npmjs.com/package/@optimizely/cmp-sdk) | [`js/`](./js/README.md) |
+| Language              | Package                                                                                         | Docs                    |
+| --------------------- | ----------------------------------------------------------------------------------------------- | ----------------------- |
+| TypeScript/JavaScript | [`@optimizely/cmp-sdk`](https://www.npmjs.com/package/@optimizely/cmp-sdk)                      | [`js/`](./js/README.md) |
+| Go                    | [`github.com/newscred/opti-cmp-sdk/go`](https://pkg.go.dev/github.com/newscred/opti-cmp-sdk/go) | [`go/`](./go/README.md) |
 
 ## Documentation
 

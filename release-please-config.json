@@ -11,6 +11,14 @@
       "release-type": "node",
       "extra-files": ["src/version.ts"],
       "pull-request-title-pattern": "chore(js): release ${version}"
+    },
+    "go": {
+      "component": "go",
+      "release-type": "go",
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "extra-files": ["version.go"],
+      "pull-request-title-pattern": "chore(go): release ${version}"
     }
   }
 }
