@@ -734,6 +734,10 @@ export interface ListTasksParams {
   milestone?: string;
   start_date?: string;
   due_date?: string;
+  start_date__from?: string;
+  start_date__to?: string;
+  due_date__from?: string;
+  due_date__to?: string;
   status?: 'Archived' | 'Completed' | 'Overdue' | 'Not Started' | 'In Progress' | 'On Hold'[];
   offset?: number;
   page_size?: number;

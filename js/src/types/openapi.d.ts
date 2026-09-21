@@ -1438,6 +1438,8 @@ export type paths = {
         /**
          * GET /tasks
          * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a list of tasks.
+         *
+         *     Pick one style of date filter per request. Either use `start_date` and `due_date`, or use the `__from` and `__to` filters. A request that mixes the two styles returns a `400` error.
          */
         get: operations["listTasks"];
         put?: never;
@@ -14822,6 +14824,14 @@ export interface operations {
                 start_date?: string;
                 /** @example 2022-08-24T00:00:00.000Z */
                 due_date?: string;
+                /** @example 2022-08-24T00:00:00Z */
+                start_date__from?: string;
+                /** @example 2022-08-31T23:59:59Z */
+                start_date__to?: string;
+                /** @example 2022-08-24T00:00:00Z */
+                due_date__from?: string;
+                /** @example 2022-08-31T23:59:59Z */
+                due_date__to?: string;
                 /**
                  * @example [
                  *       "In Progress",
