@@ -6236,7 +6236,7 @@
   },
   "/tasks": {
     "get": {
-      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of tasks.",
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a list of tasks.\n\nPick one style of date filter per request. Either use `start_date` and `due_date`, or use the `__from` and `__to` filters. A request that mixes the two styles returns a `400` error.",
       "operationId": "listTasks",
       "parameters": [
         {
@@ -6280,7 +6280,7 @@
           "in": "query",
           "name": "start_date",
           "schema": {
-            "description": "Start date of the tasks, in ISO 8601 UTC format",
+            "description": "Start date of the tasks, in ISO 8601 UTC format. Returns the tasks whose start date falls in the 24 hours that begin at this date and time.",
             "type": "string"
           }
         },
@@ -6289,7 +6289,51 @@
           "in": "query",
           "name": "due_date",
           "schema": {
-            "description": "Due date of the tasks, in ISO 8601 UTC format",
+            "description": "Due date of the tasks, in ISO 8601 UTC format. Returns the tasks whose due date falls in the 24 hours that begin at this date and time.",
+            "type": "string"
+          }
+        },
+        {
+          "example": "2022-08-24T00:00:00Z",
+          "in": "query",
+          "name": "start_date__from",
+          "required": false,
+          "schema": {
+            "description": "Date and time as the lower limit to filter tasks by their start date, in ISO 8601 UTC format",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        {
+          "example": "2022-08-31T23:59:59Z",
+          "in": "query",
+          "name": "start_date__to",
+          "required": false,
+          "schema": {
+            "description": "Date and time as the upper limit to filter tasks by their start date, in ISO 8601 UTC format",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        {
+          "example": "2022-08-24T00:00:00Z",
+          "in": "query",
+          "name": "due_date__from",
+          "required": false,
+          "schema": {
+            "description": "Date and time as the lower limit to filter tasks by their due date, in ISO 8601 UTC format",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        {
+          "example": "2022-08-31T23:59:59Z",
+          "in": "query",
+          "name": "due_date__to",
+          "required": false,
+          "schema": {
+            "description": "Date and time as the upper limit to filter tasks by their due date, in ISO 8601 UTC format",
+            "format": "date-time",
             "type": "string"
           }
         },
