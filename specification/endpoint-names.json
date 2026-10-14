@@ -163,7 +163,7 @@
       "namespace": "contentGraph"
     }
   },
-  "/content-graphs/{cg_instance_id}/query": {
+  "/content-graphs/{instance_id}/query": {
     "post": {
       "name": "queryContentGraph",
       "namespace": "contentGraph"
@@ -354,6 +354,16 @@
   "/publishing-events/{publishing_event_id}/assets/{asset_id}/publishing-metadata/{publishing_metadata_id}": {
     "get": {
       "name": "getPublishingEventAssetMetadata",
+      "namespace": "publishing"
+    }
+  },
+  "/publishing-events/{publishing_event_id}/progress-updates": {
+    "get": {
+      "name": "listPublishingEventProgressUpdates",
+      "namespace": "publishing"
+    },
+    "post": {
+      "name": "createPublishingEventProgressUpdate",
       "namespace": "publishing"
     }
   },
@@ -742,6 +752,12 @@
   "/tasks/{task_id}/structured-contents/{content_id}/drafts": {
     "post": {
       "name": "createTaskStructuredContentDraft",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/structured-contents/{content_id}/previews": {
+    "post": {
+      "name": "createTaskStructuredContentPreview",
       "namespace": "task"
     }
   },

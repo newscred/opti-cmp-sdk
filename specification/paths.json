@@ -2138,15 +2138,15 @@
       ]
     }
   },
-  "/content-graphs/{cg_instance_id}/query": {
+  "/content-graphs/{instance_id}/query": {
     "post": {
-      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Run a GraphQL query against a content graph instance. Get the `cg_instance_id` from `GET /content-graphs`.\n\nUse this to check whether a given asset has synced to the graph, by querying for its identifier and seeing whether the graph returns it.\n\n**Reading the response.** A `200` carries the graph's JSON payload (`data`, and `extensions` when present) passed through unchanged. If the graph rejects a well-formed query, the endpoint returns the graph's own `4xx` status with its GraphQL `errors` body (for example `429` when the graph rate-limits). A `502` means the content graph is unavailable or returned a server error, and a `504` means it could not be reached in time — both are transient, so retry. A `500` is a server-side failure on our end and, unlike `502`/`504`, will not be resolved by retrying.",
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Run a GraphQL query against a content graph instance. Get the `instance_id` from `GET /content-graphs`.\n\nUse this to check whether a given asset has synced to the graph, by querying for its identifier and seeing whether the graph returns it.\n\n**Reading the response.** A `200` carries the graph's JSON payload (`data`, and `extensions` when present) passed through unchanged. If the graph rejects a well-formed query, the endpoint returns the graph's own `4xx` status with its GraphQL `errors` body (for example `429` when the graph rate-limits). A `502` means the content graph is unavailable or returned a server error, and a `504` means it could not be reached in time — both are transient, so retry. A `500` is a server-side failure on our end and, unlike `502`/`504`, will not be resolved by retrying.",
       "operationId": "queryContentGraph",
       "parameters": [
         {
           "example": "00e3d1f85ceb41408b3e323a6b3b188d",
           "in": "path",
-          "name": "cg_instance_id",
+          "name": "instance_id",
           "required": true,
           "schema": {
             "description": "Unique identifier of the content graph instance",
@@ -2243,7 +2243,7 @@
           "$ref": "#/components/responses/GatewayTimeout"
         }
       },
-      "summary": "POST /content-graphs/{cg_instance_id}/query",
+      "summary": "POST /content-graphs/{instance_id}/query",
       "tags": [
         "Content Graph"
       ]
@@ -2805,7 +2805,7 @@
   },
   "/fields/{field_id}/choices/{choice_id}": {
     "delete": {
-      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a choice from a field.",
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a choice from a field. A request that deletes the last active choice of a field fails with a `400` error.",
       "operationId": "deleteFieldChoice",
       "parameters": [
         {
@@ -3005,7 +3005,7 @@
               }
             }
           },
-          "description": "Field with all the choices including the newly created ones"
+          "description": "All the choices of the field, including the newly created ones"
         },
         "400": {
           "$ref": "#/components/responses/ClientError"
@@ -4518,6 +4518,115 @@
         }
       },
       "summary": "GET v3/publishing-events/{publishing_event_id}/assets/{asset_id}/publishing-metadata/{publishing_metadata_id}",
+      "tags": [
+        "Publishing"
+      ]
+    }
+  },
+  "/publishing-events/{publishing_event_id}/progress-updates": {
+    "get": {
+      "description": "Get the progress updates posted for a publishing event, newest first.",
+      "operationId": "listPublishingEventProgressUpdates",
+      "parameters": [
+        {
+          "description": "Unique identifier of the publishing event",
+          "example": "1d9d8aeca10811ebbc640242ac12001b",
+          "in": "path",
+          "name": "publishing_event_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/offset"
+        },
+        {
+          "description": "Number of results to return per page",
+          "example": 15,
+          "in": "query",
+          "name": "page_size",
+          "schema": {
+            "default": 10,
+            "maximum": 1000,
+            "minimum": 1,
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishingEventProgressUpdateListResponse"
+              }
+            }
+          },
+          "description": "List of posted progress updates"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "GET /v3/publishing-events/{publishing_event_id}/progress-updates",
+      "tags": [
+        "Publishing"
+      ]
+    },
+    "post": {
+      "description": "Post a progress update describing what is happening while a publishing event is being processed, so that CMP can show it to the user.",
+      "operationId": "createPublishingEventProgressUpdate",
+      "parameters": [
+        {
+          "description": "Unique identifier of the publishing event",
+          "example": "1d9d8aeca10811ebbc640242ac12001b",
+          "in": "path",
+          "name": "publishing_event_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PublishingEventProgressUpdateCreateRequest"
+            }
+          }
+        },
+        "description": "Progress update to post against the publishing event",
+        "required": true
+      },
+      "responses": {
+        "204": {
+          "description": "Progress update posted"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "POST /v3/publishing-events/{publishing_event_id}/progress-updates",
       "tags": [
         "Publishing"
       ]
@@ -6089,6 +6198,111 @@
       "requestBody": {
         "content": {
           "application/json": {
+            "examples": {
+              "simple": {
+                "summary": "Plain fields",
+                "value": {
+                  "content_body": {
+                    "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                    "fields": {
+                      "title": [
+                        {
+                          "field_values": [
+                            {
+                              "text_value": "My Industry Page"
+                            }
+                          ],
+                          "locale": "en_US"
+                        }
+                      ]
+                    },
+                    "root_content": true,
+                    "title": "My Industry Page"
+                  },
+                  "title": "My Industry Page"
+                }
+              },
+              "withReferenceField": {
+                "description": "Set `has_embedded: true` and nest each new item's values under its own `fields`. The server assigns `content_guid`, `created_by`, etc.",
+                "summary": "Reference field with new embedded items",
+                "value": {
+                  "content_body": {
+                    "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                    "fields": {
+                      "has_embedded": true,
+                      "painGains": [
+                        {
+                          "field_values": [
+                            {
+                              "content_details": {
+                                "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                                "fields": {
+                                  "description": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "rich_text_value": "<p>Cut ramp time in half.</p>"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ],
+                                  "title": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "text_value": "Faster onboarding"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ]
+                                },
+                                "root_content": false,
+                                "title": "Faster onboarding"
+                              }
+                            },
+                            {
+                              "content_details": {
+                                "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                                "fields": {
+                                  "description": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "rich_text_value": "<p>Consolidate tooling spend.</p>"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ],
+                                  "title": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "text_value": "Lower total cost"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ]
+                                },
+                                "root_content": false,
+                                "title": "Lower total cost"
+                              }
+                            }
+                          ],
+                          "locale": "en_US"
+                        }
+                      ]
+                    },
+                    "root_content": true,
+                    "title": "My Industry Page"
+                  },
+                  "title": "My Industry Page"
+                }
+              }
+            },
             "schema": {
               "$ref": "#/components/schemas/LibraryStructuredContentCreateRequest"
             }
@@ -6276,20 +6490,22 @@
           }
         },
         {
+          "deprecated": true,
           "example": "2022-08-24T00:00:00.000Z",
           "in": "query",
           "name": "start_date",
           "schema": {
-            "description": "Start date of the tasks, in ISO 8601 UTC format. Returns the tasks whose start date falls in the 24 hours that begin at this date and time.",
+            "description": "Start date of the tasks, in ISO 8601 UTC format. Returns the tasks whose start date falls in the 24 hours that begin at this date and time. Deprecated, use `start_date__from` and `start_date__to` instead.",
             "type": "string"
           }
         },
         {
+          "deprecated": true,
           "example": "2022-08-24T00:00:00.000Z",
           "in": "query",
           "name": "due_date",
           "schema": {
-            "description": "Due date of the tasks, in ISO 8601 UTC format. Returns the tasks whose due date falls in the 24 hours that begin at this date and time.",
+            "description": "Due date of the tasks, in ISO 8601 UTC format. Returns the tasks whose due date falls in the 24 hours that begin at this date and time. Deprecated, use `due_date__from` and `due_date__to` instead.",
             "type": "string"
           }
         },
@@ -9223,6 +9439,105 @@
       "requestBody": {
         "content": {
           "application/json": {
+            "examples": {
+              "simple": {
+                "summary": "Plain fields",
+                "value": {
+                  "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                  "fields": {
+                    "title": [
+                      {
+                        "field_values": [
+                          {
+                            "text_value": "My Industry Page"
+                          }
+                        ],
+                        "locale": "en_US"
+                      }
+                    ]
+                  },
+                  "root_content": true,
+                  "title": "My Industry Page"
+                }
+              },
+              "withReferenceField": {
+                "description": "Set `has_embedded: true` and nest each new item's values under its own `fields`. The server assigns `content_guid`, `created_by`, etc.",
+                "summary": "Reference field with new embedded items",
+                "value": {
+                  "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                  "fields": {
+                    "has_embedded": true,
+                    "painGains": [
+                      {
+                        "field_values": [
+                          {
+                            "content_details": {
+                              "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                              "fields": {
+                                "description": [
+                                  {
+                                    "field_values": [
+                                      {
+                                        "rich_text_value": "<p>Cut ramp time in half.</p>"
+                                      }
+                                    ],
+                                    "locale": "en_US"
+                                  }
+                                ],
+                                "title": [
+                                  {
+                                    "field_values": [
+                                      {
+                                        "text_value": "Faster onboarding"
+                                      }
+                                    ],
+                                    "locale": "en_US"
+                                  }
+                                ]
+                              },
+                              "root_content": false,
+                              "title": "Faster onboarding"
+                            }
+                          },
+                          {
+                            "content_details": {
+                              "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                              "fields": {
+                                "description": [
+                                  {
+                                    "field_values": [
+                                      {
+                                        "rich_text_value": "<p>Consolidate tooling spend.</p>"
+                                      }
+                                    ],
+                                    "locale": "en_US"
+                                  }
+                                ],
+                                "title": [
+                                  {
+                                    "field_values": [
+                                      {
+                                        "text_value": "Lower total cost"
+                                      }
+                                    ],
+                                    "locale": "en_US"
+                                  }
+                                ]
+                              },
+                              "root_content": false,
+                              "title": "Lower total cost"
+                            }
+                          }
+                        ],
+                        "locale": "en_US"
+                      }
+                    ]
+                  },
+                  "root_content": true,
+                  "title": "My Industry Page"
+                }
+              }
+            },
             "schema": {
               "$ref": "#/components/schemas/TaskStructuredContentCreateRequest"
             }
@@ -9504,6 +9819,69 @@
         }
       },
       "summary": "POST /tasks/{task_id}/structured-contents/{content_id}/drafts",
+      "tags": [
+        "Tasks"
+      ]
+    }
+  },
+  "/tasks/{task_id}/structured-contents/{content_id}/previews": {
+    "post": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a preview URL to the latest version of a structured content in a task. The task must be neither archived nor completed.",
+      "operationId": "createTaskStructuredContentPreview",
+      "parameters": [
+        {
+          "description": "Unique identifier of the task",
+          "example": "da80cfd7bbf84959a8a981acbad996b3",
+          "in": "path",
+          "name": "task_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "description": "Unique identifier of the structured content",
+          "example": "1e7d1ebe28fd4378a0aa4cc300bc039e",
+          "in": "path",
+          "name": "content_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TaskStructuredContentPreviewCreateRequest"
+            }
+          }
+        },
+        "description": "Preview to add to the structured content",
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "description": "Preview added"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
+        }
+      },
+      "summary": "POST /tasks/{task_id}/structured-contents/{content_id}/previews",
       "tags": [
         "Tasks"
       ]

@@ -2687,23 +2687,7 @@
               "choices": {
                 "description": "Choices of the field",
                 "items": {
-                  "properties": {
-                    "id": {
-                      "description": "Identifier of the choice",
-                      "example": "6ceee2f4fa3411ecb37802420ac8001b",
-                      "type": "string"
-                    },
-                    "name": {
-                      "description": "Name of the choice",
-                      "example": "Choice 1",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "name"
-                  ],
-                  "type": "object"
+                  "$ref": "#/components/schemas/SettingsFieldChoiceResponse"
                 },
                 "type": "array"
               }
@@ -3843,23 +3827,7 @@
               "choices": {
                 "description": "Choices of the field",
                 "items": {
-                  "properties": {
-                    "id": {
-                      "description": "Identifier of the choice",
-                      "example": "6ceee2f4fa3411ecb37802420ac8001b",
-                      "type": "string"
-                    },
-                    "name": {
-                      "description": "Name of the choice",
-                      "example": "Choice 1",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "name"
-                  ],
-                  "type": "object"
+                  "$ref": "#/components/schemas/SettingsFieldChoiceResponse"
                 },
                 "type": "array"
               },
@@ -5081,6 +5049,11 @@
       "GenericSettingsFieldChoiceUpdatePayload": {
         "description": "Choice for field types other than `label`",
         "properties": {
+          "is_active": {
+            "description": "Indicates active status of the choice. Inactive choices stay on the field. In the app, users cannot select them.\nA request that makes the last active choice of a field inactive fails with a `400` error.\n",
+            "example": false,
+            "type": "boolean"
+          },
           "name": {
             "description": "Name of the choice",
             "example": "Choice 1",
@@ -5088,9 +5061,6 @@
             "type": "string"
           }
         },
-        "required": [
-          "name"
-        ],
         "type": "object"
       },
       "HTTPException": {
@@ -5337,6 +5307,27 @@
           }
         ]
       },
+      "LabelTypeSettingsFieldChoiceResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SettingsFieldChoiceResponse"
+          },
+          {
+            "properties": {
+              "color": {
+                "description": "Code of choice color. Colors are limited to the following:\n- Electric Blue (#4ECFD5)\n- Golden Rod (#FFC700)\n- Salmon Pink (#FF98A7)\n- Blue Violet (#702BD5)\n- Spring Green (#5FEEAD)\n- Lavender Blue (#D6C4F2)\n- Sky (#5F9FF6)\n- Persian blue (#CB5DEB)\n- Cool Gray (#9694B3)\n",
+                "example": "#4ECFD5",
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "color"
+            ],
+            "type": "object"
+          }
+        ]
+      },
       "LabelTypeSettingsFieldChoiceUpdatePayload": {
         "description": "Choice for field type of `label`",
         "properties": {
@@ -5344,6 +5335,11 @@
             "description": "Code of choice color. Colors are limited to the following:\n- Electric Blue (#4ECFD5)\n- Golden Rod (#FFC700)\n- Salmon Pink (#FF98A7)\n- Blue Violet (#702BD5)\n- Spring Green (#5FEEAD)\n- Lavender Blue (#D6C4F2)\n- Sky (#5F9FF6)\n- Persian blue (#CB5DEB)\n- Cool Gray (#9694B3)\n",
             "example": "#FFC700",
             "type": "string"
+          },
+          "is_active": {
+            "description": "Indicates active status of the choice. Inactive choices stay on the field. In the app, users cannot select them.\nA request that makes the last active choice of a field inactive fails with a `400` error.\n",
+            "example": false,
+            "type": "boolean"
           },
           "name": {
             "description": "Name of the choice",
@@ -5409,30 +5405,7 @@
               "choices": {
                 "description": "Choices of the field",
                 "items": {
-                  "properties": {
-                    "color": {
-                      "description": "Code of choice color. Colors are limited to the following:\n- Electric Blue (#4ECFD5)\n- Golden Rod (#FFC700)\n- Salmon Pink (#FF98A7)\n- Blue Violet (#702BD5)\n- Spring Green (#5FEEAD)\n- Lavender Blue (#D6C4F2)\n- Sky (#5F9FF6)\n- Persian blue (#CB5DEB)\n- Cool Gray (#9694B3)\n",
-                      "example": "#4ECFD5",
-                      "nullable": true,
-                      "type": "string"
-                    },
-                    "id": {
-                      "description": "Identifier of the choice",
-                      "example": "6ceee2f4fa3411ecb37802420ac8001b",
-                      "type": "string"
-                    },
-                    "name": {
-                      "description": "Name of the choice",
-                      "example": "Choice 1",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "name",
-                    "color"
-                  ],
-                  "type": "object"
+                  "$ref": "#/components/schemas/LabelTypeSettingsFieldChoiceResponse"
                 },
                 "type": "array"
               },
@@ -6529,7 +6502,7 @@
                 "type": "object"
               },
               "root_content": {
-                "description": "This is true when the content is not embedded in another content through a content type reference field",
+                "description": "Set to `false` for content embedded via a reference field; `true` for root content.",
                 "title": "Rootcontent",
                 "type": "boolean"
               },
@@ -8222,6 +8195,109 @@
         ],
         "type": "object"
       },
+      "PublishingEventProgressUpdateCreateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "level": {
+            "default": "info",
+            "description": "Severity of the progress update. Defaults to `info` when omitted.",
+            "enum": [
+              "info",
+              "error"
+            ],
+            "example": "info",
+            "nullable": false,
+            "type": "string"
+          },
+          "message": {
+            "description": "Human-readable description of what happened, shown to the user. Must not be empty or whitespace only. Keep it free of internal identifiers — job keys, instance ids, stack traces and the like belong in your own logs.",
+            "example": "All assets are ready. Waiting for the destination to confirm publishing.",
+            "maxLength": 500,
+            "minLength": 1,
+            "nullable": false,
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object"
+      },
+      "PublishingEventProgressUpdateListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "description": "Progress updates posted for the publishing event, newest first",
+            "items": {
+              "$ref": "#/components/schemas/PublishingEventProgressUpdateResponse"
+            },
+            "type": "array"
+          },
+          "pagination": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Pagination"
+              },
+              {
+                "properties": {
+                  "next": {
+                    "example": "https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/progress-updates?offset=10&page_size=10",
+                    "nullable": true,
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "pagination"
+        ],
+        "type": "object"
+      },
+      "PublishingEventProgressUpdateResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "description": "When the progress update was posted",
+            "example": "2026-10-01T13:15:30Z",
+            "format": "date-time",
+            "nullable": false,
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the progress update",
+            "example": "5ebcd5644967474414564",
+            "nullable": false,
+            "type": "string"
+          },
+          "level": {
+            "description": "Severity of the progress update",
+            "enum": [
+              "info",
+              "error"
+            ],
+            "example": "info",
+            "nullable": false,
+            "type": "string"
+          },
+          "message": {
+            "description": "Human-readable description of what happened",
+            "example": "All assets are ready. Waiting for the destination to confirm publishing.",
+            "nullable": false,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "level",
+          "message",
+          "created_at"
+        ],
+        "type": "object"
+      },
       "PublishingEventResponse": {
         "additionalProperties": false,
         "properties": {
@@ -8242,6 +8318,11 @@
             "additionalProperties": false,
             "description": "Meta links",
             "properties": {
+              "progress_updates": {
+                "description": "URL of the list of progress updates posted for this publishing event",
+                "example": "https://api.cmp.optimizely.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/progress-updates",
+                "type": "string"
+              },
               "publishing_metadata": {
                 "description": "URL of list of publishing metadata",
                 "example": "https://api.cmp.optimizely.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/publishing-metadata",
@@ -8255,7 +8336,8 @@
             },
             "required": [
               "self",
-              "publishing_metadata"
+              "publishing_metadata",
+              "progress_updates"
             ],
             "type": "object"
           }
@@ -8406,12 +8488,6 @@
         "type": "object"
       },
       "RecursiveStructuredContent": {
-        "additionalProperties": {
-          "items": {
-            "$ref": "#/components/schemas/LocalizedFieldValuesWithEmbeddedContent"
-          },
-          "type": "array"
-        },
         "properties": {
           "content_type_guid": {
             "description": "The guid of the content's content type",
@@ -8430,8 +8506,19 @@
             "title": "Expirydatetime",
             "type": "string"
           },
+          "fields": {
+            "additionalProperties": {
+              "items": {
+                "$ref": "#/components/schemas/LocalizedFieldValuesWithEmbeddedContent"
+              },
+              "type": "array"
+            },
+            "description": "Field values of the embedded content, keyed by field key. Values must be nested under `fields`, not placed directly on the content object.",
+            "title": "fields",
+            "type": "object"
+          },
           "root_content": {
-            "description": "This is true when the content is not embedded in another content through a content type reference field",
+            "description": "Set to `false` for content embedded via a reference field; `true` for root content.",
             "title": "Rootcontent",
             "type": "boolean"
           },
@@ -8461,7 +8548,9 @@
         },
         "required": [
           "content_type_guid",
-          "root_content"
+          "root_content",
+          "title",
+          "fields"
         ],
         "type": "object"
       },
@@ -9604,27 +9693,35 @@
       "SettingsFieldChoiceCreateResponse": {
         "description": "Choices of the field",
         "items": {
-          "properties": {
-            "id": {
-              "description": "Identifier of the field choice",
-              "example": "675ca12f4fa3411ecb37802420ac82ab7",
-              "type": "string"
-            },
-            "name": {
-              "description": "Name of the choice",
-              "example": "Choice 1",
-              "minLength": 1,
-              "type": "string"
-            }
-          },
-          "required": [
-            "id",
-            "name"
-          ],
-          "type": "object"
+          "$ref": "#/components/schemas/SettingsFieldChoiceResponse"
         },
         "minItems": 1,
         "type": "array"
+      },
+      "SettingsFieldChoiceResponse": {
+        "properties": {
+          "id": {
+            "description": "Identifier of the choice",
+            "example": "6ceee2f4fa3411ecb37802420ac8001b",
+            "type": "string"
+          },
+          "is_active": {
+            "description": "Indicates active status of the choice. Inactive choices stay on the field. In the app, users cannot select them.",
+            "example": true,
+            "type": "boolean"
+          },
+          "name": {
+            "description": "Name of the choice",
+            "example": "Choice 1",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "is_active"
+        ],
+        "type": "object"
       },
       "SettingsFieldChoiceUpdateRequest": {
         "additionalProperties": false,
@@ -10182,7 +10279,7 @@
         "description": "The fields of structured content",
         "properties": {
           "has_embedded": {
-            "description": "Whether the structured content has embedded content reference field values",
+            "description": "Set to `true` when embedding new content via reference fields (using `content_details`). Required to create embedded content.",
             "nullable": true,
             "type": "boolean"
           }
@@ -12317,7 +12414,7 @@
             "type": "string"
           },
           "root_content": {
-            "description": "This is true when the content is not embedded in another content through a content type reference field",
+            "description": "Set to `false` for content embedded via a reference field; `true` for root content.",
             "title": "Rootcontent",
             "type": "boolean"
           },
@@ -12368,6 +12465,22 @@
         },
         "required": [
           "content_body"
+        ],
+        "type": "object"
+      },
+      "TaskStructuredContentPreviewCreateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "description": "URL where the latest version of the structured content can be previewed. CMP must be able to reach this URL.",
+            "example": "https://example.com/preview/my-landing-page",
+            "format": "uri",
+            "nullable": false,
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
         ],
         "type": "object"
       },
@@ -13986,6 +14099,12 @@
             "nullable": true,
             "type": "string"
           },
+          "exclude_empty_fields": {
+            "default": true,
+            "description": "If `true`, work request custom fields and labels that have no value (for example, fields hidden by form logic) are not copied to the campaign. Set to `false` to copy every work request field, including empty ones.",
+            "example": true,
+            "type": "boolean"
+          },
           "owner_id": {
             "description": "Unique identifier of the campaign owner",
             "example": "8q7f910551b00a722e0418830cee6612",
@@ -15560,6 +15679,12 @@
             "format": "date-time",
             "nullable": true,
             "type": "string"
+          },
+          "exclude_empty_fields": {
+            "default": true,
+            "description": "If `true`, work request custom fields and labels that have no value (for example, fields hidden by form logic) are not copied to the task. When `inherit_fields_from` is `workflow`, an empty work request value falls back to the workflow field's default value instead. Set to `false` to copy every work request field, including empty ones.",
+            "example": true,
+            "type": "boolean"
           },
           "inherit_fields_from": {
             "default": "work_request",
@@ -18379,15 +18504,15 @@
         ]
       }
     },
-    "/content-graphs/{cg_instance_id}/query": {
+    "/content-graphs/{instance_id}/query": {
       "post": {
-        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Run a GraphQL query against a content graph instance. Get the `cg_instance_id` from `GET /content-graphs`.\n\nUse this to check whether a given asset has synced to the graph, by querying for its identifier and seeing whether the graph returns it.\n\n**Reading the response.** A `200` carries the graph's JSON payload (`data`, and `extensions` when present) passed through unchanged. If the graph rejects a well-formed query, the endpoint returns the graph's own `4xx` status with its GraphQL `errors` body (for example `429` when the graph rate-limits). A `502` means the content graph is unavailable or returned a server error, and a `504` means it could not be reached in time — both are transient, so retry. A `500` is a server-side failure on our end and, unlike `502`/`504`, will not be resolved by retrying.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Run a GraphQL query against a content graph instance. Get the `instance_id` from `GET /content-graphs`.\n\nUse this to check whether a given asset has synced to the graph, by querying for its identifier and seeing whether the graph returns it.\n\n**Reading the response.** A `200` carries the graph's JSON payload (`data`, and `extensions` when present) passed through unchanged. If the graph rejects a well-formed query, the endpoint returns the graph's own `4xx` status with its GraphQL `errors` body (for example `429` when the graph rate-limits). A `502` means the content graph is unavailable or returned a server error, and a `504` means it could not be reached in time — both are transient, so retry. A `500` is a server-side failure on our end and, unlike `502`/`504`, will not be resolved by retrying.",
         "operationId": "queryContentGraph",
         "parameters": [
           {
             "example": "00e3d1f85ceb41408b3e323a6b3b188d",
             "in": "path",
-            "name": "cg_instance_id",
+            "name": "instance_id",
             "required": true,
             "schema": {
               "description": "Unique identifier of the content graph instance",
@@ -18484,7 +18609,7 @@
             "$ref": "#/components/responses/GatewayTimeout"
           }
         },
-        "summary": "POST /content-graphs/{cg_instance_id}/query",
+        "summary": "POST /content-graphs/{instance_id}/query",
         "tags": [
           "Content Graph"
         ]
@@ -19046,7 +19171,7 @@
     },
     "/fields/{field_id}/choices/{choice_id}": {
       "delete": {
-        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a choice from a field.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Delete a choice from a field. A request that deletes the last active choice of a field fails with a `400` error.",
         "operationId": "deleteFieldChoice",
         "parameters": [
           {
@@ -19246,7 +19371,7 @@
                 }
               }
             },
-            "description": "Field with all the choices including the newly created ones"
+            "description": "All the choices of the field, including the newly created ones"
           },
           "400": {
             "$ref": "#/components/responses/ClientError"
@@ -20759,6 +20884,115 @@
           }
         },
         "summary": "GET v3/publishing-events/{publishing_event_id}/assets/{asset_id}/publishing-metadata/{publishing_metadata_id}",
+        "tags": [
+          "Publishing"
+        ]
+      }
+    },
+    "/publishing-events/{publishing_event_id}/progress-updates": {
+      "get": {
+        "description": "Get the progress updates posted for a publishing event, newest first.",
+        "operationId": "listPublishingEventProgressUpdates",
+        "parameters": [
+          {
+            "description": "Unique identifier of the publishing event",
+            "example": "1d9d8aeca10811ebbc640242ac12001b",
+            "in": "path",
+            "name": "publishing_event_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "description": "Number of results to return per page",
+            "example": 15,
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "default": 10,
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishingEventProgressUpdateListResponse"
+                }
+              }
+            },
+            "description": "List of posted progress updates"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "summary": "GET /v3/publishing-events/{publishing_event_id}/progress-updates",
+        "tags": [
+          "Publishing"
+        ]
+      },
+      "post": {
+        "description": "Post a progress update describing what is happening while a publishing event is being processed, so that CMP can show it to the user.",
+        "operationId": "createPublishingEventProgressUpdate",
+        "parameters": [
+          {
+            "description": "Unique identifier of the publishing event",
+            "example": "1d9d8aeca10811ebbc640242ac12001b",
+            "in": "path",
+            "name": "publishing_event_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishingEventProgressUpdateCreateRequest"
+              }
+            }
+          },
+          "description": "Progress update to post against the publishing event",
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Progress update posted"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "summary": "POST /v3/publishing-events/{publishing_event_id}/progress-updates",
         "tags": [
           "Publishing"
         ]
@@ -22330,6 +22564,111 @@
         "requestBody": {
           "content": {
             "application/json": {
+              "examples": {
+                "simple": {
+                  "summary": "Plain fields",
+                  "value": {
+                    "content_body": {
+                      "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                      "fields": {
+                        "title": [
+                          {
+                            "field_values": [
+                              {
+                                "text_value": "My Industry Page"
+                              }
+                            ],
+                            "locale": "en_US"
+                          }
+                        ]
+                      },
+                      "root_content": true,
+                      "title": "My Industry Page"
+                    },
+                    "title": "My Industry Page"
+                  }
+                },
+                "withReferenceField": {
+                  "description": "Set `has_embedded: true` and nest each new item's values under its own `fields`. The server assigns `content_guid`, `created_by`, etc.",
+                  "summary": "Reference field with new embedded items",
+                  "value": {
+                    "content_body": {
+                      "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                      "fields": {
+                        "has_embedded": true,
+                        "painGains": [
+                          {
+                            "field_values": [
+                              {
+                                "content_details": {
+                                  "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                                  "fields": {
+                                    "description": [
+                                      {
+                                        "field_values": [
+                                          {
+                                            "rich_text_value": "<p>Cut ramp time in half.</p>"
+                                          }
+                                        ],
+                                        "locale": "en_US"
+                                      }
+                                    ],
+                                    "title": [
+                                      {
+                                        "field_values": [
+                                          {
+                                            "text_value": "Faster onboarding"
+                                          }
+                                        ],
+                                        "locale": "en_US"
+                                      }
+                                    ]
+                                  },
+                                  "root_content": false,
+                                  "title": "Faster onboarding"
+                                }
+                              },
+                              {
+                                "content_details": {
+                                  "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                                  "fields": {
+                                    "description": [
+                                      {
+                                        "field_values": [
+                                          {
+                                            "rich_text_value": "<p>Consolidate tooling spend.</p>"
+                                          }
+                                        ],
+                                        "locale": "en_US"
+                                      }
+                                    ],
+                                    "title": [
+                                      {
+                                        "field_values": [
+                                          {
+                                            "text_value": "Lower total cost"
+                                          }
+                                        ],
+                                        "locale": "en_US"
+                                      }
+                                    ]
+                                  },
+                                  "root_content": false,
+                                  "title": "Lower total cost"
+                                }
+                              }
+                            ],
+                            "locale": "en_US"
+                          }
+                        ]
+                      },
+                      "root_content": true,
+                      "title": "My Industry Page"
+                    },
+                    "title": "My Industry Page"
+                  }
+                }
+              },
               "schema": {
                 "$ref": "#/components/schemas/LibraryStructuredContentCreateRequest"
               }
@@ -22517,20 +22856,22 @@
             }
           },
           {
+            "deprecated": true,
             "example": "2022-08-24T00:00:00.000Z",
             "in": "query",
             "name": "start_date",
             "schema": {
-              "description": "Start date of the tasks, in ISO 8601 UTC format. Returns the tasks whose start date falls in the 24 hours that begin at this date and time.",
+              "description": "Start date of the tasks, in ISO 8601 UTC format. Returns the tasks whose start date falls in the 24 hours that begin at this date and time. Deprecated, use `start_date__from` and `start_date__to` instead.",
               "type": "string"
             }
           },
           {
+            "deprecated": true,
             "example": "2022-08-24T00:00:00.000Z",
             "in": "query",
             "name": "due_date",
             "schema": {
-              "description": "Due date of the tasks, in ISO 8601 UTC format. Returns the tasks whose due date falls in the 24 hours that begin at this date and time.",
+              "description": "Due date of the tasks, in ISO 8601 UTC format. Returns the tasks whose due date falls in the 24 hours that begin at this date and time. Deprecated, use `due_date__from` and `due_date__to` instead.",
               "type": "string"
             }
           },
@@ -25464,6 +25805,105 @@
         "requestBody": {
           "content": {
             "application/json": {
+              "examples": {
+                "simple": {
+                  "summary": "Plain fields",
+                  "value": {
+                    "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                    "fields": {
+                      "title": [
+                        {
+                          "field_values": [
+                            {
+                              "text_value": "My Industry Page"
+                            }
+                          ],
+                          "locale": "en_US"
+                        }
+                      ]
+                    },
+                    "root_content": true,
+                    "title": "My Industry Page"
+                  }
+                },
+                "withReferenceField": {
+                  "description": "Set `has_embedded: true` and nest each new item's values under its own `fields`. The server assigns `content_guid`, `created_by`, etc.",
+                  "summary": "Reference field with new embedded items",
+                  "value": {
+                    "content_type_guid": "5d7f910551b00a722e0418830cee6633",
+                    "fields": {
+                      "has_embedded": true,
+                      "painGains": [
+                        {
+                          "field_values": [
+                            {
+                              "content_details": {
+                                "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                                "fields": {
+                                  "description": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "rich_text_value": "<p>Cut ramp time in half.</p>"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ],
+                                  "title": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "text_value": "Faster onboarding"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ]
+                                },
+                                "root_content": false,
+                                "title": "Faster onboarding"
+                              }
+                            },
+                            {
+                              "content_details": {
+                                "content_type_guid": "8a1c0e2f4b6d47e0a1b2c3d4e5f60718",
+                                "fields": {
+                                  "description": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "rich_text_value": "<p>Consolidate tooling spend.</p>"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ],
+                                  "title": [
+                                    {
+                                      "field_values": [
+                                        {
+                                          "text_value": "Lower total cost"
+                                        }
+                                      ],
+                                      "locale": "en_US"
+                                    }
+                                  ]
+                                },
+                                "root_content": false,
+                                "title": "Lower total cost"
+                              }
+                            }
+                          ],
+                          "locale": "en_US"
+                        }
+                      ]
+                    },
+                    "root_content": true,
+                    "title": "My Industry Page"
+                  }
+                }
+              },
               "schema": {
                 "$ref": "#/components/schemas/TaskStructuredContentCreateRequest"
               }
@@ -25745,6 +26185,69 @@
           }
         },
         "summary": "POST /tasks/{task_id}/structured-contents/{content_id}/drafts",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{task_id}/structured-contents/{content_id}/previews": {
+      "post": {
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a preview URL to the latest version of a structured content in a task. The task must be neither archived nor completed.",
+        "operationId": "createTaskStructuredContentPreview",
+        "parameters": [
+          {
+            "description": "Unique identifier of the task",
+            "example": "da80cfd7bbf84959a8a981acbad996b3",
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Unique identifier of the structured content",
+            "example": "1e7d1ebe28fd4378a0aa4cc300bc039e",
+            "in": "path",
+            "name": "content_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskStructuredContentPreviewCreateRequest"
+              }
+            }
+          },
+          "description": "Preview to add to the structured content",
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Preview added"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "summary": "POST /tasks/{task_id}/structured-contents/{content_id}/previews",
         "tags": [
           "Tasks"
         ]
