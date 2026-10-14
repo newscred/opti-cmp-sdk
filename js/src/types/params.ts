@@ -84,7 +84,7 @@ export interface ListContentGraphsParams {
 }
 
 export interface QueryContentGraphParams {
-  cg_instance_id: string;
+  instance_id: string;
   body: Schema.ContentGraphQueryRequest;
 }
 
@@ -412,6 +412,12 @@ export interface BulkCreatePublishingEventMetadataParams {
   body: Schema.PublishingEventMetadataBulkCreateRequest;
 }
 
+export interface CreatePublishingEventProgressUpdateParams {
+  /** Unique identifier of the publishing event */
+  publishing_event_id: string;
+  body: Schema.PublishingEventProgressUpdateCreateRequest;
+}
+
 export interface GetPublishingEventParams {
   /** Unique identifier of the publishing event */
   publishing_event_id: string;
@@ -442,6 +448,13 @@ export interface ListPublishingEventMetadataParams {
   asset_id?: string;
   /** The locale to which the asset is being published to. */
   locale?: string;
+}
+
+export interface ListPublishingEventProgressUpdatesParams {
+  /** Unique identifier of the publishing event */
+  publishing_event_id: string;
+  /** Number of results to return per page */
+  page_size?: number;
 }
 
 export type GetSettingsParams = Record<string, never>;
@@ -604,6 +617,14 @@ export interface CreateTaskStructuredContentDraftParams {
   task_id: string;
   content_id: string;
   body: Schema.TaskStructuredContentDraftRequest;
+}
+
+export interface CreateTaskStructuredContentPreviewParams {
+  /** Unique identifier of the task */
+  task_id: string;
+  /** Unique identifier of the structured content */
+  content_id: string;
+  body: Schema.TaskStructuredContentPreviewCreateRequest;
 }
 
 export interface DeleteTaskStructuredContentParams {

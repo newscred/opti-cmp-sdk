@@ -249,6 +249,9 @@ export interface APIEndpoints {
     bulkCreatePublishingEventMetadata: (
       params: Params.BulkCreatePublishingEventMetadataParams,
     ) => Promise<Response<Schema.PublishingEventMetadataBulkCreateResponse>>;
+    createPublishingEventProgressUpdate: (
+      params: Params.CreatePublishingEventProgressUpdateParams,
+    ) => Promise<void>;
     getPublishingEvent: (
       params: Params.GetPublishingEventParams,
     ) => Promise<Response<Schema.PublishingEventResponse>>;
@@ -261,6 +264,9 @@ export interface APIEndpoints {
     listPublishingEventMetadata: (
       params: Params.ListPublishingEventMetadataParams,
     ) => Promise<Response<Schema.PublishingEventMetadataListResponse>>;
+    listPublishingEventProgressUpdates: (
+      params: Params.ListPublishingEventProgressUpdatesParams,
+    ) => Promise<Response<Schema.PublishingEventProgressUpdateListResponse>>;
   };
   settings: {
     getSettings: (
@@ -357,6 +363,9 @@ export interface APIEndpoints {
     createTaskStructuredContentDraft: (
       params: Params.CreateTaskStructuredContentDraftParams,
     ) => Promise<Response<Record<string, unknown>>>;
+    createTaskStructuredContentPreview: (
+      params: Params.CreateTaskStructuredContentPreviewParams,
+    ) => Promise<void>;
     deleteTaskStructuredContent: (
       params: Params.DeleteTaskStructuredContentParams,
     ) => Promise<void>;

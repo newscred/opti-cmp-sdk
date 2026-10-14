@@ -476,7 +476,7 @@ export type paths = {
         patch?: never;
         trace?: never;
     };
-    "/content-graphs/{cg_instance_id}/query": {
+    "/content-graphs/{instance_id}/query": {
         parameters: {
             query?: never;
             header?: never;
@@ -486,8 +486,8 @@ export type paths = {
         get?: never;
         put?: never;
         /**
-         * POST /content-graphs/{cg_instance_id}/query
-         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Run a GraphQL query against a content graph instance. Get the `cg_instance_id` from `GET /content-graphs`.
+         * POST /content-graphs/{instance_id}/query
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Run a GraphQL query against a content graph instance. Get the `instance_id` from `GET /content-graphs`.
          *
          *     Use this to check whether a given asset has synced to the graph, by querying for its identifier and seeing whether the graph returns it.
          *
@@ -608,7 +608,7 @@ export type paths = {
         post?: never;
         /**
          * DELETE /fields/{field_id}/choices/{choice_id}
-         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a choice from a field.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Delete a choice from a field. A request that deletes the last active choice of a field fails with a `400` error.
          */
         delete: operations["deleteFieldChoice"];
         options?: never;
@@ -990,6 +990,30 @@ export type paths = {
         get: operations["getPublishingEventAssetMetadata"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/publishing-events/{publishing_event_id}/progress-updates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /v3/publishing-events/{publishing_event_id}/progress-updates
+         * @description Get the progress updates posted for a publishing event, newest first.
+         */
+        get: operations["listPublishingEventProgressUpdates"];
+        put?: never;
+        /**
+         * POST /v3/publishing-events/{publishing_event_id}/progress-updates
+         * @description Post a progress update describing what is happening while a publishing event is being processed, so that CMP can show it to the user.
+         */
+        post: operations["createPublishingEventProgressUpdate"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2053,6 +2077,26 @@ export type paths = {
          * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create structured content draft using a task.
          */
         post: operations["createTaskStructuredContentDraft"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tasks/{task_id}/structured-contents/{content_id}/previews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * POST /tasks/{task_id}/structured-contents/{content_id}/previews
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add a preview URL to the latest version of a structured content in a task. The task must be neither archived nor completed.
+         */
+        post: operations["createTaskStructuredContentPreview"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3909,18 +3953,7 @@ export type components = {
         };
         CheckboxAndRadioTypeSettingsFieldResponse: components["schemas"]["BaseSettingsFieldsResponse"] & {
             /** @description Choices of the field */
-            choices: {
-                /**
-                 * @description Identifier of the choice
-                 * @example 6ceee2f4fa3411ecb37802420ac8001b
-                 */
-                id: string;
-                /**
-                 * @description Name of the choice
-                 * @example Choice 1
-                 */
-                name: string;
-            }[];
+            choices: components["schemas"]["SettingsFieldChoiceResponse"][];
         } & {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -4508,18 +4541,7 @@ export type components = {
         };
         DropdownTypeSettingsFieldResponse: components["schemas"]["BaseSettingsFieldsResponse"] & {
             /** @description Choices of the field */
-            choices: {
-                /**
-                 * @description Identifier of the choice
-                 * @example 6ceee2f4fa3411ecb37802420ac8001b
-                 */
-                id: string;
-                /**
-                 * @description Name of the choice
-                 * @example Choice 1
-                 */
-                name: string;
-            }[];
+            choices: components["schemas"]["SettingsFieldChoiceResponse"][];
             /** @description Allow users to select multiple values */
             is_multi_select: boolean;
         } & {
@@ -5181,10 +5203,16 @@ export type components = {
         /** @description Choice for field types other than `label` */
         GenericSettingsFieldChoiceUpdatePayload: {
             /**
+             * @description Indicates active status of the choice. Inactive choices stay on the field. In the app, users cannot select them.
+             *     A request that makes the last active choice of a field inactive fails with a `400` error.
+             * @example false
+             */
+            is_active?: boolean;
+            /**
              * @description Name of the choice
              * @example Choice 1
              */
-            name: string;
+            name?: string;
         };
         HTTPException: {
             /** @description Error message details. */
@@ -5341,6 +5369,22 @@ export type components = {
              */
             color: string;
         };
+        LabelTypeSettingsFieldChoiceResponse: components["schemas"]["SettingsFieldChoiceResponse"] & {
+            /**
+             * @description Code of choice color. Colors are limited to the following:
+             *     - Electric Blue (#4ECFD5)
+             *     - Golden Rod (#FFC700)
+             *     - Salmon Pink (#FF98A7)
+             *     - Blue Violet (#702BD5)
+             *     - Spring Green (#5FEEAD)
+             *     - Lavender Blue (#D6C4F2)
+             *     - Sky (#5F9FF6)
+             *     - Persian blue (#CB5DEB)
+             *     - Cool Gray (#9694B3)
+             * @example #4ECFD5
+             */
+            color: string | null;
+        };
         /** @description Choice for field type of `label` */
         LabelTypeSettingsFieldChoiceUpdatePayload: {
             /**
@@ -5357,6 +5401,12 @@ export type components = {
              * @example #FFC700
              */
             color?: string;
+            /**
+             * @description Indicates active status of the choice. Inactive choices stay on the field. In the app, users cannot select them.
+             *     A request that makes the last active choice of a field inactive fails with a `400` error.
+             * @example false
+             */
+            is_active?: boolean;
             /**
              * @description Name of the choice
              * @example Choice 1
@@ -5397,32 +5447,7 @@ export type components = {
         };
         LabelTypeSettingsFieldResponse: components["schemas"]["BaseSettingsFieldsResponse"] & {
             /** @description Choices of the field */
-            choices: {
-                /**
-                 * @description Code of choice color. Colors are limited to the following:
-                 *     - Electric Blue (#4ECFD5)
-                 *     - Golden Rod (#FFC700)
-                 *     - Salmon Pink (#FF98A7)
-                 *     - Blue Violet (#702BD5)
-                 *     - Spring Green (#5FEEAD)
-                 *     - Lavender Blue (#D6C4F2)
-                 *     - Sky (#5F9FF6)
-                 *     - Persian blue (#CB5DEB)
-                 *     - Cool Gray (#9694B3)
-                 * @example #4ECFD5
-                 */
-                color: string | null;
-                /**
-                 * @description Identifier of the choice
-                 * @example 6ceee2f4fa3411ecb37802420ac8001b
-                 */
-                id: string;
-                /**
-                 * @description Name of the choice
-                 * @example Choice 1
-                 */
-                name: string;
-            }[];
+            choices: components["schemas"]["LabelTypeSettingsFieldChoiceResponse"][];
             /** @description Allow users to select multiple values */
             is_multi_select: boolean;
         } & {
@@ -6122,7 +6147,7 @@ export type components = {
                 fields?: components["schemas"]["StructuredContentBody"];
                 /**
                  * Rootcontent
-                 * @description This is true when the content is not embedded in another content through a content type reference field
+                 * @description Set to `false` for content embedded via a reference field; `true` for root content.
                  */
                 root_content: boolean;
                 /**
@@ -6946,6 +6971,52 @@ export type components = {
              */
             status_message: string | null;
         };
+        PublishingEventProgressUpdateCreateRequest: {
+            /**
+             * @description Severity of the progress update. Defaults to `info` when omitted.
+             * @default info
+             * @example info
+             * @enum {string}
+             */
+            level: "info" | "error";
+            /**
+             * @description Human-readable description of what happened, shown to the user. Must not be empty or whitespace only. Keep it free of internal identifiers — job keys, instance ids, stack traces and the like belong in your own logs.
+             * @example All assets are ready. Waiting for the destination to confirm publishing.
+             */
+            message: string;
+        };
+        PublishingEventProgressUpdateListResponse: {
+            /** @description Progress updates posted for the publishing event, newest first */
+            data: components["schemas"]["PublishingEventProgressUpdateResponse"][];
+            pagination: components["schemas"]["Pagination"] & {
+                /** @example https://api.cmp.optimizely.com/v3/publishing-events/1d9d8aeca10811ebbc640242ac12001b/progress-updates?offset=10&page_size=10 */
+                next?: string | null;
+            };
+        };
+        PublishingEventProgressUpdateResponse: {
+            /**
+             * Format: date-time
+             * @description When the progress update was posted
+             * @example 2026-10-01T13:15:30Z
+             */
+            created_at: string;
+            /**
+             * @description Unique identifier of the progress update
+             * @example 5ebcd5644967474414564
+             */
+            id: string;
+            /**
+             * @description Severity of the progress update
+             * @example info
+             * @enum {string}
+             */
+            level: "info" | "error";
+            /**
+             * @description Human-readable description of what happened
+             * @example All assets are ready. Waiting for the destination to confirm publishing.
+             */
+            message: string;
+        };
         PublishingEventResponse: {
             /** @description List of assets associated with the publishing event. */
             assets: components["schemas"]["PublishingEventAssets"][];
@@ -6956,6 +7027,11 @@ export type components = {
             id: string;
             /** @description Meta links */
             links: {
+                /**
+                 * @description URL of the list of progress updates posted for this publishing event
+                 * @example https://api.cmp.optimizely.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/progress-updates
+                 */
+                progress_updates: string;
                 /**
                  * @description URL of list of publishing metadata
                  * @example https://api.cmp.optimizely.com/v3/publishing-events/5d7f910551b00a722e0418830cee5534/publishing-metadata
@@ -7071,8 +7147,15 @@ export type components = {
              */
             expiry_datetime?: string | null;
             /**
+             * fields
+             * @description Field values of the embedded content, keyed by field key. Values must be nested under `fields`, not placed directly on the content object.
+             */
+            fields: {
+                [key: string]: components["schemas"]["LocalizedFieldValuesWithEmbeddedContent"][];
+            };
+            /**
              * Rootcontent
-             * @description This is true when the content is not embedded in another content through a content type reference field
+             * @description Set to `false` for content embedded via a reference field; `true` for root content.
              */
             root_content: boolean;
             /**
@@ -7094,9 +7177,7 @@ export type components = {
              * @description Title of the structured content
              * @example Some webpage
              */
-            title?: string;
-        } & {
-            [key: string]: components["schemas"]["LocalizedFieldValuesWithEmbeddedContent"][];
+            title: string;
         };
         RelatedAssetItem: {
             content: {
@@ -7554,18 +7635,24 @@ export type components = {
         /** @description Choices of the field */
         SettingsFieldChoiceCreateRequest: (components["schemas"]["GenericSettingsFieldChoiceCreatePayload"] | components["schemas"]["LabelTypeSettingsFieldChoiceCreatePayload"])[];
         /** @description Choices of the field */
-        SettingsFieldChoiceCreateResponse: {
+        SettingsFieldChoiceCreateResponse: components["schemas"]["SettingsFieldChoiceResponse"][];
+        SettingsFieldChoiceResponse: {
             /**
-             * @description Identifier of the field choice
-             * @example 675ca12f4fa3411ecb37802420ac82ab7
+             * @description Identifier of the choice
+             * @example 6ceee2f4fa3411ecb37802420ac8001b
              */
             id: string;
+            /**
+             * @description Indicates active status of the choice. Inactive choices stay on the field. In the app, users cannot select them.
+             * @example true
+             */
+            is_active: boolean;
             /**
              * @description Name of the choice
              * @example Choice 1
              */
             name: string;
-        }[];
+        };
         /** @description Payload for updating choice */
         SettingsFieldChoiceUpdateRequest: components["schemas"]["GenericSettingsFieldChoiceUpdatePayload"] | components["schemas"]["LabelTypeSettingsFieldChoiceUpdatePayload"];
         SettingsFieldCreateRequest: components["schemas"]["BaseSettingsFieldCreatePayload"] | components["schemas"]["LabelTypeSettingsFieldCreatePayload"] | components["schemas"]["DropdownTypeSettingsFieldCreatePayload"] | components["schemas"]["CheckboxAndRadioTypeSettingsFieldCreatePayload"] | components["schemas"]["GenericNumberTypeSettingsFieldCreatePayload"] | components["schemas"]["CurrencyNumberTypeSettingsFieldCreatePayload"];
@@ -7798,7 +7885,7 @@ export type components = {
         };
         /** @description The fields of structured content */
         StructuredContentBody: {
-            /** @description Whether the structured content has embedded content reference field values */
+            /** @description Set to `true` when embedding new content via reference fields (using `content_details`). Required to create embedded content. */
             has_embedded?: boolean | null;
         } & {
             [key: string]: components["schemas"]["LocalizedFieldValuesWithEmbeddedContent"][];
@@ -9034,7 +9121,7 @@ export type components = {
             primary_locale?: string;
             /**
              * Rootcontent
-             * @description This is true when the content is not embedded in another content through a content type reference field
+             * @description Set to `false` for content embedded via a reference field; `true` for root content.
              */
             root_content?: boolean;
             /**
@@ -9069,6 +9156,14 @@ export type components = {
              * @description The fields of structured content
              */
             content_body: components["schemas"]["LocalizedFieldValues"];
+        };
+        TaskStructuredContentPreviewCreateRequest: {
+            /**
+             * Format: uri
+             * @description URL where the latest version of the structured content can be previewed. CMP must be able to reach this URL.
+             * @example https://example.com/preview/my-landing-page
+             */
+            url: string;
         };
         TaskStructuredContentUpdateRequest: {
             /**
@@ -9945,6 +10040,12 @@ export type components = {
              */
             end_date?: string | null;
             /**
+             * @description If `true`, work request custom fields and labels that have no value (for example, fields hidden by form logic) are not copied to the campaign. Set to `false` to copy every work request field, including empty ones.
+             * @default true
+             * @example true
+             */
+            exclude_empty_fields: boolean;
+            /**
              * @description Unique identifier of the campaign owner
              * @example 8q7f910551b00a722e0418830cee6612
              */
@@ -10744,6 +10845,12 @@ export type components = {
              * @example 2022-12-31T06:00:00Z
              */
             due_at?: string | null;
+            /**
+             * @description If `true`, work request custom fields and labels that have no value (for example, fields hidden by form logic) are not copied to the task. When `inherit_fields_from` is `workflow`, an empty work request value falls back to the workflow field's default value instead. Set to `false` to copy every work request field, including empty ones.
+             * @default true
+             * @example true
+             */
+            exclude_empty_fields: boolean;
             /**
              * @description Specifies the source from which to inherit fields.
              *
@@ -12396,7 +12503,7 @@ export interface operations {
             header?: never;
             path: {
                 /** @example 00e3d1f85ceb41408b3e323a6b3b188d */
-                cg_instance_id: string;
+                instance_id: string;
             };
             cookie?: never;
         };
@@ -12877,7 +12984,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Field with all the choices including the newly created ones */
+            /** @description All the choices of the field, including the newly created ones */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -13760,6 +13867,80 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["PublishingEventMetadataResponse"];
                 };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    listPublishingEventProgressUpdates: {
+        parameters: {
+            query?: {
+                /**
+                 * @description Starting index of results (zero indexed)
+                 * @example 5
+                 */
+                offset?: components["parameters"]["offset"];
+                /**
+                 * @description Number of results to return per page
+                 * @example 15
+                 */
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                /**
+                 * @description Unique identifier of the publishing event
+                 * @example 1d9d8aeca10811ebbc640242ac12001b
+                 */
+                publishing_event_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of posted progress updates */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublishingEventProgressUpdateListResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    createPublishingEventProgressUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Unique identifier of the publishing event
+                 * @example 1d9d8aeca10811ebbc640242ac12001b
+                 */
+                publishing_event_id: string;
+            };
+            cookie?: never;
+        };
+        /** @description Progress update to post against the publishing event */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublishingEventProgressUpdateCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Progress update posted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             400: components["responses"]["ClientError"];
             401: components["responses"]["Unauthorized"];
@@ -14820,9 +15001,15 @@ export interface operations {
                 workflow?: string;
                 /** @example 8n7f910o51b00b722o0418n30cie8211 */
                 milestone?: string;
-                /** @example 2022-08-24T00:00:00.000Z */
+                /**
+                 * @deprecated
+                 * @example 2022-08-24T00:00:00.000Z
+                 */
                 start_date?: string;
-                /** @example 2022-08-24T00:00:00.000Z */
+                /**
+                 * @deprecated
+                 * @example 2022-08-24T00:00:00.000Z
+                 */
                 due_date?: string;
                 /** @example 2022-08-24T00:00:00Z */
                 start_date__from?: string;
@@ -16396,6 +16583,45 @@ export interface operations {
                     /** @example null */
                     "application/json": Record<string, never>;
                 };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["UnprocessableEntity"];
+        };
+    };
+    createTaskStructuredContentPreview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Unique identifier of the task
+                 * @example da80cfd7bbf84959a8a981acbad996b3
+                 */
+                task_id: string;
+                /**
+                 * @description Unique identifier of the structured content
+                 * @example 1e7d1ebe28fd4378a0aa4cc300bc039e
+                 */
+                content_id: string;
+            };
+            cookie?: never;
+        };
+        /** @description Preview to add to the structured content */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskStructuredContentPreviewCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Preview added */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             400: components["responses"]["ClientError"];
             401: components["responses"]["Unauthorized"];
