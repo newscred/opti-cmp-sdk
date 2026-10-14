@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const SPEC_DIR = join(__dirname, "..", "specification");
 const OPENAPI_SPEC_URI =
   process.env.OPENAPI_SPEC_URI ||
-  "https://docs.developers.optimizely.com/content-marketing-platform/openapi/optimizely-cmp-open-api-documentation.json";
+  "https://developers.welcomesoftware.com/openapi/openapi.yaml";
 
 interface OpenAPISpec {
   components: {
