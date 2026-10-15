@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.0](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.7...js-0.1.0) (2026-10-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **js:** `queryContentGraph` now takes `instance_id` instead of `cg_instance_id`.
+
+### Features
+
+* **js:** generate from latest specification ([111c3fb](https://github.com/newscred/opti-cmp-sdk/commit/111c3fb552a8f9fcc875bbbc9c3ecc4053197151))
+
 ## [0.0.7](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.6...js-0.0.7) (2026-09-21)
 
 
