@@ -157,6 +157,27 @@
       "namespace": "campaign"
     }
   },
+  "/compose-contents/{content_id}": {
+    "get": {
+      "experimental": true,
+      "name": "getComposeContent",
+      "namespace": "library"
+    }
+  },
+  "/compose/content-schemas": {
+    "get": {
+      "experimental": true,
+      "name": "listComposeContentSchemas",
+      "namespace": "compose"
+    }
+  },
+  "/compose/content-schemas/{schema_id}": {
+    "get": {
+      "experimental": true,
+      "name": "getComposeContentSchema",
+      "namespace": "compose"
+    }
+  },
   "/content-graphs": {
     "get": {
       "name": "listContentGraphs",
@@ -619,6 +640,30 @@
       "namespace": "task"
     }
   },
+  "/tasks/{task_id}/compose-contents": {
+    "post": {
+      "experimental": true,
+      "name": "createTaskComposeContent",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/compose-contents/{content_id}": {
+    "get": {
+      "experimental": true,
+      "name": "getTaskComposeContent",
+      "namespace": "task"
+    },
+    "patch": {
+      "experimental": true,
+      "name": "updateTaskComposeContent",
+      "namespace": "task"
+    },
+    "delete": {
+      "experimental": true,
+      "name": "deleteTaskComposeContent",
+      "namespace": "task"
+    }
+  },
   "/tasks/{task_id}/custom-fields/{custom_field_id}": {
     "get": {
       "name": "getTaskCustomField",
@@ -758,6 +803,12 @@
   "/tasks/{task_id}/structured-contents/{content_id}/previews": {
     "post": {
       "name": "createTaskStructuredContentPreview",
+      "namespace": "task"
+    }
+  },
+  "/tasks/{task_id}/structured-contents/{content_id}/versions": {
+    "get": {
+      "name": "listTaskStructuredContentVersions",
       "namespace": "task"
     }
   },

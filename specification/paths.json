@@ -248,7 +248,8 @@
               "image",
               "video",
               "raw_file",
-              "structured_content"
+              "structured_content",
+              "compose_content"
             ],
             "items": {
               "enum": [
@@ -256,7 +257,8 @@
                 "image",
                 "video",
                 "raw_file",
-                "structured_content"
+                "structured_content",
+                "compose_content"
               ],
               "type": "string"
             },
@@ -2071,6 +2073,149 @@
       "tags": [
         "Campaigns"
       ]
+    }
+  },
+  "/compose-contents/{content_id}": {
+    "get": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a compose content from the library, with the field values of its published version. Returns 404 if the content was never published.",
+      "operationId": "getComposeContent",
+      "parameters": [
+        {
+          "example": "db1jqsvq64lsu74mnujg",
+          "in": "path",
+          "name": "content_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the compose content in the library",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LibraryComposeContentResponse"
+              }
+            }
+          },
+          "description": "Fetched compose content"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "GET /compose-contents/{content_id}",
+      "tags": [
+        "Library"
+      ],
+      "x-experimental": true
+    }
+  },
+  "/compose/content-schemas": {
+    "get": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get all content schemas of the organization. The list is not paginated, so `pagination.next` and `pagination.previous` are always `null`. Returns 403 if Compose is not enabled for the organization.",
+      "operationId": "listComposeContentSchemas",
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "data": {
+                    "description": "List of content schemas",
+                    "items": {
+                      "$ref": "#/components/schemas/ComposeContentSchemaResponse"
+                    },
+                    "type": "array"
+                  },
+                  "pagination": {
+                    "$ref": "#/components/schemas/Pagination"
+                  }
+                },
+                "required": [
+                  "data",
+                  "pagination"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "List of content schemas"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        }
+      },
+      "summary": "GET /compose/content-schemas",
+      "tags": [
+        "Compose"
+      ],
+      "x-experimental": true
+    }
+  },
+  "/compose/content-schemas/{schema_id}": {
+    "get": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a content schema. Returns 403 if Compose is not enabled for the organization.",
+      "operationId": "getComposeContentSchema",
+      "parameters": [
+        {
+          "example": "blog_post",
+          "in": "path",
+          "name": "schema_id",
+          "required": true,
+          "schema": {
+            "description": "The `api_id` or the internal `id` of the content schema",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComposeContentSchemaResponse"
+              }
+            }
+          },
+          "description": "Fetched content schema"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "GET /compose/content-schemas/{schema_id}",
+      "tags": [
+        "Compose"
+      ],
+      "x-experimental": true
     }
   },
   "/content-graphs": {
@@ -7863,6 +8008,244 @@
       ]
     }
   },
+  "/tasks/{task_id}/compose-contents": {
+    "post": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a compose content in a task. The new content has no field values and the status `draft`. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.",
+      "operationId": "createTaskComposeContent",
+      "parameters": [
+        {
+          "example": "645cb61c966d0c591320f636",
+          "in": "path",
+          "name": "task_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the task",
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TaskComposeContentCreateRequest"
+            }
+          }
+        },
+        "description": "Payload to create a compose content",
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskComposeContentResponse"
+              }
+            }
+          },
+          "description": "Created compose content"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
+        }
+      },
+      "summary": "POST /tasks/{task_id}/compose-contents",
+      "tags": [
+        "Tasks"
+      ],
+      "x-experimental": true
+    }
+  },
+  "/tasks/{task_id}/compose-contents/{content_id}": {
+    "delete": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Remove a compose content from a task. The content is not deleted from Compose, and references to it from other content are not checked. Returns 422 if the task is completed or archived.",
+      "operationId": "deleteTaskComposeContent",
+      "parameters": [
+        {
+          "example": "645cb61c966d0c591320f636",
+          "in": "path",
+          "name": "task_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the task",
+            "type": "string"
+          }
+        },
+        {
+          "example": "db5lh0dh7f0s1otndpp0",
+          "in": "path",
+          "name": "content_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the compose content",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "Removed the compose content from the task"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
+        }
+      },
+      "summary": "DELETE /tasks/{task_id}/compose-contents/{content_id}",
+      "tags": [
+        "Tasks"
+      ],
+      "x-experimental": true
+    },
+    "get": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a compose content of a task, with its current (draft) field values. Reference and embedded schema fields are returned as links only. An embedded child content can also be fetched by its own id when its parent content belongs to the task.",
+      "operationId": "getTaskComposeContent",
+      "parameters": [
+        {
+          "example": "645cb61c966d0c591320f636",
+          "in": "path",
+          "name": "task_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the task",
+            "type": "string"
+          }
+        },
+        {
+          "example": "db5lh0dh7f0s1otndpp0",
+          "in": "path",
+          "name": "content_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the compose content",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskComposeContentResponse"
+              }
+            }
+          },
+          "description": "Fetched compose content"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "GET /tasks/{task_id}/compose-contents/{content_id}",
+      "tags": [
+        "Tasks"
+      ],
+      "x-experimental": true
+    },
+    "patch": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update the field values of a compose content of a task. The given fields are merged into the existing fields. Field values are checked against the content schema structure; value rules (`validations`) are not checked on update. Returns 422 if the task is completed or archived.",
+      "operationId": "updateTaskComposeContent",
+      "parameters": [
+        {
+          "example": "645cb61c966d0c591320f636",
+          "in": "path",
+          "name": "task_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the task",
+            "type": "string"
+          }
+        },
+        {
+          "example": "db5lh0dh7f0s1otndpp0",
+          "in": "path",
+          "name": "content_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the compose content",
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TaskComposeContentUpdateRequest"
+            }
+          }
+        },
+        "description": "Payload to update a compose content",
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskComposeContentResponse"
+              }
+            }
+          },
+          "description": "Updated compose content"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
+        }
+      },
+      "summary": "PATCH /tasks/{task_id}/compose-contents/{content_id}",
+      "tags": [
+        "Tasks"
+      ],
+      "x-experimental": true
+    }
+  },
   "/tasks/{task_id}/custom-fields/{custom_field_id}": {
     "get": {
       "description": "Get a custom field of a task",
@@ -9882,6 +10265,68 @@
         }
       },
       "summary": "POST /tasks/{task_id}/structured-contents/{content_id}/previews",
+      "tags": [
+        "Tasks"
+      ]
+    }
+  },
+  "/tasks/{task_id}/structured-contents/{content_id}/versions": {
+    "get": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the list of versions of a task structured content, newest first. These are the versions that CMP lists for the content.",
+      "operationId": "listTaskStructuredContentVersions",
+      "parameters": [
+        {
+          "example": "645cb61c966d0c591320f636",
+          "in": "path",
+          "name": "task_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the task",
+            "type": "string"
+          }
+        },
+        {
+          "example": "a24b834428a043ab8caed1ded4606f7d",
+          "in": "path",
+          "name": "content_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the structured content",
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/offset"
+        },
+        {
+          "$ref": "#/components/parameters/page_size"
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskStructuredContentVersionListResponse"
+              }
+            }
+          },
+          "description": "List of versions of the task structured content"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "GET /tasks/{task_id}/structured-contents/{content_id}/versions",
       "tags": [
         "Tasks"
       ]
