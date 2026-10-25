@@ -76,6 +76,15 @@ export interface UpdateCampaignFieldParams {
   body: Schema.CampaignFieldUpdateRequest;
 }
 
+export interface GetComposeContentSchemaParams {
+  schema_id: string;
+}
+
+export interface ListComposeContentSchemasParams {
+  offset?: number;
+  page_size?: number;
+}
+
 export interface ListContentGraphsParams {
   /** Type of the content graph instances to return. Use `dam` for instances holding library assets and `sc` for instances holding structured contents. */
   type: 'dam' | 'sc';
@@ -219,6 +228,10 @@ export interface GetArticleParams {
   id: string;
 }
 
+export interface GetComposeContentParams {
+  content_id: string;
+}
+
 export interface GetFolderParams {
   id: string;
 }
@@ -279,7 +292,7 @@ export interface ListAssetRenditionsParams {
 
 export interface ListAssetsParams {
   /** Asset type to filter by. Example: `type=image&type=video` */
-  type?: 'article' | 'image' | 'video' | 'raw_file' | 'structured_content'[];
+  type?: 'article' | 'image' | 'video' | 'raw_file' | 'structured_content' | 'compose_content'[];
   /** Label to filter by. **Must be passed as urlencoded string**. Labels that do not exist are ignored. If none of the provided labels exist, filtering is not applied. Example – `label=%7B%22group%22%3A%22ee63e3ee43925bb5cc8cd17b817d93ee%22%2C%22values%22%3A%5B%226706efc7828cd6aaedbc0434139cd3e1%22%2C%221f32651216cf2aefcaa08be1ea7dedf1%22%5D%7D` */
   label?: Record<string, unknown>[];
   /** List of fields to filter by. **Must be passed as base64 encoded string**. Fields that do not exist are ignored. If none of the provided fields exist, filtering is not applied. Example – `fields=Wwp7CiJpZCI6ICI2N2E4NDZhMWM3NzU1YTFwNThpNjh5MzVhIiwKInZhbHVlcyI6IFsiNjdhODQ2YTFjNzc1YWU1YWExYTE0YTA1Il0KfQpd=` */
@@ -608,6 +621,11 @@ export interface CreateTaskParams {
   body: Schema.TaskCreateRequest;
 }
 
+export interface CreateTaskComposeContentParams {
+  task_id: string;
+  body: Schema.TaskComposeContentCreateRequest;
+}
+
 export interface CreateTaskPublishingIntentParams {
   task_id: string;
   body: Schema.TaskPublishingIntentCreateRequest;
@@ -625,6 +643,11 @@ export interface CreateTaskStructuredContentPreviewParams {
   /** Unique identifier of the structured content */
   content_id: string;
   body: Schema.TaskStructuredContentPreviewCreateRequest;
+}
+
+export interface DeleteTaskComposeContentParams {
+  task_id: string;
+  content_id: string;
 }
 
 export interface DeleteTaskStructuredContentParams {
@@ -650,6 +673,11 @@ export interface GetTaskArticleParams {
 
 export interface GetTaskBriefParams {
   id: string;
+}
+
+export interface GetTaskComposeContentParams {
+  task_id: string;
+  content_id: string;
 }
 
 export interface GetTaskCustomFieldParams {
@@ -764,6 +792,11 @@ export interface ListTasksParams {
   page_size?: number;
 }
 
+export interface ListTaskStructuredContentVersionsParams {
+  task_id: string;
+  content_id: string;
+}
+
 export interface ListTaskSubStepCommentsParams {
   task_id: string;
   step_id: string;
@@ -794,6 +827,12 @@ export interface UpdateTaskAssetFieldsParams {
   task_id: string;
   asset_id: string;
   body: Schema.TaskAssetFieldsUpdateRequest;
+}
+
+export interface UpdateTaskComposeContentParams {
+  task_id: string;
+  content_id: string;
+  body: Schema.TaskComposeContentUpdateRequest;
 }
 
 export interface UpdateTaskCustomFieldParams {

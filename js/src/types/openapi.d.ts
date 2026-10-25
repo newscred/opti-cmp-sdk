@@ -454,6 +454,66 @@ export type paths = {
         patch?: never;
         trace?: never;
     };
+    "/compose-contents/{content_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /compose-contents/{content_id}
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a compose content from the library, with the field values of its published version. Returns 404 if the content was never published.
+         */
+        get: operations["getComposeContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/compose/content-schemas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /compose/content-schemas
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get all content schemas of the organization. The list is not paginated, so `pagination.next` and `pagination.previous` are always `null`. Returns 403 if Compose is not enabled for the organization.
+         */
+        get: operations["listComposeContentSchemas"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/compose/content-schemas/{schema_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /compose/content-schemas/{schema_id}
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a content schema. Returns 403 if Compose is not enabled for the organization.
+         */
+        get: operations["getComposeContentSchema"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/content-graphs": {
         parameters: {
             query?: never;
@@ -1722,6 +1782,54 @@ export type paths = {
         patch?: never;
         trace?: never;
     };
+    "/tasks/{task_id}/compose-contents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * POST /tasks/{task_id}/compose-contents
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a compose content in a task. The new content has no field values and the status `draft`. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.
+         */
+        post: operations["createTaskComposeContent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tasks/{task_id}/compose-contents/{content_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /tasks/{task_id}/compose-contents/{content_id}
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a compose content of a task, with its current (draft) field values. Reference and embedded schema fields are returned as links only. An embedded child content can also be fetched by its own id when its parent content belongs to the task.
+         */
+        get: operations["getTaskComposeContent"];
+        put?: never;
+        post?: never;
+        /**
+         * DELETE /tasks/{task_id}/compose-contents/{content_id}
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Remove a compose content from a task. The content is not deleted from Compose, and references to it from other content are not checked. Returns 422 if the task is completed or archived.
+         */
+        delete: operations["deleteTaskComposeContent"];
+        options?: never;
+        head?: never;
+        /**
+         * PATCH /tasks/{task_id}/compose-contents/{content_id}
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Update the field values of a compose content of a task. The given fields are merged into the existing fields. Field values are checked against the content schema structure; value rules (`validations`) are not checked on update. Returns 422 if the task is completed or archived.
+         */
+        patch: operations["updateTaskComposeContent"];
+        trace?: never;
+    };
     "/tasks/{task_id}/custom-fields/{custom_field_id}": {
         parameters: {
             query?: never;
@@ -2097,6 +2205,26 @@ export type paths = {
          * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Add a preview URL to the latest version of a structured content in a task. The task must be neither archived nor completed.
          */
         post: operations["createTaskStructuredContentPreview"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tasks/{task_id}/structured-contents/{content_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * GET /tasks/{task_id}/structured-contents/{content_id}/versions
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the list of versions of a task structured content, newest first. These are the versions that CMP lists for the content.
+         */
+        get: operations["listTaskStructuredContentVersions"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2680,12 +2808,13 @@ export type components = {
              *      - article  – `html_body`
              *      - image, raw_file, video  – `url`
              *      - structured_content  – `api_url`
+             *      - compose_content  – `api_url`
              * @example url
              * @enum {string}
              */
             type: "url" | "api_url" | "html_body";
             /**
-             * @description Content of the asset.  - article – the html body - image, raw_file, video – the download URL - structured_content – api url
+             * @description Content of the asset.  - article – the html body - image, raw_file, video – the download URL - structured_content – api url - compose_content – api url
              * @example http://images.cmp.optimizely.com/Zz0xODQ3NDU3Y2Y2YmYzOTlmNjkyOTgyZDY3Y2I3YWM2OA==S
              */
             value: string;
@@ -3083,7 +3212,7 @@ export type components = {
              * @example image
              * @enum {string}
              */
-            type: "article" | "image" | "video" | "raw_file" | "structured_content";
+            type: "article" | "image" | "video" | "raw_file" | "structured_content" | "compose_content";
         };
         AssetTypeObjectField: components["schemas"]["BaseObjectField"] & components["schemas"]["AssetTypeObjectFieldUpdatePayload"] & {
             /**
@@ -4004,6 +4133,149 @@ export type components = {
              * @example Comment mentioning @[Organization User](https://api.cmp.optimizely.com/v3/users/5fe38aeb574b52a62a089238)
              */
             value: string;
+        };
+        /**
+         * @description Field values of the compose content, keyed by the field `api_id` of the content schema. Each value is an object keyed by locale code (for example `en-US`). Fields that are not localized are still keyed by the default locale. The value type depends on the field type in the content schema. Reference and embedded schema fields are returned as links only: `{"meta": {"id": "...", "type": "link", "link_type": "content"}}`.
+         * @example {
+         *       "is_featured": {
+         *         "en-US": true
+         *       },
+         *       "title": {
+         *         "de": "Hallo",
+         *         "en-US": "Hello from Open API"
+         *       }
+         *     }
+         */
+        ComposeContentFields: {
+            [key: string]: {
+                [key: string]: unknown;
+            };
+        };
+        ComposeContentSchemaResponse: {
+            /**
+             * @description Identifier of the content schema, used in `schema_id` when creating compose content
+             * @example blog_post
+             */
+            api_id: string;
+            /**
+             * Format: date-time
+             * @description Date and time on which the content schema was created, in ISO 8601 UTC format
+             * @example 2026-10-11T09:33:44Z
+             */
+            created_at: string;
+            /**
+             * @description Description of the content schema
+             * @example A blog post with a title and a body
+             */
+            description: string | null;
+            /**
+             * @description Field used as the display title of a compose content
+             * @example title
+             */
+            display_field_id: string | null;
+            /** @description Fields of the content schema */
+            fields: components["schemas"]["ComposeFieldDefinition"][];
+            /**
+             * @description Internal identifier of the content schema
+             * @example db5lfu5h7f0s1otndoug
+             */
+            id: string;
+            /** @description Meta links */
+            links: {
+                /**
+                 * @description URL of the content schema
+                 * @example https://api.cmp.optimizely.com/v3/compose/content-schemas/blog_post
+                 */
+                self: string;
+            };
+            /**
+             * @description Name of the content schema
+             * @example Blog Post
+             */
+            name: string;
+            /**
+             * Format: date-time
+             * @description Date and time of the most recent update of the content schema, in ISO 8601 UTC format
+             * @example 2026-10-11T09:35:00Z
+             */
+            updated_at: string;
+            /**
+             * @description Version of the content schema
+             * @example 2
+             */
+            version: number;
+        };
+        /** @description Definition of one field in a content schema */
+        ComposeFieldDefinition: {
+            /**
+             * @description Identifier of the field. Use it as the key in compose content `fields`.
+             * @example title
+             */
+            api_id: string;
+            /**
+             * @description Internal identifier of the field
+             * @example db5lgh5h7f0s1otndp90
+             */
+            id: string;
+            /** @description Definition of the list items. Set only for list fields. */
+            items: {
+                /**
+                 * @description Target type when the items are references
+                 * @example null
+                 */
+                link_type: string | null;
+                /**
+                 * @description Type of each item in the list
+                 * @example string
+                 */
+                type: string;
+                /**
+                 * @description Validation rules applied to each item
+                 * @example null
+                 */
+                validations: {
+                    [key: string]: unknown;
+                }[] | null;
+            } | null;
+            /**
+             * @description Target type of a reference field
+             * @example null
+             */
+            link_type: string | null;
+            /**
+             * @description Whether the field holds a separate value per locale
+             * @example true
+             */
+            localized: boolean;
+            /**
+             * @description Display name of the field
+             * @example Title
+             */
+            name: string;
+            /**
+             * @description Whether the field must have a value before the content can be published
+             * @example false
+             */
+            required: boolean;
+            /**
+             * @description Type of the field. For example `string`, `boolean`, `object`, `list`, `date_time`, `rich_text`, `reference` or `embedded_schema`.
+             * @example string
+             */
+            type: string;
+            /**
+             * @description Validation rules of the field
+             * @example [
+             *       {
+             *         "size": {
+             *           "max": 60,
+             *           "min": 1
+             *         }
+             *       }
+             *     ]
+             */
+            validations: {
+                [key: string]: unknown;
+            }[] | null;
         };
         ContentDetailsModel: {
             /** @description Unique identifier of the content */
@@ -5691,6 +5963,85 @@ export type components = {
              */
             version_number: number;
         };
+        LibraryComposeContentResponse: {
+            /** @description Content schema of the compose content */
+            content_schema: {
+                /**
+                 * @description Internal identifier of the content schema
+                 * @example db5lfu5h7f0s1otndoug
+                 */
+                id: string | null;
+                /**
+                 * @description Name of the content schema
+                 * @example Blog Post
+                 */
+                name: string | null;
+            } | null;
+            /**
+             * Format: date-time
+             * @description Date and time on which the compose content was created, in ISO 8601 UTC format
+             * @example 2026-10-11T09:36:01Z
+             */
+            created_at: string;
+            /** @description Field values of the published version of the compose content */
+            fields: components["schemas"]["ComposeContentFields"];
+            /**
+             * @description Location of the folder containing the compose content in the library
+             * @example /all files/
+             */
+            file_location: string;
+            /**
+             * @description ID of the folder containing the compose content in the library
+             * @example 6bb8db20a5b611ebae319b7c541b1a5a
+             */
+            folder_id: string | null;
+            /**
+             * @description Unique identifier of the compose content
+             * @example db1jqsvq64lsu74mnujg
+             */
+            id: string;
+            /**
+             * @description Whether the compose content is archived or not
+             * @example false
+             */
+            is_archived: boolean;
+            /** @description Labels associated with the compose content */
+            labels: components["schemas"]["ResourceLabelResponse"][];
+            /** @description Meta links */
+            links: {
+                /**
+                 * @description URL of the content schema
+                 * @example https://api.cmp.optimizely.com/v3/compose/content-schemas/db5lfu5h7f0s1otndoug
+                 */
+                content_schema: string | null;
+                /**
+                 * @description URL of the compose content
+                 * @example https://api.cmp.optimizely.com/v3/compose-contents/db1jqsvq64lsu74mnujg
+                 */
+                self: string;
+            };
+            /**
+             * Format: date-time
+             * @description Date and time of the most recent modification of the compose content, in ISO 8601 UTC format
+             * @example 2026-10-11T10:02:45Z
+             */
+            modified_at: string;
+            /**
+             * @description ID of owner organization of the compose content
+             * @example 5108c3a9becac35915111191
+             */
+            owner_organization_id: string;
+            /**
+             * @description Status of the library asset
+             * @example published
+             */
+            status: string | null;
+            /**
+             * @description Title of the compose content. Empty string if the content has no title.
+             * @example Hello from Open API
+             */
+            title: string;
+        };
         LibraryImage: {
             /**
              * @description Whether the image is allowed to be indexed by search engines
@@ -5864,6 +6215,25 @@ export type components = {
              */
             expires_at?: string | null;
             /**
+             * @description Focal point of the image, used when cropping renditions. Coordinates are percentages of the image width and height, where `{"x": 50, "y": 50}` is the center of the image.
+             * @example {
+             *       "x": 35,
+             *       "y": 75
+             *     }
+             */
+            focal_point?: {
+                /**
+                 * @description Horizontal position of the focal point as a percentage of the image width
+                 * @example 35
+                 */
+                x: number;
+                /**
+                 * @description Vertical position of the focal point as a percentage of the image height
+                 * @example 75
+                 */
+                y: number;
+            };
+            /**
              * @description ID of the folder containing the image in the library
              * @example 6bb8db20a5b611ebae319b7c541b1a5a
              */
@@ -5880,7 +6250,7 @@ export type components = {
             is_public?: boolean;
             /**
              * @deprecated
-             * @description Please use [PUT /assets/{asset_id}/fields](https://docs.developers.optimizely.com/content-marketing-platform/reference/put_assets-asset-id-fields) or  [PUT /assets/{asset_id}/fields/{field_id}](https://docs.developers.optimizely.com/content-marketing-platform/reference/put_assets-asset-id-fields-field-id)  API to update label type asset fields
+             * @description Please use [PUT /assets/{asset_id}/fields](https://docs.developers.optimizely.com/content-marketing-platform/reference/put_assets-asset-id-fields) or [PUT /assets/{asset_id}/fields/{field_id}](https://docs.developers.optimizely.com/content-marketing-platform/reference/put_assets-asset-id-fields-field-id) API to update label type asset fields
              */
             labels?: components["schemas"]["ResourceLabelRequest"][];
             /**
@@ -7186,11 +7556,12 @@ export type components = {
                  *      - article  – `html_body`
                  *      - image, raw_file, video  – `url`
                  *      - structured_content  – `api_url`
+                 *      - compose_content  – `api_url`
                  * @example url
                  * @enum {string}
                  */
                 type: "url" | "api_url" | "html_body";
-                /** @description Content of the asset. - article – the html body - image, raw_file, video – the download URL - structured_content – api url */
+                /** @description Content of the asset. - article – the html body - image, raw_file, video – the download URL - structured_content – api url - compose_content – api url */
                 value: string;
             };
             /**
@@ -7226,7 +7597,7 @@ export type components = {
              * @example image
              * @enum {string}
              */
-            type: "article" | "image" | "video" | "raw_file" | "structured_content";
+            type: "article" | "image" | "video" | "raw_file" | "structured_content" | "compose_content";
         };
         RelatedAssetsListResponse: {
             /** @description List of related assets */
@@ -8376,7 +8747,7 @@ export type components = {
              * @example image
              * @enum {string}
              */
-            type: "article" | "image" | "video" | "raw_file" | "structured_content";
+            type: "article" | "image" | "video" | "raw_file" | "structured_content" | "compose_content";
         };
         TaskBriefResponse: {
             /** @description List of fields of the brief */
@@ -8495,6 +8866,76 @@ export type components = {
              * @example Well done!
              */
             value: string;
+        };
+        TaskComposeContentCreateRequest: {
+            /**
+             * @description Content schema of the new compose content. Accepts the schema `api_id` or its internal `id`.
+             * @example blog_post
+             */
+            schema_id: string;
+        };
+        TaskComposeContentResponse: {
+            /**
+             * @description Internal identifier of the content schema of the compose content
+             * @example db5lfu5h7f0s1otndoug
+             */
+            content_schema_id: string;
+            /**
+             * Format: date-time
+             * @description Date and time on which the compose content was created, in ISO 8601 UTC format
+             * @example 2026-10-11T09:36:01Z
+             */
+            created_at: string;
+            fields: components["schemas"]["ComposeContentFields"];
+            /**
+             * @description Unique identifier of the compose content
+             * @example db5lh0dh7f0s1otndpp0
+             */
+            id: string;
+            /** @description Meta links */
+            links: {
+                /**
+                 * @description URL of the content schema
+                 * @example https://api.cmp.optimizely.com/v3/compose/content-schemas/db5lfu5h7f0s1otndoug
+                 */
+                content_schema: string | null;
+                /**
+                 * @description URL of the compose content
+                 * @example https://api.cmp.optimizely.com/v3/tasks/645cb61c966d0c591320f636/compose-contents/db5lh0dh7f0s1otndpp0
+                 */
+                self: string;
+                /**
+                 * @description URL of the task
+                 * @example https://api.cmp.optimizely.com/v3/tasks/645cb61c966d0c591320f636
+                 */
+                task: string;
+            };
+            /**
+             * @description Version number that is currently published. `null` if the content was never published.
+             * @example null
+             */
+            published_version: number | null;
+            /**
+             * @description Status of the compose content
+             * @example draft
+             * @enum {string|null}
+             */
+            status: "draft" | "changed" | "published" | "archived" | null;
+            /**
+             * Format: date-time
+             * @description Date and time of the most recent update of the compose content, in ISO 8601 UTC format
+             * @example 2026-10-11T09:36:11Z
+             */
+            updated_at: string;
+            /**
+             * @description Current version number of the compose content
+             * @example 1
+             */
+            version: number;
+        };
+        TaskComposeContentUpdateRequest: {
+            /** @description Field values to set. The values are merged into the existing fields: fields that are not in the request keep their values. Each field must exist in the content schema, and each locale code must be active. A `null` value is not supported and does not clear a field. */
+            fields: components["schemas"]["ComposeContentFields"];
         };
         TaskCreateRequest: {
             /**
@@ -9208,6 +9649,53 @@ export type components = {
              * @example Some webpage
              */
             title?: string;
+        };
+        TaskStructuredContentVersion: {
+            /**
+             * Format: date-time
+             * @description Date and time on which the version was created, in ISO 8601 UTC format
+             * @example 2026-10-02T09:15:00Z
+             */
+            created_at: string;
+            /**
+             * @description Unique identifier of the user who created the version
+             * @example 5c52cc153db27d0e5141146f
+             */
+            created_by: string;
+            /** @description Meta links */
+            links: {
+                /**
+                 * @description URL of the task structured content
+                 * @example https://api.cmp.optimizely.com/v3/tasks/645cb61c966d0c591320f636/structured-contents/a24b834428a043ab8caed1ded4606f7d
+                 */
+                structured_content: string;
+                /** @description Web URLs */
+                web_urls: {
+                    /**
+                     * @description Web URL of the version of the structured content in the task
+                     * @example https://cmp.optimizely.com/go/5c52cc153db27d0e5141146f/tasks/645cb61c966d0c591320f636/structured-contents/a24b834428a043ab8caed1ded4606f7d/versions/31a6d15b09c54a04935203eb958ae058
+                     */
+                    self: string;
+                };
+            };
+            /**
+             * @description Source metadata of the version
+             * @example null
+             */
+            source_metadata: string | null;
+            /**
+             * @description Unique identifier of the version, as CMP lists it. A version is created when the content or any of its nested contents changes. This identifier is not the same as the `version_guid` of `latest_fields_version` or the `version_id` of the `/structured-content` endpoints, and those endpoints do not accept it.
+             * @example 31a6d15b09c54a04935203eb958ae058
+             */
+            version_guid: string;
+        };
+        TaskStructuredContentVersionListResponse: {
+            /** @description List of versions of the task structured content, newest first */
+            data: components["schemas"]["TaskStructuredContentVersion"][];
+            pagination: components["schemas"]["Pagination"] & {
+                /** @example https://api.cmp.optimizely.com/v3/tasks/645cb61c966d0c591320f636/structured-contents/a24b834428a043ab8caed1ded4606f7d/versions?offset=10&page_size=10 */
+                next?: string | null;
+            };
         };
         TaskSubStep: {
             /**
@@ -11502,7 +11990,7 @@ export interface operations {
         parameters: {
             query?: {
                 /** @description Asset type to filter by. Example: `type=image&type=video` */
-                type?: ("article" | "image" | "video" | "raw_file" | "structured_content")[];
+                type?: ("article" | "image" | "video" | "raw_file" | "structured_content" | "compose_content")[];
                 /** @description Label to filter by. **Must be passed as urlencoded string**. Labels that do not exist are ignored. If none of the provided labels exist, filtering is not applied. Example – `label=%7B%22group%22%3A%22ee63e3ee43925bb5cc8cd17b817d93ee%22%2C%22values%22%3A%5B%226706efc7828cd6aaedbc0434139cd3e1%22%2C%221f32651216cf2aefcaa08be1ea7dedf1%22%5D%7D` */
                 label?: {
                     /**
@@ -12455,6 +12943,87 @@ export interface operations {
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
             422: components["responses"]["UnprocessableEntity"];
+        };
+    };
+    getComposeContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example db1jqsvq64lsu74mnujg */
+                content_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Fetched compose content */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryComposeContentResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    listComposeContentSchemas: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of content schemas */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description List of content schemas */
+                        data: components["schemas"]["ComposeContentSchemaResponse"][];
+                        pagination: components["schemas"]["Pagination"];
+                    };
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getComposeContentSchema: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example blog_post */
+                schema_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Fetched content schema */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ComposeContentSchemaResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     listContentGraphs: {
@@ -15692,6 +16261,131 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
+    createTaskComposeContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example 645cb61c966d0c591320f636 */
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        /** @description Payload to create a compose content */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskComposeContentCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Created compose content */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskComposeContentResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["UnprocessableEntity"];
+        };
+    };
+    getTaskComposeContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example 645cb61c966d0c591320f636 */
+                task_id: string;
+                /** @example db5lh0dh7f0s1otndpp0 */
+                content_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Fetched compose content */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskComposeContentResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    deleteTaskComposeContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example 645cb61c966d0c591320f636 */
+                task_id: string;
+                /** @example db5lh0dh7f0s1otndpp0 */
+                content_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Removed the compose content from the task */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["UnprocessableEntity"];
+        };
+    };
+    updateTaskComposeContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @example 645cb61c966d0c591320f636 */
+                task_id: string;
+                /** @example db5lh0dh7f0s1otndpp0 */
+                content_id: string;
+            };
+            cookie?: never;
+        };
+        /** @description Payload to update a compose content */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskComposeContentUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated compose content */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskComposeContentResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["UnprocessableEntity"];
+        };
+    };
     getTaskCustomField: {
         parameters: {
             query?: never;
@@ -16628,6 +17322,46 @@ export interface operations {
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
             422: components["responses"]["UnprocessableEntity"];
+        };
+    };
+    listTaskStructuredContentVersions: {
+        parameters: {
+            query?: {
+                /**
+                 * @description Starting index of results (zero indexed)
+                 * @example 5
+                 */
+                offset?: components["parameters"]["offset"];
+                /**
+                 * @description Number of results to return per page
+                 * @example 15
+                 */
+                page_size?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @example 645cb61c966d0c591320f636 */
+                task_id: string;
+                /** @example a24b834428a043ab8caed1ded4606f7d */
+                content_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of versions of the task structured content */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskStructuredContentVersionListResponse"];
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
     addUrlToTask: {
