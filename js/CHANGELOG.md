@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/newscred/opti-cmp-sdk/compare/js-0.1.0...js-0.1.1) (2026-10-25)
+
+
+### Features
+
+* **js:** generate from latest specification ([1628e58](https://github.com/newscred/opti-cmp-sdk/commit/1628e580ff2568c197c3995cc019c147d787b9dc))
+* **js:** mark experimental endpoints and add JSDoc to endpoint methods ([c403dc9](https://github.com/newscred/opti-cmp-sdk/commit/c403dc9f843309b290faf6be1aea2ec3a0020904))
+
 ## [0.1.0](https://github.com/newscred/opti-cmp-sdk/compare/js-0.0.7...js-0.1.0) (2026-10-15)
 
 
