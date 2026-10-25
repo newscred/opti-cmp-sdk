@@ -11,17 +11,20 @@ const TEMPLATES_DIR = join(__dirname, "..", "templates");
 
 interface EndpointMapping {
   deprecated?: boolean;
+  experimental?: boolean;
   name: string;
   namespace: string;
 }
 
 interface OperationObject {
   deprecated?: boolean;
+  description?: string;
   parameters?: ParameterObject[];
   requestBody?: RequestBodyObject;
   responses?: Record<string, ResponseObject>;
   summary?: string;
   tags?: string[];
+  "x-experimental"?: boolean;
 }
 
 interface ParameterObject {
@@ -85,7 +88,7 @@ interface TemplateData {
 interface TemplateEndpoint {
   bodyRequired?: boolean;
   bodyType?: string;
-  deprecated?: boolean;
+  docLines: string[];
   hasBody: boolean;
   isEmpty: boolean;
   name: string;
@@ -114,6 +117,33 @@ function toPascalCase(str: string): string {
 }
 
 const HTTP_METHODS = ["get", "post", "put", "patch", "delete"] as const;
+
+function getDocLines(
+  method: string,
+  path: string,
+  operation: OperationObject,
+): string[] {
+  const lines: string[] = [];
+
+  if (operation.description) {
+    const description = operation.description
+      .replace(/<span[^>]*>(.*?)<\/span>\s*/g, "**$1:** ")
+      .replace(/<[^>]+>/g, "")
+      .replace(/\*\//g, "*\\/")
+      .trim();
+    lines.push(...description.split("\n"), "");
+  }
+
+  lines.push(`\`${method.toUpperCase()} ${path}\``);
+
+  if (operation["x-experimental"] || operation.deprecated) {
+    lines.push("");
+    if (operation["x-experimental"]) lines.push("@experimental");
+    if (operation.deprecated) lines.push("@deprecated");
+  }
+
+  return lines.map((line) => (line ? ` ${line}` : ""));
+}
 
 function getRequestBodyType(
   requestBody: RequestBodyObject | undefined,
@@ -265,7 +295,7 @@ function main(): void {
       const endpoint: TemplateEndpoint = {
         bodyRequired: bodyInfo?.bodyRequired,
         bodyType: bodyInfo?.bodyType,
-        deprecated: operation.deprecated,
+        docLines: getDocLines(method, path, operation),
         hasBody,
         isEmpty,
         name,

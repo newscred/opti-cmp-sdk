@@ -8,9 +8,11 @@ export interface APIEndpoints {
 {{#namespaces}}
   {{namespace}}: {
 {{#endpoints}}
-{{#deprecated}}
-    /** @deprecated */
-{{/deprecated}}
+    /**
+{{#docLines}}
+     *{{{.}}}
+{{/docLines}}
+     */
     {{name}}: (
       params: Params.{{paramsType}},
     ) => Promise<{{{returnType}}}>;

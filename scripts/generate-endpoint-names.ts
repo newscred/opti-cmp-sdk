@@ -9,6 +9,7 @@ interface EndpointNameMapping {
   [path: string]: {
     [method: string]: {
       deprecated?: boolean;
+      experimental?: boolean;
       name: string;
       namespace: string;
     };
@@ -20,6 +21,7 @@ interface OperationObject {
   operationId?: string;
   summary?: string;
   tags?: string[];
+  "x-experimental"?: boolean;
 }
 
 interface PathItem {
@@ -139,6 +141,7 @@ function main(): void {
 
       endpointNames[path][method] = {
         deprecated: operation.deprecated,
+        experimental: operation["x-experimental"],
         name,
         namespace,
       };
