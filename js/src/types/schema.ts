@@ -290,6 +290,7 @@ export type TaskCreateRequest = components["schemas"]["TaskCreateRequest"];
 export type TaskCustomField = components["schemas"]["TaskCustomField"];
 export type TaskCustomFieldChoiceListResponseItem = components["schemas"]["TaskCustomFieldChoiceListResponseItem"];
 export type TaskCustomFieldUpdateRequest = components["schemas"]["TaskCustomFieldUpdateRequest"];
+export type TaskDependentTasksConflictError = components["schemas"]["TaskDependentTasksConflictError"];
 export type TaskExternalWorkRequest = components["schemas"]["TaskExternalWorkRequest"];
 export type TaskExternalWorkResponse = components["schemas"]["TaskExternalWorkResponse"];
 export type TaskFieldUpdateRequest = components["schemas"]["TaskFieldUpdateRequest"];

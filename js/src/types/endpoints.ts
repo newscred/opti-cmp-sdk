@@ -20,6 +20,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the brand compliance details of a draft of an asset of a task.
      *
      * `GET /tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance`
+     *
+     * @experimental
      */
     getTaskAssetDraftBrandCompliance: (
       params: Params.GetTaskAssetDraftBrandComplianceParams,
@@ -28,6 +30,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of brand compliance categories.
      *
      * `GET /brand-compliance/categories`
+     *
+     * @experimental
      */
     listBrandComplianceCategories: (
       params: Params.ListBrandComplianceCategoriesParams,
@@ -36,6 +40,8 @@ export interface APIEndpoints {
      * **Experimental:** Update the brand compliance details of a draft of an asset of a task.
      *
      * `PUT /tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance`
+     *
+     * @experimental
      */
     updateTaskAssetDraftBrandCompliance: (
       params: Params.UpdateTaskAssetDraftBrandComplianceParams,
@@ -46,6 +52,8 @@ export interface APIEndpoints {
      * **Experimental:** Add an attachment to the campaign.
      *
      * `POST /campaigns/{id}/attachments`
+     *
+     * @experimental
      */
     addAttachmentToCampaign: (
       params: Params.AddAttachmentToCampaignParams,
@@ -54,6 +62,8 @@ export interface APIEndpoints {
      * **Experimental:** Post a comment on a campaign.
      *
      * `POST /campaigns/{id}/comments`
+     *
+     * @experimental
      */
     addCommentToCampaign: (
       params: Params.AddCommentToCampaignParams,
@@ -62,6 +72,8 @@ export interface APIEndpoints {
      * **Experimental:** Add a field to a campaign.
      *
      * `POST /campaigns/{id}/fields`
+     *
+     * @experimental
      */
     addFieldToCampaign: (
       params: Params.AddFieldToCampaignParams,
@@ -70,6 +82,8 @@ export interface APIEndpoints {
      * **Experimental:** Create a campaign
      *
      * `POST /campaigns`
+     *
+     * @experimental
      */
     createCampaign: (
       params: Params.CreateCampaignParams,
@@ -94,6 +108,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of fields of a campaign.
      *
      * `GET /campaigns/{id}/fields`
+     *
+     * @experimental
      */
     listCampaignFields: (
       params: Params.ListCampaignFieldsParams,
@@ -102,6 +118,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of campaigns.
      *
      * `GET /campaigns`
+     *
+     * @experimental
      */
     listCampaigns: (
       params: Params.ListCampaignsParams,
@@ -110,6 +128,8 @@ export interface APIEndpoints {
      * **Experimental:** Update a campaign
      *
      * `PATCH /campaigns/{id}`
+     *
+     * @experimental
      */
     updateCampaign: (
       params: Params.UpdateCampaignParams,
@@ -118,6 +138,8 @@ export interface APIEndpoints {
      * **Experimental:** Update the field value of a campaign.
      *
      * `PUT /campaigns/{campaign_id}/fields/{field_id}`
+     *
+     * @experimental
      */
     updateCampaignField: (
       params: Params.UpdateCampaignFieldParams,
@@ -152,6 +174,8 @@ export interface APIEndpoints {
      * An organization with no content graph instance of the requested type gets an empty `data` list rather than an error.
      *
      * `GET /content-graphs`
+     *
+     * @experimental
      */
     listContentGraphs: (
       params: Params.ListContentGraphsParams,
@@ -164,6 +188,8 @@ export interface APIEndpoints {
      * **Reading the response.** A `200` carries the graph's JSON payload (`data`, and `extensions` when present) passed through unchanged. If the graph rejects a well-formed query, the endpoint returns the graph's own `4xx` status with its GraphQL `errors` body (for example `429` when the graph rate-limits). A `502` means the content graph is unavailable or returned a server error, and a `504` means it could not be reached in time — both are transient, so retry. A `500` is a server-side failure on our end and, unlike `502`/`504`, will not be resolved by retrying.
      *
      * `POST /content-graphs/{instance_id}/query`
+     *
+     * @experimental
      */
     queryContentGraph: (
       params: Params.QueryContentGraphParams,
@@ -174,6 +200,8 @@ export interface APIEndpoints {
      * **Experimental:** Create an event.
      *
      * `POST /events`
+     *
+     * @experimental
      */
     createEvent: (
       params: Params.CreateEventParams,
@@ -182,6 +210,8 @@ export interface APIEndpoints {
      * **Experimental:** Get an event.
      *
      * `GET /events/{id}`
+     *
+     * @experimental
      */
     getEvent: (
       params: Params.GetEventParams,
@@ -190,6 +220,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of fields of an event.
      *
      * `GET /events/{id}/fields`
+     *
+     * @experimental
      */
     listEventFields: (
       params: Params.ListEventFieldsParams,
@@ -198,6 +230,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of events.
      *
      * `GET /events`
+     *
+     * @experimental
      */
     listEvents: (
       params: Params.ListEventsParams,
@@ -206,6 +240,8 @@ export interface APIEndpoints {
      * **Experimental:** Update an event.
      *
      * `PATCH /events/{id}`
+     *
+     * @experimental
      */
     updateEvent: (
       params: Params.UpdateEventParams,
@@ -214,6 +250,8 @@ export interface APIEndpoints {
      * **Experimental:** Replace existing fields of an event.
      *
      * `PUT /events/{id}/fields`
+     *
+     * @experimental
      */
     updateEventFields: (
       params: Params.UpdateEventFieldsParams,
@@ -224,6 +262,8 @@ export interface APIEndpoints {
      * **Experimental:** Add a new field to an Organization.
      *
      * `POST /fields`
+     *
+     * @experimental
      */
     createField: (
       params: Params.CreateFieldParams,
@@ -232,6 +272,8 @@ export interface APIEndpoints {
      * **Experimental:** Create choices in a field.
      *
      * `POST /fields/{id}/choices`
+     *
+     * @experimental
      */
     createFieldChoices: (
       params: Params.CreateFieldChoicesParams,
@@ -240,6 +282,8 @@ export interface APIEndpoints {
      * **Experimental:** Delete a choice from a field. A request that deletes the last active choice of a field fails with a `400` error.
      *
      * `DELETE /fields/{field_id}/choices/{choice_id}`
+     *
+     * @experimental
      */
     deleteFieldChoice: (
       params: Params.DeleteFieldChoiceParams,
@@ -248,6 +292,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of fields of an Organization.
      *
      * `GET /fields`
+     *
+     * @experimental
      */
     listFields: (
       params: Params.ListFieldsParams,
@@ -256,6 +302,8 @@ export interface APIEndpoints {
      * **Experimental:** Update a field in an Organization.
      *
      * `PATCH /fields/{id}`
+     *
+     * @experimental
      */
     updateField: (
       params: Params.UpdateFieldParams,
@@ -264,6 +312,8 @@ export interface APIEndpoints {
      * **Experimental:** Update a choice of a field.
      *
      * `PATCH /fields/{field_id}/choices/{choice_id}`
+     *
+     * @experimental
      */
     updateFieldChoice: (
       params: Params.UpdateFieldChoiceParams,
@@ -284,6 +334,8 @@ export interface APIEndpoints {
      * **Experimental:** Grant asset access to users or teams
      *
      * `POST /assets/{asset_id}/permissions`
+     *
+     * @experimental
      */
     addAssetPermissions: (
       params: Params.AddAssetPermissionsParams,
@@ -292,6 +344,8 @@ export interface APIEndpoints {
      * **Experimental:** Grant folder access to users or teams
      *
      * `POST /folders/{id}/permissions`
+     *
+     * @experimental
      */
     addFolderPermissions: (
       params: Params.AddFolderPermissionsParams,
@@ -308,6 +362,8 @@ export interface APIEndpoints {
      * **Experimental:** Add a new external asset lineage.
      *
      * `POST /assets/{asset_id}/lineages`
+     *
+     * @experimental
      */
     createAssetLineage: (
       params: Params.CreateAssetLineageParams,
@@ -340,6 +396,8 @@ export interface APIEndpoints {
      * **Experimental:** Creates a structured content.
      *
      * `POST /structured-contents`
+     *
+     * @experimental
      */
     createStructuredContent: (
       params: Params.CreateStructuredContentParams,
@@ -348,6 +406,8 @@ export interface APIEndpoints {
      * **Experimental:** Delete an asset lineage.
      *
      * `DELETE /assets/{asset_id}/lineages/{lineage_id}`
+     *
+     * @experimental
      */
     deleteAssetLineage: (
       params: Params.DeleteAssetLineageParams,
@@ -356,6 +416,8 @@ export interface APIEndpoints {
      * **Experimental:** Delete a folder.
      *
      * `DELETE /folders/{id}`
+     *
+     * @experimental
      */
     deleteFolder: (
       params: Params.DeleteFolderParams,
@@ -430,6 +492,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a rendition given its `id`.
      *
      * `GET /renditions/{id}`
+     *
+     * @experimental
      */
     getRendition: (
       params: Params.GetRenditionParams,
@@ -438,6 +502,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a rendition configuration of an organization given its `id`.
      *
      * `GET /rendition-configs/{id}`
+     *
+     * @experimental
      */
     getRenditionConfig: (
       params: Params.GetRenditionConfigParams,
@@ -446,6 +512,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the structured content.
      *
      * `GET /structured-contents/{id}`
+     *
+     * @experimental
      */
     getStructuredContent: (
       params: Params.GetStructuredContentParams,
@@ -462,6 +530,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of fields of an asset.
      *
      * `GET /assets/{asset_id}/fields`
+     *
+     * @experimental
      */
     listAssetFields: (
       params: Params.ListAssetFieldsParams,
@@ -470,6 +540,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of asset lineage.
      *
      * `GET /asset-lineages`
+     *
+     * @experimental
      */
     listAssetLineages: (
       params: Params.ListAssetLineagesParams,
@@ -478,6 +550,8 @@ export interface APIEndpoints {
      * **Experimental:** List of entities that have permission to access the asset
      *
      * `GET /assets/{asset_id}/permissions`
+     *
+     * @experimental
      */
     listAssetPermissions: (
       params: Params.ListAssetPermissionsParams,
@@ -486,6 +560,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the renditions of an asset given its `id`.
      *
      * `GET /assets/{asset_id}/renditions`
+     *
+     * @experimental
      */
     listAssetRenditions: (
       params: Params.ListAssetRenditionsParams,
@@ -503,6 +579,8 @@ export interface APIEndpoints {
      * **Experimental:** List of entities that have permission to access the folder
      *
      * `GET /folders/{id}/permissions`
+     *
+     * @experimental
      */
     listFolderPermissions: (
       params: Params.ListFolderPermissionsParams,
@@ -527,6 +605,8 @@ export interface APIEndpoints {
      * **Experimental:** Remove accessor's access from an asset
      *
      * `DELETE /assets/{asset_id}/permissions/{accessor_id}`
+     *
+     * @experimental
      */
     removeAssetPermission: (
       params: Params.RemoveAssetPermissionParams,
@@ -535,6 +615,8 @@ export interface APIEndpoints {
      * **Experimental:** Remove accessor's access from a folder
      *
      * `DELETE /folders/{id}/permissions/{accessor_id}`
+     *
+     * @experimental
      */
     removeFolderPermission: (
       params: Params.RemoveFolderPermissionParams,
@@ -551,6 +633,8 @@ export interface APIEndpoints {
      * **Experimental:** Update the field value of an asset.
      *
      * `PUT /assets/{asset_id}/fields/{field_id}`
+     *
+     * @experimental
      */
     updateAssetField: (
       params: Params.UpdateAssetFieldParams,
@@ -559,6 +643,8 @@ export interface APIEndpoints {
      * **Experimental:** Replace existing fields of an asset.
      *
      * `PUT /assets/{asset_id}/fields`
+     *
+     * @experimental
      */
     updateAssetFields: (
       params: Params.UpdateAssetFieldsParams,
@@ -567,6 +653,8 @@ export interface APIEndpoints {
      * **Experimental:** Update accessor's access level and ownership of asset
      *
      * `PATCH /assets/{asset_id}/permissions/{accessor_id}`
+     *
+     * @experimental
      */
     updateAssetPermission: (
       params: Params.UpdateAssetPermissionParams,
@@ -575,6 +663,8 @@ export interface APIEndpoints {
      * **Experimental:** Update a folder's name and/or parent.
      *
      * `PATCH /folders/{id}`
+     *
+     * @experimental
      */
     updateFolder: (
       params: Params.UpdateFolderParams,
@@ -583,6 +673,8 @@ export interface APIEndpoints {
      * **Experimental:** Update accessor's access level and ownership of folder
      *
      * `PATCH /folders/{id}/permissions/{accessor_id}`
+     *
+     * @experimental
      */
     updateFolderPermission: (
       params: Params.UpdateFolderPermissionParams,
@@ -607,6 +699,8 @@ export interface APIEndpoints {
      * **Experimental:** Updates a structured content.
      *
      * `PATCH /structured-contents/{id}`
+     *
+     * @experimental
      */
     updateStructuredContent: (
       params: Params.UpdateStructuredContentParams,
@@ -625,6 +719,8 @@ export interface APIEndpoints {
      * **Experimental:** Creates a milestone. Defaults to the organization's campaign if campaign_id is omitted. Tasks are validated against the selected campaign and must belong to it.
      *
      * `POST /milestones`
+     *
+     * @experimental
      */
     createMilestone: (
       params: Params.CreateMilestoneParams,
@@ -633,6 +729,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a milestone by ID.
      *
      * `GET /milestones/{id}`
+     *
+     * @experimental
      */
     getMilestone: (
       params: Params.GetMilestoneParams,
@@ -641,6 +739,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of milestones.
      *
      * `GET /milestones`
+     *
+     * @experimental
      */
     listMilestones: (
       params: Params.ListMilestonesParams,
@@ -649,6 +749,8 @@ export interface APIEndpoints {
      * **Experimental:** Updates a milestone. All fields are optional. Only provided fields will be updated. Note: If tasks array is empty, it will remove all task associations for that milestone.
      *
      * `PATCH /milestones/{id}`
+     *
+     * @experimental
      */
     updateMilestone: (
       params: Params.UpdateMilestoneParams,
@@ -691,6 +793,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of publishing channels available in the organization. Use this to populate a channel picker before creating a publishing intent for a task.
      *
      * `GET /publishing-channels`
+     *
+     * @experimental
      */
     listPublishingChannels: (
       params: Params.ListPublishingChannelsParams,
@@ -717,6 +821,8 @@ export interface APIEndpoints {
      * **Experimental:** Get settings.
      *
      * `GET /settings`
+     *
+     * @experimental
      */
     getSettings: (
       params: Params.GetSettingsParams,
@@ -753,6 +859,8 @@ export interface APIEndpoints {
      *     - If no routing rule with the same name exists, a new routing rule is created.
      *
      * `POST /settings`
+     *
+     * @experimental
      */
     updateSettings: (
       params: Params.UpdateSettingsParams,
@@ -763,6 +871,8 @@ export interface APIEndpoints {
      * **Experimental:** Acknowledge content preview. Content preview can be acknowledged only once. So make sure you are acknowledging only the content previews targeted for your integration. Otherwise it will stall acknowledgment from other integrations.
      *
      * `POST /structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/acknowledge`
+     *
+     * @experimental
      */
     acknowledgeSCContentPreview: (
       params: Params.AcknowledgeSCContentPreviewParams,
@@ -771,6 +881,8 @@ export interface APIEndpoints {
      * **Experimental:** Complete content preview.
      *
      * `POST /structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/complete`
+     *
+     * @experimental
      */
     completeSCContentPreview: (
       params: Params.CompleteSCContentPreviewParams,
@@ -779,6 +891,8 @@ export interface APIEndpoints {
      * **Experimental:** Create content type.
      *
      * `POST /structured-content/content-types`
+     *
+     * @experimental
      */
     createSCContentType: (
       params: Params.CreateSCContentTypeParams,
@@ -787,6 +901,8 @@ export interface APIEndpoints {
      * **Experimental:** Create a new managed migration job.
      *
      * `POST /structured-content/content-types/{content_type_id}/managed-migrations`
+     *
+     * @experimental
      */
     createSCContentTypeManagedMigration: (
       params: Params.CreateSCContentTypeManagedMigrationParams,
@@ -795,6 +911,8 @@ export interface APIEndpoints {
      * **Experimental:** Add Content Type Version.
      *
      * `POST /structured-content/content-types/{content_type_id}/versions`
+     *
+     * @experimental
      */
     createSCContentTypeVersion: (
       params: Params.CreateSCContentTypeVersionParams,
@@ -803,6 +921,8 @@ export interface APIEndpoints {
      * **Experimental:** Delete a managed migration job with not_started status.
      *
      * `DELETE /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}`
+     *
+     * @experimental
      */
     deleteSCContentTypeManagedMigration: (
       params: Params.DeleteSCContentTypeManagedMigrationParams,
@@ -811,6 +931,8 @@ export interface APIEndpoints {
      * **Experimental:** Get content type.
      *
      * `GET /structured-content/content-types/{content_type_id}`
+     *
+     * @experimental
      */
     getSCContentType: (
       params: Params.GetSCContentTypeParams,
@@ -819,6 +941,8 @@ export interface APIEndpoints {
      * **Experimental:** Get details of a specific managed migration job.
      *
      * `GET /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}`
+     *
+     * @experimental
      */
     getSCContentTypeManagedMigration: (
       params: Params.GetSCContentTypeManagedMigrationParams,
@@ -827,6 +951,8 @@ export interface APIEndpoints {
      * **Experimental:** Get content type version.
      *
      * `GET /structured-content/content-types/{content_type_id}/versions/{version_id}`
+     *
+     * @experimental
      */
     getSCContentTypeVersion: (
       params: Params.GetSCContentTypeVersionParams,
@@ -835,6 +961,8 @@ export interface APIEndpoints {
      * **Experimental:** Retrieves a list of managed migration jobs for a specific content type.
      *
      * `GET /structured-content/content-types/{content_type_id}/managed-migrations`
+     *
+     * @experimental
      */
     listSCContentTypeManagedMigrations: (
       params: Params.ListSCContentTypeManagedMigrationsParams,
@@ -843,6 +971,8 @@ export interface APIEndpoints {
      * **Experimental:** Get content types.
      *
      * `GET /structured-content/content-types`
+     *
+     * @experimental
      */
     listSCContentTypes: (
       params: Params.ListSCContentTypesParams,
@@ -851,6 +981,8 @@ export interface APIEndpoints {
      * **Experimental:** Get content type versions.
      *
      * `GET /structured-content/content-types/{content_type_id}/versions`
+     *
+     * @experimental
      */
     listSCContentTypeVersions: (
       params: Params.ListSCContentTypeVersionsParams,
@@ -859,6 +991,8 @@ export interface APIEndpoints {
      * Migrate content to a specific content type version. **Experimental:**
      *
      * `POST /structured-content/contents/{content_id}/migration`
+     *
+     * @experimental
      */
     migrateSCContent: (
       params: Params.MigrateSCContentParams,
@@ -867,6 +1001,8 @@ export interface APIEndpoints {
      * **Experimental:** Start managed migration job.
      *
      * `POST /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}/start`
+     *
+     * @experimental
      */
     startSCContentTypeManagedMigration: (
       params: Params.StartSCContentTypeManagedMigrationParams,
@@ -875,6 +1011,8 @@ export interface APIEndpoints {
      * **Experimental:** Update content type.
      *
      * `POST /structured-content/content-types/{content_type_id}`
+     *
+     * @experimental
      */
     updateSCContentType: (
       params: Params.UpdateSCContentTypeParams,
@@ -883,6 +1021,8 @@ export interface APIEndpoints {
      * **Experimental:** Update a managed migration job.
      *
      * `PATCH /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}`
+     *
+     * @experimental
      */
     updateSCContentTypeManagedMigration: (
       params: Params.UpdateSCContentTypeManagedMigrationParams,
@@ -891,6 +1031,8 @@ export interface APIEndpoints {
      * **Experimental:** Check managed migration possible or not.
      *
      * `POST /structured-content/content-types/{content_type_id}/managed-migrations/validate`
+     *
+     * @experimental
      */
     validateSCContentTypeManagedMigration: (
       params: Params.ValidateSCContentTypeManagedMigrationParams,
@@ -909,6 +1051,8 @@ export interface APIEndpoints {
      * **Experimental:** Post a comment on a task.
      *
      * `POST /tasks/{task_id}/comments`
+     *
+     * @experimental
      */
     addCommentToTask: (
       params: Params.AddCommentToTaskParams,
@@ -941,6 +1085,8 @@ export interface APIEndpoints {
      * **Experimental:** Add a field to a task.
      *
      * `POST /tasks/{task_id}/fields`
+     *
+     * @experimental
      */
     addFieldToTask: (
       params: Params.AddFieldToTaskParams,
@@ -949,6 +1095,8 @@ export interface APIEndpoints {
      * **Experimental:** Add a new structured content to task
      *
      * `POST /tasks/{task_id}/structured-contents`
+     *
+     * @experimental
      */
     addStructuredContentToTask: (
       params: Params.AddStructuredContentToTaskParams,
@@ -957,6 +1105,8 @@ export interface APIEndpoints {
      * **Experimental:** Adds a URL to a task.
      *
      * `POST /tasks/{task_id}/urls`
+     *
+     * @experimental
      */
     addUrlToTask: (
       params: Params.AddUrlToTaskParams,
@@ -965,6 +1115,8 @@ export interface APIEndpoints {
      * **Experimental:** Create a task
      *
      * `POST /tasks`
+     *
+     * @experimental
      */
     createTask: (
       params: Params.CreateTaskParams,
@@ -983,6 +1135,8 @@ export interface APIEndpoints {
      * **Experimental:** Create a publishing intent for a task on the specified publishing channel.
      *
      * `POST /tasks/{task_id}/publishing-intents`
+     *
+     * @experimental
      */
     createTaskPublishingIntent: (
       params: Params.CreateTaskPublishingIntentParams,
@@ -991,6 +1145,8 @@ export interface APIEndpoints {
      * **Experimental:** Create structured content draft using a task.
      *
      * `POST /tasks/{task_id}/structured-contents/{content_id}/drafts`
+     *
+     * @experimental
      */
     createTaskStructuredContentDraft: (
       params: Params.CreateTaskStructuredContentDraftParams,
@@ -999,6 +1155,8 @@ export interface APIEndpoints {
      * **Experimental:** Add a preview URL to the latest version of a structured content in a task. The task must be neither archived nor completed.
      *
      * `POST /tasks/{task_id}/structured-contents/{content_id}/previews`
+     *
+     * @experimental
      */
     createTaskStructuredContentPreview: (
       params: Params.CreateTaskStructuredContentPreviewParams,
@@ -1017,6 +1175,8 @@ export interface APIEndpoints {
      * **Experimental:** Delete a structured content from task
      *
      * `DELETE /tasks/{task_id}/structured-contents/{content_id}`
+     *
+     * @experimental
      */
     deleteTaskStructuredContent: (
       params: Params.DeleteTaskStructuredContentParams,
@@ -1091,6 +1251,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a task structured content by its guid.
      *
      * `GET /tasks/{task_id}/structured-contents/{content_id}`
+     *
+     * @experimental
      */
     getTaskStructuredContent: (
       params: Params.GetTaskStructuredContentParams,
@@ -1139,6 +1301,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of drafts on an asset of a task.
      *
      * `GET /tasks/{task_id}/assets/{asset_id}/drafts`
+     *
+     * @experimental
      */
     listTaskAssetDrafts: (
       params: Params.ListTaskAssetDraftsParams,
@@ -1147,6 +1311,8 @@ export interface APIEndpoints {
      * **Experimental:** List all the fields of a task asset.
      *
      * `GET /tasks/{task_id}/assets/{asset_id}/fields`
+     *
+     * @experimental
      */
     listTaskAssetFields: (
       params: Params.ListTaskAssetFieldsParams,
@@ -1187,6 +1353,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of fields of a task.
      *
      * `GET /tasks/{task_id}/fields`
+     *
+     * @experimental
      */
     listTaskFields: (
       params: Params.ListTaskFieldsParams,
@@ -1197,6 +1365,8 @@ export interface APIEndpoints {
      * Pick one style of date filter per request. Either use `start_date` and `due_date`, or use the `__from` and `__to` filters. A request that mixes the two styles returns a `400` error.
      *
      * `GET /tasks`
+     *
+     * @experimental
      */
     listTasks: (
       params: Params.ListTasksParams,
@@ -1205,6 +1375,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of versions of a task structured content, newest first. These are the versions that CMP lists for the content.
      *
      * `GET /tasks/{task_id}/structured-contents/{content_id}/versions`
+     *
+     * @experimental
      */
     listTaskStructuredContentVersions: (
       params: Params.ListTaskStructuredContentVersionsParams,
@@ -1221,6 +1393,8 @@ export interface APIEndpoints {
      * **Experimental:** Get the list of fields of a substep of a task.
      *
      * `GET /tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/fields`
+     *
+     * @experimental
      */
     listTaskSubStepFields: (
       params: Params.ListTaskSubStepFieldsParams,
@@ -1229,12 +1403,16 @@ export interface APIEndpoints {
      * **Experimental:** Remove a field of a task.
      *
      * `DELETE /tasks/{task_id}/fields/{field_id}`
+     *
+     * @experimental
      */
     removeTaskField: (
       params: Params.RemoveTaskFieldParams,
     ) => Promise<void>;
     /**
-     * Update a task
+     * Update a task.
+     *
+     * When `due_at` moves the task and other tasks depend on it, set `dependent_tasks` to choose whether those tasks keep their dates or shift with this task. Without it, the request is rejected with `409` listing the dependent tasks, and no changes are made.
      *
      * `PATCH /tasks/{id}`
      */
@@ -1245,6 +1423,8 @@ export interface APIEndpoints {
      * **Experimental:** Replace fields of an asset in a task.
      *
      * `PUT /tasks/{task_id}/assets/{asset_id}/fields`
+     *
+     * @experimental
      */
     updateTaskAssetFields: (
       params: Params.UpdateTaskAssetFieldsParams,
@@ -1272,6 +1452,8 @@ export interface APIEndpoints {
      * **Experimental:** Update a field of a task.
      *
      * `PUT /tasks/{task_id}/fields/{field_id}`
+     *
+     * @experimental
      */
     updateTaskField: (
       params: Params.UpdateTaskFieldParams,
@@ -1280,6 +1462,8 @@ export interface APIEndpoints {
      * **Experimental:** Update structured content using a task.
      *
      * `PATCH /tasks/{task_id}/structured-contents/{content_id}`
+     *
+     * @experimental
      */
     updateTaskStructuredContent: (
       params: Params.UpdateTaskStructuredContentParams,
@@ -1314,6 +1498,8 @@ export interface APIEndpoints {
      * **Experimental:** Update a step in a task
      *
      * `PATCH /tasks/{task_id}/steps/{step_id}`
+     *
+     * @experimental
      */
     updateTaskStep: (
       params: Params.UpdateTaskStepParams,
@@ -1324,6 +1510,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a team.
      *
      * `GET /teams/{id}`
+     *
+     * @experimental
      */
     getTeam: (
       params: Params.GetTeamParams,
@@ -1332,6 +1520,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of teams.
      *
      * `GET /teams`
+     *
+     * @experimental
      */
     listTeams: (
       params: Params.ListTeamsParams,
@@ -1342,6 +1532,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a template by ID.
      *
      * `GET /templates/{template_id}`
+     *
+     * @experimental
      */
     getTemplate: (
       params: Params.GetTemplateParams,
@@ -1350,6 +1542,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of templates.
      *
      * `GET /templates`
+     *
+     * @experimental
      */
     listTemplates: (
       params: Params.ListTemplatesParams,
@@ -1360,6 +1554,8 @@ export interface APIEndpoints {
      * **Experimental:** Initiate completion of a multipart upload after all parts have been uploaded
      *
      * `POST /multipart-uploads/{id}/complete`
+     *
+     * @experimental
      */
     completeMultipartUpload: (
       params: Params.CompleteMultipartUploadParams,
@@ -1368,6 +1564,8 @@ export interface APIEndpoints {
      * **Experimental:** Create pre-signed URLs for multipart upload of large files
      *
      * `POST /multipart-uploads`
+     *
+     * @experimental
      */
     createMultipartUpload: (
       params: Params.CreateMultipartUploadParams,
@@ -1376,6 +1574,8 @@ export interface APIEndpoints {
      * **Experimental:** Retrieve the current status of a multipart upload
      *
      * `GET /multipart-uploads/{id}/status`
+     *
+     * @experimental
      */
     getMultipartUploadStatus: (
       params: Params.GetMultipartUploadStatusParams,
@@ -1420,6 +1620,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a workflow by ID.
      *
      * `GET /workflows/{workflow_id}`
+     *
+     * @experimental
      */
     getWorkflow: (
       params: Params.GetWorkflowParams,
@@ -1428,6 +1630,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of workflows.
      *
      * `GET /workflows`
+     *
+     * @experimental
      */
     listWorkflows: (
       params: Params.ListWorkflowsParams,
@@ -1438,6 +1642,8 @@ export interface APIEndpoints {
      * **Experimental:** Create attachments for a work request.
      *
      * `POST /work-requests/{id}/attachments`
+     *
+     * @experimental
      */
     addAttachmentToWorkRequest: (
       params: Params.AddAttachmentToWorkRequestParams,
@@ -1446,6 +1652,8 @@ export interface APIEndpoints {
      * **Experimental:** Post a comment on a work request.
      *
      * `POST /work-requests/{id}/comments`
+     *
+     * @experimental
      */
     addCommentToWorkRequest: (
       params: Params.AddCommentToWorkRequestParams,
@@ -1454,6 +1662,8 @@ export interface APIEndpoints {
      * **Experimental:** Create a new campaign from a work request.
      *
      * `POST /work-requests/{id}/campaigns`
+     *
+     * @experimental
      */
     createCampaignFromWorkRequest: (
       params: Params.CreateCampaignFromWorkRequestParams,
@@ -1462,6 +1672,8 @@ export interface APIEndpoints {
      * **Experimental:** Create a new task from a work request.
      *
      * `POST /work-requests/{id}/tasks`
+     *
+     * @experimental
      */
     createTaskFromWorkRequest: (
       params: Params.CreateTaskFromWorkRequestParams,
@@ -1470,6 +1682,8 @@ export interface APIEndpoints {
      * **Experimental:** Create a work request.
      *
      * `POST /work-requests`
+     *
+     * @experimental
      */
     createWorkRequest: (
       params: Params.CreateWorkRequestParams,
@@ -1478,6 +1692,8 @@ export interface APIEndpoints {
      * **Experimental:** Create creative assets for a work request.
      *
      * `POST /work-requests/{id}/creative-assets`
+     *
+     * @experimental
      */
     createWorkRequestCreativeAsset: (
       params: Params.CreateWorkRequestCreativeAssetParams,
@@ -1486,6 +1702,8 @@ export interface APIEndpoints {
      * **Experimental:** Delete a work request attachment.
      *
      * `DELETE /work-requests/{work_request_id}/attachments/{attachment_id}`
+     *
+     * @experimental
      */
     deleteWorkRequestAttachment: (
       params: Params.DeleteWorkRequestAttachmentParams,
@@ -1494,6 +1712,8 @@ export interface APIEndpoints {
      * **Experimental:** Delete a work request creative asset.
      *
      * `DELETE /work-requests/{work_request_id}/creative-assets/{creative_asset_id}`
+     *
+     * @experimental
      */
     deleteWorkRequestCreativeAsset: (
       params: Params.DeleteWorkRequestCreativeAssetParams,
@@ -1502,6 +1722,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a work request by ID.
      *
      * `GET /work-requests/{id}`
+     *
+     * @experimental
      */
     getWorkRequest: (
       params: Params.GetWorkRequestParams,
@@ -1510,6 +1732,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a work request comment by ID.
      *
      * `GET /work-requests/{work_request_id}/comments/{comment_id}`
+     *
+     * @experimental
      */
     getWorkRequestComment: (
       params: Params.GetWorkRequestCommentParams,
@@ -1518,6 +1742,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of approved assets of a work request.
      *
      * `GET /work-requests/{id}/approved-assets`
+     *
+     * @experimental
      */
     listWorkRequestApprovedAssets: (
       params: Params.ListWorkRequestApprovedAssetsParams,
@@ -1526,6 +1752,8 @@ export interface APIEndpoints {
      * **Experimental:** Get list of comments for a work request.
      *
      * `GET /work-requests/{id}/comments`
+     *
+     * @experimental
      */
     listWorkRequestComments: (
       params: Params.ListWorkRequestCommentsParams,
@@ -1534,6 +1762,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of work request related resources.
      *
      * `GET /work-requests/{id}/related-resources`
+     *
+     * @experimental
      */
     listWorkRequestRelatedResources: (
       params: Params.ListWorkRequestRelatedResourcesParams,
@@ -1542,6 +1772,8 @@ export interface APIEndpoints {
      * **Experimental:** Get a list of work requests.
      *
      * `GET /work-requests`
+     *
+     * @experimental
      */
     listWorkRequests: (
       params: Params.ListWorkRequestsParams,
@@ -1550,6 +1782,8 @@ export interface APIEndpoints {
      * **Experimental:** Updates a work request.
      *
      * `PATCH /work-requests/{id}`
+     *
+     * @experimental
      */
     updateWorkRequest: (
       params: Params.UpdateWorkRequestParams,
@@ -1558,6 +1792,8 @@ export interface APIEndpoints {
      * **Experimental:** Updates a work request form field.
      *
      * `PUT /work-requests/{work_request_id}/form-fields/{form_field_identifier}`
+     *
+     * @experimental
      */
     updateWorkRequestFormField: (
       params: Params.UpdateWorkRequestFormFieldParams,
