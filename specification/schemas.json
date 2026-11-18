@@ -1652,10 +1652,20 @@
         "description": "Title of the template",
         "example": "Sample Template Title",
         "type": "string"
+      },
+      "version": {
+        "description": "Form version of the template. `1` is a classic form, and `2` is a Form Builder form.",
+        "enum": [
+          1,
+          2
+        ],
+        "example": 1,
+        "type": "integer"
       }
     },
     "required": [
       "id",
+      "version",
       "is_active",
       "title",
       "description",
@@ -11929,6 +11939,94 @@
     ],
     "type": "object"
   },
+  "TaskDependentTasksConflictError": {
+    "description": "Error returned when changing a task's due date affects tasks that depend on it",
+    "properties": {
+      "code": {
+        "example": 409,
+        "type": "integer"
+      },
+      "details": {
+        "additionalProperties": true,
+        "properties": {
+          "business_days_moved": {
+            "description": "Number of business days the due date change moves the task by. Negative when the task moves earlier.",
+            "example": 5,
+            "type": "integer"
+          },
+          "dependent_tasks": {
+            "description": "Tasks that depend on this task",
+            "items": {
+              "properties": {
+                "completed": {
+                  "description": "Whether the dependent task is completed. Completed tasks are not moved by `shift`.",
+                  "example": false,
+                  "type": "boolean"
+                },
+                "current_due_at": {
+                  "description": "Current due date of the dependent task",
+                  "example": "2026-07-06T00:00:00Z",
+                  "format": "date-time",
+                  "nullable": true,
+                  "type": "string"
+                },
+                "editable": {
+                  "description": "Whether you can edit the dependent task. Tasks you cannot edit are not moved by `shift`.",
+                  "example": true,
+                  "type": "boolean"
+                },
+                "id": {
+                  "description": "Unique identifier of the dependent task",
+                  "example": "6abfc0ae8cd4e76aada6742c",
+                  "type": "string"
+                },
+                "new_due_at": {
+                  "description": "Due date the dependent task would get with `shift`",
+                  "example": "2026-07-13T00:00:00Z",
+                  "format": "date-time",
+                  "nullable": true,
+                  "type": "string"
+                },
+                "reference_number": {
+                  "description": "Reference number of the dependent task",
+                  "example": 13,
+                  "type": "integer"
+                },
+                "title": {
+                  "description": "Title of the dependent task",
+                  "example": "Book booth staff",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "reason": {
+            "description": "Machine-readable reason for the error",
+            "enum": [
+              "dependent_tasks_affected"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "message": {
+        "description": "Message describing the error",
+        "example": "Changing the due date affects 1 dependent task(s). Set dependent_tasks to \"keep\" or \"shift\" to proceed.",
+        "type": "string"
+      },
+      "status": {
+        "example": "Conflict",
+        "type": "string"
+      }
+    },
+    "required": [
+      "message"
+    ],
+    "type": "object"
+  },
   "TaskExternalWorkRequest": {
     "additionalProperties": false,
     "properties": {
@@ -13269,6 +13367,16 @@
         "nullable": false,
         "type": "string"
       },
+      "dependent_tasks": {
+        "description": "How to handle tasks that depend on this task when `due_at` moves it by one or more business days. Only used together with `due_at`.\n\n- `keep`: move only this task. Dependent tasks keep their dates.\n- `shift`: move each dependent task by the same number of business days. Business days follow the organization's working days; organization-specific blocked dates are not taken into account. Completed dependent tasks and dependent tasks you cannot edit are left unchanged.\n\nIf omitted and the change affects dependent tasks, the request is rejected with `409` and nothing is updated. The `409` response lists the affected tasks.\n",
+        "enum": [
+          "keep",
+          "shift"
+        ],
+        "example": "keep",
+        "nullable": false,
+        "type": "string"
+      },
       "due_at": {
         "description": "Due date and time of the task",
         "example": "2025-10-06T13:00:00Z",
@@ -13294,6 +13402,21 @@
         "description": "Start date of the task",
         "example": "2025-10-06T13:00:00Z",
         "format": "date-time",
+        "nullable": false,
+        "type": "string"
+      },
+      "status": {
+        "description": "New status of the task. `unarchive` and `resume` take the task out of archived or on-hold and restore the status that matches its progress.",
+        "enum": [
+          "not-started",
+          "in-progress",
+          "completed",
+          "on-hold",
+          "archived",
+          "unarchive",
+          "resume"
+        ],
+        "example": "in-progress",
         "nullable": false,
         "type": "string"
       },

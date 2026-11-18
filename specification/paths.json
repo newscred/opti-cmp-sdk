@@ -155,7 +155,8 @@
       "summary": "GET /asset-lineages",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/asset-urls/{asset_id}": {
@@ -638,7 +639,8 @@
       "summary": "GET assets/{asset_id}/fields",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     },
     "put": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Replace existing fields of an asset.",
@@ -728,7 +730,8 @@
       "summary": "PUT /assets/{asset_id}/fields",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/assets/{asset_id}/fields/{field_id}": {
@@ -795,7 +798,8 @@
       "summary": "PUT /assets/{asset_id}/fields/{field_id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/assets/{asset_id}/lineages": {
@@ -855,7 +859,8 @@
       "summary": "POST /assets/{asset_id}/lineages",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/assets/{asset_id}/lineages/{lineage_id}": {
@@ -907,7 +912,8 @@
       "summary": "DELETE /assets/{asset_id}/lineages/{lineage_id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/assets/{asset_id}/permissions": {
@@ -998,7 +1004,8 @@
       "summary": "GET /assets/{asset_id}/permissions",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Grant asset access to users or teams",
@@ -1046,7 +1053,8 @@
       "summary": "POST /assets/{asset_id}/permissions",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/assets/{asset_id}/permissions/{accessor_id}": {
@@ -1098,7 +1106,8 @@
       "summary": "DELETE /asstes/{asset_id}/permissions/{accessor_id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update accessor's access level and ownership of asset",
@@ -1159,7 +1168,8 @@
       "summary": "PATCH /assets/{asset_id}/permissions/{accessor_id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/assets/{asset_id}/related-assets": {
@@ -1343,7 +1353,8 @@
       "summary": "GET /assets/{asset_id}/renditions",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/assets/{asset_id}/versions": {
@@ -1470,7 +1481,8 @@
       "summary": "GET /brand-compliance/categories",
       "tags": [
         "Brand Compliance"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/campaigns": {
@@ -1564,7 +1576,8 @@
       "summary": "GET /campaigns",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a campaign",
@@ -1610,7 +1623,8 @@
       "summary": "POST /campaigns",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/campaigns/{campaign_id}/fields/{field_id}": {
@@ -1677,7 +1691,8 @@
       "summary": "PUT /campaigns/{campaign_id}/fields/{field_id}",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/campaigns/{id}": {
@@ -1771,7 +1786,8 @@
       "summary": "PATCH /campaigns/{id}",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/campaigns/{id}/attachments": {
@@ -1828,7 +1844,8 @@
       "summary": "POST /campaigns/{id}/attachments",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/campaigns/{id}/brief": {
@@ -1931,7 +1948,8 @@
       "summary": "POST /campaigns/{id}/comments",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/campaigns/{id}/fields": {
@@ -2014,7 +2032,8 @@
       "summary": "GET campaigns/{id}/fields",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a field to a campaign.",
@@ -2072,7 +2091,8 @@
       "summary": "POST campaigns/{id}/fields",
       "tags": [
         "Campaigns"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/compose-contents/{content_id}": {
@@ -2280,7 +2300,8 @@
       "summary": "GET /content-graphs",
       "tags": [
         "Content Graph"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/content-graphs/{instance_id}/query": {
@@ -2391,7 +2412,8 @@
       "summary": "POST /content-graphs/{instance_id}/query",
       "tags": [
         "Content Graph"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/events": {
@@ -2485,7 +2507,8 @@
       "summary": "GET /events",
       "tags": [
         "Events"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create an event.",
@@ -2531,7 +2554,8 @@
       "summary": "POST /events",
       "tags": [
         "Events"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/events/{id}": {
@@ -2577,7 +2601,8 @@
       "summary": "GET /events/{id}",
       "tags": [
         "Events"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update an event.",
@@ -2635,7 +2660,8 @@
       "summary": "PATCH /events/{id}",
       "tags": [
         "Events"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/events/{id}/fields": {
@@ -2718,7 +2744,8 @@
       "summary": "GET events/{id}/fields",
       "tags": [
         "Events"
-      ]
+      ],
+      "x-experimental": true
     },
     "put": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Replace existing fields of an event.",
@@ -2769,7 +2796,8 @@
       "summary": "PUT /events/{id}/fields",
       "tags": [
         "Events"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/fields": {
@@ -2888,7 +2916,8 @@
       "summary": "GET /fields",
       "tags": [
         "Fields"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a new field to an Organization.",
@@ -2945,7 +2974,8 @@
       "summary": "POST /fields",
       "tags": [
         "Fields"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/fields/{field_id}/choices/{choice_id}": {
@@ -2997,7 +3027,8 @@
       "summary": "DELETE /fields/{field_id}/choices/{choice_id}",
       "tags": [
         "Fields"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a choice of a field.",
@@ -3058,7 +3089,8 @@
       "summary": "PATCH /fields/{field_id}/choices/{choice_id}",
       "tags": [
         "Fields"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/fields/{id}": {
@@ -3111,7 +3143,8 @@
       "summary": "PATCH /fields/{id}",
       "tags": [
         "Fields"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/fields/{id}/choices": {
@@ -3171,7 +3204,8 @@
       "summary": "POST /fields/{id}/choices",
       "tags": [
         "Fields"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/file-urls": {
@@ -3378,7 +3412,8 @@
       "summary": "DELETE /folders/{id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     },
     "get": {
       "description": "Get a folder",
@@ -3477,7 +3512,8 @@
       "summary": "PATCH /folders/{id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/folders/{id}/permissions": {
@@ -3568,7 +3604,8 @@
       "summary": "GET /folders/{id}/permissions",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Grant folder access to users or teams",
@@ -3616,7 +3653,8 @@
       "summary": "POST /folders/{id}/permissions",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/folders/{id}/permissions/{accessor_id}": {
@@ -3668,7 +3706,8 @@
       "summary": "DELETE /folders/{id}/permissions/{accessor_id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update accessor's access level and ownership of folder",
@@ -3729,7 +3768,8 @@
       "summary": "PATCH /folders/{id}/permissions/{accessor_id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/images/{id}": {
@@ -4053,7 +4093,8 @@
       "summary": "GET /milestones",
       "tags": [
         "Milestones"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Creates a milestone. Defaults to the organization's campaign if campaign_id is omitted. Tasks are validated against the selected campaign and must belong to it.",
@@ -4096,7 +4137,8 @@
       "summary": "POST /milestones",
       "tags": [
         "Milestones"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/milestones/{id}": {
@@ -4142,7 +4184,8 @@
       "summary": "GET /milestones/{id}",
       "tags": [
         "Milestones"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Updates a milestone. All fields are optional. Only provided fields will be updated. Note: If tasks array is empty, it will remove all task associations for that milestone.",
@@ -4200,7 +4243,8 @@
       "summary": "PATCH /milestones/{id}",
       "tags": [
         "Milestones"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/multipart-uploads": {
@@ -4334,7 +4378,8 @@
       "summary": "POST /v3/multipart-uploads",
       "tags": [
         "Uploader"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/multipart-uploads/{id}/complete": {
@@ -4405,7 +4450,8 @@
       "summary": "POST /v3/multipart-uploads/{id}/complete",
       "tags": [
         "Uploader"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/multipart-uploads/{id}/status": {
@@ -4505,7 +4551,8 @@
       "summary": "GET /v3/multipart-uploads/{id}/status",
       "tags": [
         "Uploader"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/publishing-channels": {
@@ -4553,7 +4600,8 @@
       "summary": "GET /publishing-channels",
       "tags": [
         "Publishing"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/publishing-events/{publishing_event_id}": {
@@ -5118,7 +5166,8 @@
       "summary": "GET /rendition-configs/{id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/renditions/{id}": {
@@ -5164,7 +5213,8 @@
       "summary": "GET /renditions/{id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/settings": {
@@ -5192,7 +5242,8 @@
       "summary": "GET /settings",
       "tags": [
         "Settings"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create or update settings.\n## Import behavior:\n- Label:\n    - If a label-group with the same name exists, the label-group is updated.\n      - Labels are merged.\n      - If a label with the same name exists, it is overwritten.\n    - If no label-group with the same name exists, a new label-group is created.\n- Custom Fields:\n    - If a custom field with the same name exists, the custom field is updated and its choices are merged.\n    - If no custom field with the same name exists, a new custom field will be created.\n- Workflows:\n    - If the query param overwrite_workflows=true the existing workflows are overwritten.\n      Otherwise, a new workflow will be created where the prefix `Copy of` is added to the name of the workflow.\n- Webhooks:\n    - If a webhook with the same name exists, the webhook is updated and its events are merged.\n    - If multiple webhooks with the same name exist, a new webhook is created.\n    - If no webhook with the same name exists, a new webhook is created.\n- Apps:\n    - If an app with the same name exists, the app is updated and its authorization callback URLs are merged.\n    - If multiple apps with the same name exist, a new app is created.\n    - If no app with the same name exists, a new app is created.\n- Templates:\n    - If a template with the same name exists, the template is updated.\n    - If multiple templates with the same name exist, a new template is created.\n    - If no template with the same name exists, a new template is created.\n- Routing Rules:\n    - If one single routing rule with the same name exists, the routing rule is updated.\n    - If multiple routing rules with the same name exist, a new routing rule is created.\n    - If no routing rule with the same name exists, a new routing rule is created.\n",
@@ -5254,7 +5305,8 @@
       "summary": "POST /settings",
       "tags": [
         "Settings"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types": {
@@ -5319,7 +5371,8 @@
       "summary": "GET /structured-content/content-types",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create content type. ",
@@ -5378,7 +5431,8 @@
       "summary": "POST /structured-content/content-types",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types/{content_type_id}": {
@@ -5421,7 +5475,8 @@
       "summary": "GET /structured-content/content-types/{content_type_id}",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update content type. ",
@@ -5472,7 +5527,8 @@
       "summary": "POST /structured-content/content-types/{content_type_id}",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations": {
@@ -5544,7 +5600,8 @@
       "summary": "GET /structured-content/content-types/{content_type_id}/managed-migrations",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a new managed migration job.",
@@ -5624,7 +5681,8 @@
       "summary": "POST /structured-content/content-types/{content_type_id}/managed-migrations",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations/validate": {
@@ -5699,7 +5757,8 @@
       "summary": "POST /structured-content/content-types/{content_type_id}/managed-migrations/validate",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}": {
@@ -5741,7 +5800,8 @@
       "summary": "DELETE /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     },
     "get": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get details of a specific managed migration job.",
@@ -5798,7 +5858,8 @@
       "summary": "GET /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a managed migration job.",
@@ -5876,7 +5937,8 @@
       "summary": "PATCH /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}/start": {
@@ -5948,7 +6010,8 @@
       "summary": "POST /structured-content/content-types/{content_type_id}/managed-migrations/{job_id}/start",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types/{content_type_id}/versions": {
@@ -5994,7 +6057,8 @@
       "summary": "GET /structured-content/content-types/{content_type_id}/versions",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add Content Type Version. ",
@@ -6063,7 +6127,8 @@
       "summary": "POST /structured-content/content-types/{content_type_id}/versions",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/content-types/{content_type_id}/versions/{version_id}": {
@@ -6115,7 +6180,8 @@
       "summary": "GET /structured-content/content-types/{content_type_id}/versions/{version_id}",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/contents/{content_id}/migration": {
@@ -6195,7 +6261,8 @@
       "summary": "POST /structured-content/contents/{content_id}/migration",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/acknowledge": {
@@ -6264,7 +6331,8 @@
       "summary": "POST /structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/acknowledge",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/complete": {
@@ -6333,7 +6401,8 @@
       "summary": "POST /structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/complete",
       "tags": [
         "Structured Contents"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-contents": {
@@ -6486,7 +6555,8 @@
       "summary": "POST /structured-contents",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/structured-contents/{id}": {
@@ -6532,7 +6602,8 @@
       "summary": "GET /structured-contents/{id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Updates a structured content. ",
@@ -6590,7 +6661,8 @@
       "summary": "PATCH /structured-contents/{id}",
       "tags": [
         "Library"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks": {
@@ -6780,7 +6852,8 @@
       "summary": "GET /tasks",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a task",
@@ -6823,7 +6896,8 @@
       "summary": "POST /tasks",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{id}": {
@@ -6872,7 +6946,7 @@
       ]
     },
     "patch": {
-      "description": "Update a task",
+      "description": "Update a task.\n\nWhen `due_at` moves the task and other tasks depend on it, set `dependent_tasks` to choose whether those tasks keep their dates or shift with this task. Without it, the request is rejected with `409` listing the dependent tasks, and no changes are made.\n",
       "operationId": "updateTask",
       "parameters": [
         {
@@ -6919,6 +6993,19 @@
         },
         "404": {
           "$ref": "#/components/responses/NotFound"
+        },
+        "409": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskDependentTasksConflictError"
+              }
+            }
+          },
+          "description": "The due date change affects dependent tasks and `dependent_tasks` was not set"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
         }
       },
       "summary": "PATCH /tasks/{id}",
@@ -7586,7 +7673,8 @@
       "summary": "GET /tasks/{task_id}/assets/{asset_id}/drafts",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "Add a new draft to a task asset. You can add a draft to only `images`, `videos`, and `raw files` type task assets. See [Upload assets](https://docs.developers.optimizely.com/content-marketing-platform/docs/upload-assets) to upload an asset draft.",
@@ -7726,7 +7814,8 @@
       "summary": "GET /tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance",
       "tags": [
         "Brand Compliance"
-      ]
+      ],
+      "x-experimental": true
     },
     "put": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update the brand compliance details of a draft of an asset of a task.",
@@ -7807,7 +7896,8 @@
       "summary": "PUT /tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance",
       "tags": [
         "Brand Compliance"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/assets/{asset_id}/fields": {
@@ -7890,7 +7980,8 @@
       "summary": "GET /tasks/{task_id}/assets/{asset_id}/fields",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     },
     "put": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Replace fields of an asset in a task.",
@@ -7948,7 +8039,8 @@
       "summary": "PUT tasks/{task_id}/assets/{asset_id}/fields",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/comments": {
@@ -8005,7 +8097,8 @@
       "summary": "POST /tasks/{task_id}/comments",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/compose-contents": {
@@ -8543,7 +8636,8 @@
       "summary": "GET tasks/{task_id}/fields",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a field to a task.",
@@ -8601,7 +8695,8 @@
       "summary": "POST tasks/{task_id}/fields",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/fields/{field_id}": {
@@ -8650,7 +8745,8 @@
       "summary": "DELETE tasks/{task_id}/fields/{field_id}",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     },
     "put": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update a field of a task.",
@@ -8711,7 +8807,8 @@
       "summary": "PUT tasks/{taks_id}/fields/{field_id}",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/images/{image_id}": {
@@ -8824,7 +8921,8 @@
       "summary": "POST /tasks/{task_id}/publishing-intents",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/raw-files/{raw_file_id}": {
@@ -8958,7 +9056,8 @@
       "summary": "PATCH /tasks/{task_id}/steps/{step_id}",
       "tags": [
         "Task Step"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}": {
@@ -9800,7 +9899,8 @@
       "summary": "GET /tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/fields",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/structured-contents": {
@@ -9959,7 +10059,8 @@
       "summary": "POST /tasks/{task_id}/structured-contents",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}": {
@@ -10011,7 +10112,8 @@
       "summary": "DELETE /tasks/{task_id}/structured-contents/{content_id}",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     },
     "get": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a task structured content by its guid.",
@@ -10065,7 +10167,8 @@
       "summary": "GET /tasks/{task_id}/structured-contents/{content_id}",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Update structured content using a task.",
@@ -10133,7 +10236,8 @@
       "summary": "PATCH /tasks/{task_id}/structured-contents/{content_id}",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}/drafts": {
@@ -10204,7 +10308,8 @@
       "summary": "POST /tasks/{task_id}/structured-contents/{content_id}/drafts",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}/previews": {
@@ -10267,7 +10372,8 @@
       "summary": "POST /tasks/{task_id}/structured-contents/{content_id}/previews",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}/versions": {
@@ -10329,7 +10435,8 @@
       "summary": "GET /tasks/{task_id}/structured-contents/{content_id}/versions",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/urls": {
@@ -10389,7 +10496,8 @@
       "summary": "POST /tasks/{task_id}/urls",
       "tags": [
         "Tasks"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/tasks/{task_id}/videos/{video_id}": {
@@ -10512,7 +10620,8 @@
       "summary": "GET /teams",
       "tags": [
         "Teams"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/teams/{id}": {
@@ -10558,7 +10667,8 @@
       "summary": "GET /teams/{id}",
       "tags": [
         "Teams"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/templates": {
@@ -10630,7 +10740,8 @@
       "summary": "GET /templates",
       "tags": [
         "Templates"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/templates/{template_id}": {
@@ -10814,7 +10925,8 @@
                 ],
                 "id": "9119a313057e401189407116fcd3aa24",
                 "is_active": true,
-                "title": "Sample Template Title"
+                "title": "Sample Template Title",
+                "version": 1
               },
               "schema": {
                 "$ref": "#/components/schemas/TemplateResponse"
@@ -10836,7 +10948,8 @@
       "summary": "GET /templates/{template_id}",
       "tags": [
         "Templates"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/upload-url": {
@@ -11365,7 +11478,8 @@
       "summary": "GET /work-requests",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a work request. ",
@@ -11517,7 +11631,8 @@
       "summary": "POST /work-requests",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}": {
@@ -11560,7 +11675,8 @@
       "summary": "GET /work-requests/{id}",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     },
     "patch": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Updates a work request. ",
@@ -11611,7 +11727,8 @@
       "summary": "PATCH /work-requests/{id}",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}/approved-assets": {
@@ -11694,7 +11811,8 @@
       "summary": "GET /work-requests/{id}/approved-assets",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}/attachments": {
@@ -11751,7 +11869,8 @@
       "summary": "POST /work-requests/{id}/attachments",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}/campaigns": {
@@ -11808,7 +11927,8 @@
       "summary": "POST /work-requests/{id}/campaigns",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}/comments": {
@@ -11891,7 +12011,8 @@
       "summary": "GET /work-requests/{id}/comments",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Post a comment on a work request. ",
@@ -11946,7 +12067,8 @@
       "summary": "POST /work-requests/{id}/comments",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}/creative-assets": {
@@ -12003,7 +12125,8 @@
       "summary": "POST /work-requests/{id}/creative-assets",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}/related-resources": {
@@ -12080,7 +12203,8 @@
       "summary": "GET /work-requests/{id}/related-resources",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{id}/tasks": {
@@ -12140,7 +12264,8 @@
       "summary": "POST /work-requests/{id}/tasks",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{work_request_id}/attachments/{attachment_id}": {
@@ -12192,7 +12317,8 @@
       "summary": "DELETE /work-requests/{work_request_id}/attachments/{attachment_id}",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{work_request_id}/comments/{comment_id}": {
@@ -12248,7 +12374,8 @@
       "summary": "GET /work-requests/{work_request_id}/comments/{comment_id}",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{work_request_id}/creative-assets/{creative_asset_id}": {
@@ -12300,7 +12427,8 @@
       "summary": "DELETE /work-requests/{work_request_id}/creative-assets/{creative_asset_id}",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/work-requests/{work_request_id}/form-fields/{form_field_identifier}": {
@@ -12370,7 +12498,8 @@
       "summary": "PUT /work-requests/{work_request_id}/form-fields/{form_field_identifier}",
       "tags": [
         "Work Requests"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/workflows": {
@@ -12437,7 +12566,8 @@
       "summary": "GET /workflows",
       "tags": [
         "Workflows"
-      ]
+      ],
+      "x-experimental": true
     }
   },
   "/workflows/{workflow_id}": {
@@ -12480,7 +12610,8 @@
       "summary": "GET /workflows/{workflow_id}",
       "tags": [
         "Workflows"
-      ]
+      ],
+      "x-experimental": true
     }
   }
 }
