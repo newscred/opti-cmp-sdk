@@ -16643,6 +16643,11 @@
         "example": true,
         "type": "boolean"
       },
+      "is_skip_comment_required": {
+        "description": "Indicates whether a user must write a comment to skip a sub step in a task of this workflow. A task keeps the value that the workflow had when the task was created.",
+        "example": false,
+        "type": "boolean"
+      },
       "is_smart_duration_enabled": {
         "description": "Indicates whether the smart duration of a workflow is enabled",
         "example": true,
@@ -16816,6 +16821,7 @@
       "is_smart_duration_enabled",
       "is_asset_approval_enabled",
       "is_resource_management_enabled",
+      "is_skip_comment_required",
       "steps",
       "fields"
     ],
