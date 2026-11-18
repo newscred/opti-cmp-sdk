@@ -11664,6 +11664,11 @@ export type components = {
              */
             is_resource_management_enabled: boolean;
             /**
+             * @description Indicates whether a user must write a comment to skip a sub step in a task of this workflow. A task keeps the value that the workflow had when the task was created.
+             * @example false
+             */
+            is_skip_comment_required: boolean;
+            /**
              * @description Indicates whether the smart duration of a workflow is enabled
              * @example true
              */
