@@ -7,6 +7,7 @@
   },
   "/asset-lineages": {
     "get": {
+      "experimental": true,
       "name": "listAssetLineages",
       "namespace": "library"
     }
@@ -29,48 +30,57 @@
   },
   "/assets/{asset_id}/fields": {
     "get": {
+      "experimental": true,
       "name": "listAssetFields",
       "namespace": "library"
     },
     "put": {
+      "experimental": true,
       "name": "updateAssetFields",
       "namespace": "library"
     }
   },
   "/assets/{asset_id}/fields/{field_id}": {
     "put": {
+      "experimental": true,
       "name": "updateAssetField",
       "namespace": "library"
     }
   },
   "/assets/{asset_id}/lineages": {
     "post": {
+      "experimental": true,
       "name": "createAssetLineage",
       "namespace": "library"
     }
   },
   "/assets/{asset_id}/lineages/{lineage_id}": {
     "delete": {
+      "experimental": true,
       "name": "deleteAssetLineage",
       "namespace": "library"
     }
   },
   "/assets/{asset_id}/permissions": {
     "get": {
+      "experimental": true,
       "name": "listAssetPermissions",
       "namespace": "library"
     },
     "post": {
+      "experimental": true,
       "name": "addAssetPermissions",
       "namespace": "library"
     }
   },
   "/assets/{asset_id}/permissions/{accessor_id}": {
     "patch": {
+      "experimental": true,
       "name": "updateAssetPermission",
       "namespace": "library"
     },
     "delete": {
+      "experimental": true,
       "name": "removeAssetPermission",
       "namespace": "library"
     }
@@ -87,6 +97,7 @@
   },
   "/assets/{asset_id}/renditions": {
     "get": {
+      "experimental": true,
       "name": "listAssetRenditions",
       "namespace": "library"
     }
@@ -99,22 +110,26 @@
   },
   "/brand-compliance/categories": {
     "get": {
+      "experimental": true,
       "name": "listBrandComplianceCategories",
       "namespace": "brandCompliance"
     }
   },
   "/campaigns": {
     "get": {
+      "experimental": true,
       "name": "listCampaigns",
       "namespace": "campaign"
     },
     "post": {
+      "experimental": true,
       "name": "createCampaign",
       "namespace": "campaign"
     }
   },
   "/campaigns/{campaign_id}/fields/{field_id}": {
     "put": {
+      "experimental": true,
       "name": "updateCampaignField",
       "namespace": "campaign"
     }
@@ -125,12 +140,14 @@
       "namespace": "campaign"
     },
     "patch": {
+      "experimental": true,
       "name": "updateCampaign",
       "namespace": "campaign"
     }
   },
   "/campaigns/{id}/attachments": {
     "post": {
+      "experimental": true,
       "name": "addAttachmentToCampaign",
       "namespace": "campaign"
     }
@@ -143,16 +160,19 @@
   },
   "/campaigns/{id}/comments": {
     "post": {
+      "experimental": true,
       "name": "addCommentToCampaign",
       "namespace": "campaign"
     }
   },
   "/campaigns/{id}/fields": {
     "get": {
+      "experimental": true,
       "name": "listCampaignFields",
       "namespace": "campaign"
     },
     "post": {
+      "experimental": true,
       "name": "addFieldToCampaign",
       "namespace": "campaign"
     }
@@ -180,74 +200,88 @@
   },
   "/content-graphs": {
     "get": {
+      "experimental": true,
       "name": "listContentGraphs",
       "namespace": "contentGraph"
     }
   },
   "/content-graphs/{instance_id}/query": {
     "post": {
+      "experimental": true,
       "name": "queryContentGraph",
       "namespace": "contentGraph"
     }
   },
   "/events": {
     "get": {
+      "experimental": true,
       "name": "listEvents",
       "namespace": "event"
     },
     "post": {
+      "experimental": true,
       "name": "createEvent",
       "namespace": "event"
     }
   },
   "/events/{id}": {
     "get": {
+      "experimental": true,
       "name": "getEvent",
       "namespace": "event"
     },
     "patch": {
+      "experimental": true,
       "name": "updateEvent",
       "namespace": "event"
     }
   },
   "/events/{id}/fields": {
     "get": {
+      "experimental": true,
       "name": "listEventFields",
       "namespace": "event"
     },
     "put": {
+      "experimental": true,
       "name": "updateEventFields",
       "namespace": "event"
     }
   },
   "/fields": {
     "get": {
+      "experimental": true,
       "name": "listFields",
       "namespace": "field"
     },
     "post": {
+      "experimental": true,
       "name": "createField",
       "namespace": "field"
     }
   },
   "/fields/{field_id}/choices/{choice_id}": {
     "patch": {
+      "experimental": true,
       "name": "updateFieldChoice",
       "namespace": "field"
     },
     "delete": {
+      "experimental": true,
       "name": "deleteFieldChoice",
       "namespace": "field"
     }
   },
   "/fields/{id}": {
     "patch": {
+      "experimental": true,
       "name": "updateField",
       "namespace": "field"
     }
   },
   "/fields/{id}/choices": {
     "post": {
+      "experimental": true,
       "name": "createFieldChoices",
       "namespace": "field"
     }
@@ -274,30 +308,36 @@
       "namespace": "library"
     },
     "patch": {
+      "experimental": true,
       "name": "updateFolder",
       "namespace": "library"
     },
     "delete": {
+      "experimental": true,
       "name": "deleteFolder",
       "namespace": "library"
     }
   },
   "/folders/{id}/permissions": {
     "get": {
+      "experimental": true,
       "name": "listFolderPermissions",
       "namespace": "library"
     },
     "post": {
+      "experimental": true,
       "name": "addFolderPermissions",
       "namespace": "library"
     }
   },
   "/folders/{id}/permissions/{accessor_id}": {
     "patch": {
+      "experimental": true,
       "name": "updateFolderPermission",
       "namespace": "library"
     },
     "delete": {
+      "experimental": true,
       "name": "removeFolderPermission",
       "namespace": "library"
     }
@@ -324,44 +364,52 @@
   },
   "/milestones": {
     "get": {
+      "experimental": true,
       "name": "listMilestones",
       "namespace": "milestone"
     },
     "post": {
+      "experimental": true,
       "name": "createMilestone",
       "namespace": "milestone"
     }
   },
   "/milestones/{id}": {
     "get": {
+      "experimental": true,
       "name": "getMilestone",
       "namespace": "milestone"
     },
     "patch": {
+      "experimental": true,
       "name": "updateMilestone",
       "namespace": "milestone"
     }
   },
   "/multipart-uploads": {
     "post": {
+      "experimental": true,
       "name": "createMultipartUpload",
       "namespace": "uploader"
     }
   },
   "/multipart-uploads/{id}/complete": {
     "post": {
+      "experimental": true,
       "name": "completeMultipartUpload",
       "namespace": "uploader"
     }
   },
   "/multipart-uploads/{id}/status": {
     "get": {
+      "experimental": true,
       "name": "getMultipartUploadStatus",
       "namespace": "uploader"
     }
   },
   "/publishing-channels": {
     "get": {
+      "experimental": true,
       "name": "listPublishingChannels",
       "namespace": "publishing"
     }
@@ -414,138 +462,164 @@
   },
   "/rendition-configs/{id}": {
     "get": {
+      "experimental": true,
       "name": "getRenditionConfig",
       "namespace": "library"
     }
   },
   "/renditions/{id}": {
     "get": {
+      "experimental": true,
       "name": "getRendition",
       "namespace": "library"
     }
   },
   "/settings": {
     "get": {
+      "experimental": true,
       "name": "getSettings",
       "namespace": "settings"
     },
     "post": {
+      "experimental": true,
       "name": "updateSettings",
       "namespace": "settings"
     }
   },
   "/structured-content/content-types": {
     "get": {
+      "experimental": true,
       "name": "listSCContentTypes",
       "namespace": "structuredContent"
     },
     "post": {
+      "experimental": true,
       "name": "createSCContentType",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/content-types/{content_type_id}": {
     "get": {
+      "experimental": true,
       "name": "getSCContentType",
       "namespace": "structuredContent"
     },
     "post": {
+      "experimental": true,
       "name": "updateSCContentType",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations": {
     "get": {
+      "experimental": true,
       "name": "listSCContentTypeManagedMigrations",
       "namespace": "structuredContent"
     },
     "post": {
+      "experimental": true,
       "name": "createSCContentTypeManagedMigration",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations/validate": {
     "post": {
+      "experimental": true,
       "name": "validateSCContentTypeManagedMigration",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}": {
     "get": {
+      "experimental": true,
       "name": "getSCContentTypeManagedMigration",
       "namespace": "structuredContent"
     },
     "patch": {
+      "experimental": true,
       "name": "updateSCContentTypeManagedMigration",
       "namespace": "structuredContent"
     },
     "delete": {
+      "experimental": true,
       "name": "deleteSCContentTypeManagedMigration",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/content-types/{content_type_id}/managed-migrations/{job_id}/start": {
     "post": {
+      "experimental": true,
       "name": "startSCContentTypeManagedMigration",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/content-types/{content_type_id}/versions": {
     "get": {
+      "experimental": true,
       "name": "listSCContentTypeVersions",
       "namespace": "structuredContent"
     },
     "post": {
+      "experimental": true,
       "name": "createSCContentTypeVersion",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/content-types/{content_type_id}/versions/{version_id}": {
     "get": {
+      "experimental": true,
       "name": "getSCContentTypeVersion",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/contents/{content_id}/migration": {
     "post": {
+      "experimental": true,
       "name": "migrateSCContent",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/acknowledge": {
     "post": {
+      "experimental": true,
       "name": "acknowledgeSCContentPreview",
       "namespace": "structuredContent"
     }
   },
   "/structured-content/contents/{content_id}/versions/{version_id}/previews/{preview_id}/complete": {
     "post": {
+      "experimental": true,
       "name": "completeSCContentPreview",
       "namespace": "structuredContent"
     }
   },
   "/structured-contents": {
     "post": {
+      "experimental": true,
       "name": "createStructuredContent",
       "namespace": "library"
     }
   },
   "/structured-contents/{id}": {
     "get": {
+      "experimental": true,
       "name": "getStructuredContent",
       "namespace": "library"
     },
     "patch": {
+      "experimental": true,
       "name": "updateStructuredContent",
       "namespace": "library"
     }
   },
   "/tasks": {
     "get": {
+      "experimental": true,
       "name": "listTasks",
       "namespace": "task"
     },
     "post": {
+      "experimental": true,
       "name": "createTask",
       "namespace": "task"
     }
@@ -606,6 +680,7 @@
   },
   "/tasks/{task_id}/assets/{asset_id}/drafts": {
     "get": {
+      "experimental": true,
       "name": "listTaskAssetDrafts",
       "namespace": "task"
     },
@@ -616,26 +691,31 @@
   },
   "/tasks/{task_id}/assets/{asset_id}/drafts/{draft_id}/brand-compliance": {
     "get": {
+      "experimental": true,
       "name": "getTaskAssetDraftBrandCompliance",
       "namespace": "brandCompliance"
     },
     "put": {
+      "experimental": true,
       "name": "updateTaskAssetDraftBrandCompliance",
       "namespace": "brandCompliance"
     }
   },
   "/tasks/{task_id}/assets/{asset_id}/fields": {
     "get": {
+      "experimental": true,
       "name": "listTaskAssetFields",
       "namespace": "task"
     },
     "put": {
+      "experimental": true,
       "name": "updateTaskAssetFields",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/comments": {
     "post": {
+      "experimental": true,
       "name": "addCommentToTask",
       "namespace": "task"
     }
@@ -682,20 +762,24 @@
   },
   "/tasks/{task_id}/fields": {
     "get": {
+      "experimental": true,
       "name": "listTaskFields",
       "namespace": "task"
     },
     "post": {
+      "experimental": true,
       "name": "addFieldToTask",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/fields/{field_id}": {
     "put": {
+      "experimental": true,
       "name": "updateTaskField",
       "namespace": "task"
     },
     "delete": {
+      "experimental": true,
       "name": "removeTaskField",
       "namespace": "task"
     }
@@ -708,6 +792,7 @@
   },
   "/tasks/{task_id}/publishing-intents": {
     "post": {
+      "experimental": true,
       "name": "createTaskPublishingIntent",
       "namespace": "task"
     }
@@ -720,6 +805,7 @@
   },
   "/tasks/{task_id}/steps/{step_id}": {
     "patch": {
+      "experimental": true,
       "name": "updateTaskStep",
       "namespace": "taskStep"
     }
@@ -770,50 +856,59 @@
   },
   "/tasks/{task_id}/steps/{step_id}/sub-steps/{sub_step_id}/fields": {
     "get": {
+      "experimental": true,
       "name": "listTaskSubStepFields",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/structured-contents": {
     "post": {
+      "experimental": true,
       "name": "addStructuredContentToTask",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}": {
     "get": {
+      "experimental": true,
       "name": "getTaskStructuredContent",
       "namespace": "task"
     },
     "patch": {
+      "experimental": true,
       "name": "updateTaskStructuredContent",
       "namespace": "task"
     },
     "delete": {
+      "experimental": true,
       "name": "deleteTaskStructuredContent",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}/drafts": {
     "post": {
+      "experimental": true,
       "name": "createTaskStructuredContentDraft",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}/previews": {
     "post": {
+      "experimental": true,
       "name": "createTaskStructuredContentPreview",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/structured-contents/{content_id}/versions": {
     "get": {
+      "experimental": true,
       "name": "listTaskStructuredContentVersions",
       "namespace": "task"
     }
   },
   "/tasks/{task_id}/urls": {
     "post": {
+      "experimental": true,
       "name": "addUrlToTask",
       "namespace": "task"
     }
@@ -826,24 +921,28 @@
   },
   "/teams": {
     "get": {
+      "experimental": true,
       "name": "listTeams",
       "namespace": "team"
     }
   },
   "/teams/{id}": {
     "get": {
+      "experimental": true,
       "name": "getTeam",
       "namespace": "team"
     }
   },
   "/templates": {
     "get": {
+      "experimental": true,
       "name": "listTemplates",
       "namespace": "template"
     }
   },
   "/templates/{template_id}": {
     "get": {
+      "experimental": true,
       "name": "getTemplate",
       "namespace": "template"
     }
@@ -888,102 +987,120 @@
   },
   "/work-requests": {
     "get": {
+      "experimental": true,
       "name": "listWorkRequests",
       "namespace": "workRequest"
     },
     "post": {
+      "experimental": true,
       "name": "createWorkRequest",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}": {
     "get": {
+      "experimental": true,
       "name": "getWorkRequest",
       "namespace": "workRequest"
     },
     "patch": {
+      "experimental": true,
       "name": "updateWorkRequest",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}/approved-assets": {
     "get": {
+      "experimental": true,
       "name": "listWorkRequestApprovedAssets",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}/attachments": {
     "post": {
+      "experimental": true,
       "name": "addAttachmentToWorkRequest",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}/campaigns": {
     "post": {
+      "experimental": true,
       "name": "createCampaignFromWorkRequest",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}/comments": {
     "get": {
+      "experimental": true,
       "name": "listWorkRequestComments",
       "namespace": "workRequest"
     },
     "post": {
+      "experimental": true,
       "name": "addCommentToWorkRequest",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}/creative-assets": {
     "post": {
+      "experimental": true,
       "name": "createWorkRequestCreativeAsset",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}/related-resources": {
     "get": {
+      "experimental": true,
       "name": "listWorkRequestRelatedResources",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{id}/tasks": {
     "post": {
+      "experimental": true,
       "name": "createTaskFromWorkRequest",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{work_request_id}/attachments/{attachment_id}": {
     "delete": {
+      "experimental": true,
       "name": "deleteWorkRequestAttachment",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{work_request_id}/comments/{comment_id}": {
     "get": {
+      "experimental": true,
       "name": "getWorkRequestComment",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{work_request_id}/creative-assets/{creative_asset_id}": {
     "delete": {
+      "experimental": true,
       "name": "deleteWorkRequestCreativeAsset",
       "namespace": "workRequest"
     }
   },
   "/work-requests/{work_request_id}/form-fields/{form_field_identifier}": {
     "put": {
+      "experimental": true,
       "name": "updateWorkRequestFormField",
       "namespace": "workRequest"
     }
   },
   "/workflows": {
     "get": {
+      "experimental": true,
       "name": "listWorkflows",
       "namespace": "workflow"
     }
   },
   "/workflows/{workflow_id}": {
     "get": {
+      "experimental": true,
       "name": "getWorkflow",
       "namespace": "workflow"
     }
