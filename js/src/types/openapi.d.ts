@@ -1557,7 +1557,9 @@ export type paths = {
         head?: never;
         /**
          * PATCH /tasks/{id}
-         * @description Update a task
+         * @description Update a task.
+         *
+         *     When `due_at` moves the task and other tasks depend on it, set `dependent_tasks` to choose whether those tasks keep their dates or shift with this task. Without it, the request is rejected with `409` listing the dependent tasks, and no changes are made.
          */
         patch: operations["updateTask"];
         trace?: never;
@@ -3642,6 +3644,12 @@ export type components = {
              * @example Sample Template Title
              */
             title: string;
+            /**
+             * @description Form version of the template. `1` is a classic form, and `2` is a Form Builder form.
+             * @example 1
+             * @enum {integer}
+             */
+            version: 1 | 2;
         };
         BatchFileUrlResponse: {
             /**
@@ -9034,6 +9042,72 @@ export type components = {
              */
             values: string[];
         };
+        /** @description Error returned when changing a task's due date affects tasks that depend on it */
+        TaskDependentTasksConflictError: {
+            /** @example 409 */
+            code?: number;
+            details?: {
+                /**
+                 * @description Number of business days the due date change moves the task by. Negative when the task moves earlier.
+                 * @example 5
+                 */
+                business_days_moved?: number;
+                /** @description Tasks that depend on this task */
+                dependent_tasks?: {
+                    /**
+                     * @description Whether the dependent task is completed. Completed tasks are not moved by `shift`.
+                     * @example false
+                     */
+                    completed?: boolean;
+                    /**
+                     * Format: date-time
+                     * @description Current due date of the dependent task
+                     * @example 2026-07-06T00:00:00Z
+                     */
+                    current_due_at?: string | null;
+                    /**
+                     * @description Whether you can edit the dependent task. Tasks you cannot edit are not moved by `shift`.
+                     * @example true
+                     */
+                    editable?: boolean;
+                    /**
+                     * @description Unique identifier of the dependent task
+                     * @example 6abfc0ae8cd4e76aada6742c
+                     */
+                    id?: string;
+                    /**
+                     * Format: date-time
+                     * @description Due date the dependent task would get with `shift`
+                     * @example 2026-07-13T00:00:00Z
+                     */
+                    new_due_at?: string | null;
+                    /**
+                     * @description Reference number of the dependent task
+                     * @example 13
+                     */
+                    reference_number?: number;
+                    /**
+                     * @description Title of the dependent task
+                     * @example Book booth staff
+                     */
+                    title?: string;
+                }[];
+                /**
+                 * @description Machine-readable reason for the error
+                 * @enum {string}
+                 */
+                reason?: "dependent_tasks_affected";
+            } & {
+                [key: string]: unknown;
+            };
+            /**
+             * @description Message describing the error
+             * @example Changing the due date affects 1 dependent task(s). Set dependent_tasks to "keep" or "shift" to proceed.
+             */
+            message: string;
+            /** @example Conflict */
+            status?: string;
+        };
         TaskExternalWorkRequest: {
             /**
              * @description Identifier of the external work
@@ -9870,6 +9944,17 @@ export type components = {
              */
             campaign_id?: string;
             /**
+             * @description How to handle tasks that depend on this task when `due_at` moves it by one or more business days. Only used together with `due_at`.
+             *
+             *     - `keep`: move only this task. Dependent tasks keep their dates.
+             *     - `shift`: move each dependent task by the same number of business days. Business days follow the organization's working days; organization-specific blocked dates are not taken into account. Completed dependent tasks and dependent tasks you cannot edit are left unchanged.
+             *
+             *     If omitted and the change affects dependent tasks, the request is rejected with `409` and nothing is updated. The `409` response lists the affected tasks.
+             * @example keep
+             * @enum {string}
+             */
+            dependent_tasks?: "keep" | "shift";
+            /**
              * Format: date-time
              * @description Due date and time of the task
              * @example 2025-10-06T13:00:00Z
@@ -9888,6 +9973,12 @@ export type components = {
              * @example 2025-10-06T13:00:00Z
              */
             start_at?: string;
+            /**
+             * @description New status of the task. `unarchive` and `resume` take the task out of archived or on-hold and restore the status that matches its progress.
+             * @example in-progress
+             * @enum {string}
+             */
+            status?: "not-started" | "in-progress" | "completed" | "on-hold" | "archived" | "unarchive" | "resume";
             /** @description Title of the task */
             title?: string;
             /**
@@ -15718,6 +15809,16 @@ export interface operations {
             401: components["responses"]["Unauthorized"];
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
+            /** @description The due date change affects dependent tasks and `dependent_tasks` was not set */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskDependentTasksConflictError"];
+                };
+            };
+            422: components["responses"]["UnprocessableEntity"];
         };
     };
     listTaskAssets: {
@@ -17713,7 +17814,8 @@ export interface operations {
                      *       ],
                      *       "id": "9119a313057e401189407116fcd3aa24",
                      *       "is_active": true,
-                     *       "title": "Sample Template Title"
+                     *       "title": "Sample Template Title",
+                     *       "version": 1
                      *     }
                      */
                     "application/json": components["schemas"]["TemplateResponse"];
