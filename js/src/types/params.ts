@@ -792,6 +792,15 @@ export interface ListTasksParams {
   page_size?: number;
 }
 
+export interface ListTaskStructuredContentsParams {
+  task_id: string;
+  /** Number of results to return per page, up to a maximum of 20 */
+  page_size?: number;
+  /** When `true`, each item includes its `content_type`, and contents referenced through reference fields are expanded in `latest_fields_version.fields`, as in [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent). When `false` (the default), `content_type` is `null` and reference fields contain only the referenced content identifiers. */
+  expanded?: boolean;
+  offset?: number;
+}
+
 export interface ListTaskStructuredContentVersionsParams {
   task_id: string;
   content_id: string;
@@ -898,6 +907,8 @@ export interface ListTemplatesParams {
   search?: string;
   applicable_to?: 'work_request' | 'task_brief' | 'campaign_brief';
   include_inactive?: boolean;
+  /** Form version to list. `1` is a classic form and `2` is a Form Builder form. Repeat the parameter to list both. Without it, only version 1 templates are returned for now. */
+  version?: number[];
 }
 
 export interface CompleteMultipartUploadParams {
