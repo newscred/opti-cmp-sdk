@@ -862,6 +862,11 @@
     }
   },
   "/tasks/{task_id}/structured-contents": {
+    "get": {
+      "experimental": true,
+      "name": "listTaskStructuredContents",
+      "namespace": "task"
+    },
     "post": {
       "experimental": true,
       "name": "addStructuredContentToTask",
