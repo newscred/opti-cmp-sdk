@@ -1795,7 +1795,7 @@ export type paths = {
         put?: never;
         /**
          * POST /tasks/{task_id}/compose-contents
-         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a compose content in a task. The new content has no field values and the status `draft`. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Create a compose content in a task with the status `draft`. Fields that have a `default_value` in the content schema start with it, for the default locale; other fields have no value. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.
          */
         post: operations["createTaskComposeContent"];
         delete?: never;
@@ -2132,7 +2132,11 @@ export type paths = {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * GET /tasks/{task_id}/structured-contents
+         * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get the structured contents of a task, including their latest field values, in one call. Each item has the same shape as [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent).
+         */
+        get: operations["listTaskStructuredContents"];
         put?: never;
         /**
          * POST /tasks/{task_id}/structured-contents
@@ -2343,6 +2347,48 @@ export type paths = {
         /**
          * GET /templates/{template_id}
          * @description <span style="background-color:#e95f6a;padding:5px;border-radius:5px">Experimental</span> Get a template by ID.
+         *
+         *     The response shape depends on `version`. A version 1 (classic) template
+         *     returns its answer fields. A version 2 (Form Builder) template returns every
+         *     node of the form in stored order, including the title, sections and
+         *     instructions, its logic rules, and the connections between nodes in
+         *     `unconfigured_edges`.
+         *
+         *     To find the questions a version 2 form asks, walk it the way the app does:
+         *
+         *     1. Start at the node with `type: title`.
+         *     2. Run the node's logic rules. In each rule, take the first condition whose
+         *        clauses hold (`and` binds tighter than `or`). The condition with no
+         *        clauses is the "else" condition and always comes last. A clause sees
+         *        only the answers of fields the walk has reached or shown and not
+         *        hidden; any other answer counts as empty. Reaching one copy of a field
+         *        reaches all of its copies.
+         *     3. Apply the actions of the chosen conditions. `show_field` also asks the
+         *        target node, but the walk doesn't move there or read its rules.
+         *        `hide_field` takes the target node out of the questions for the whole
+         *        walk, even when the walk passed it earlier; the walk still passes
+         *        through a hidden node. `show_values` and `hide_values` narrow the
+         *        choices of the target node.
+         *     4. Unless the node is hidden, the walk stops here when the node is
+         *        required, has no answer yet, has more than one way out (see step 5),
+         *        and its own rules test its answer.
+         *     5. Pick the next node. The first `jump_to` that fires wins, and a jump to
+         *        `end_of_form` ends the form. Otherwise, collect the ways out: the
+         *        distinct target nodes of the node's `unconfigured_edges` and of all its
+         *        `jump_to` actions, fired or not, leaving out `end_of_form`. With none,
+         *        the form ends. With one that a connection reaches, go there; with one
+         *        that only an unfired jump reaches, the form ends. With more than one,
+         *        the walk stops.
+         *     6. Repeat from step 2. The form ends when the walk comes back to a node it
+         *        already passed.
+         *
+         *     A section node leads to its first member, the one no other member connects
+         *     to, and the section's own connections leave from its last member. An empty
+         *     section passes straight through. Hiding a section hides its members;
+         *     showing one shows only its heading. A repeatable section is walked once for
+         *     each response. Copies of a field share the same `identifier` and one
+         *     answer. To answer the title in a create request, send the identifier
+         *     `title` with the type `text`.
          */
         get: operations["getTemplate"];
         put?: never;
@@ -3580,6 +3626,11 @@ export type components = {
         };
         BaseTemplateFormField: {
             /**
+             * @description Identifier of the field on the template. Logic rules target fields by it.
+             * @example attachment-aid
+             */
+            association_id: string;
+            /**
              * @description Helper text of the field
              * @example Sample helper text
              */
@@ -4221,6 +4272,11 @@ export type components = {
              */
             api_id: string;
             /**
+             * @description Value a new compose content starts with when the field is not set, for the default locale. Its type matches the field type
+             * @example Untitled
+             */
+            default_value: unknown;
+            /**
              * @description Internal identifier of the field
              * @example db5lgh5h7f0s1otndp90
              */
@@ -4393,10 +4449,10 @@ export type components = {
                 [key: string]: components["schemas"]["LocalizedFieldValues"][];
             };
             /** @description Source ID of the version */
-            source_id?: string;
+            source_id?: string | null;
             /** @description Source metadata of the version */
-            source_metadata?: string;
-            validation?: components["schemas"]["ContentFieldsVersionValidation"];
+            source_metadata?: string | null;
+            validation?: components["schemas"]["ContentFieldsVersionValidation"] | null;
             /** @description Unique identifier of the version */
             version_guid: string;
         };
@@ -4406,7 +4462,7 @@ export type components = {
                 [key: string]: {
                     [key: string]: components["schemas"]["error_reason"];
                 };
-            };
+            } | null;
         };
         ContentGraphListResponse: {
             /** @description List of content graph instances */
@@ -9680,6 +9736,67 @@ export type components = {
              */
             url: string;
         };
+        /** @description A structured content as returned by the task structured content endpoints. It is the same shape as the library `ContentDetailsModel`, except that `links` are task scoped and `template_guid` is not returned. */
+        TaskStructuredContentResponse: {
+            /** @description Unique identifier of the content */
+            content_guid: string;
+            /** @description Definition of the content type this content is based on. It is `null` in the response to [POST /tasks/{task_id}/structured-contents](#operation/addStructuredContentToTask), and when the content is listed through [GET /tasks/{task_id}/structured-contents](#operation/listTaskStructuredContents) with `expanded=false`. */
+            content_type?: components["schemas"]["VersionedContentTypeModel"] | null;
+            /** @description Unique identifier of the content type */
+            content_type_guid: string;
+            /** @description Name of the content type */
+            content_type_name: string;
+            /**
+             * Format: date-time
+             * @description Date and time on which the content was created, in ISO 8601 UTC format
+             */
+            created_at: string;
+            /** @description Unique identifier of the user who created the content */
+            created_by: string;
+            /** @description Expired status of the content */
+            expired?: boolean | null;
+            /**
+             * Format: date-time
+             * @description Date and time on which the content will expire, in ISO 8601 UTC format
+             */
+            expiry_datetime?: string | null;
+            latest_fields_version: components["schemas"]["ContentFieldsVersionDetails"];
+            /** @description Meta links */
+            links: {
+                /**
+                 * @description URL of the content in the context of the task
+                 * @example https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9/structured-contents/a24b834428a043ab8caed1ded4606f7d
+                 */
+                self: string;
+                /**
+                 * @description URL of the task the content belongs to
+                 * @example https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9
+                 */
+                task: string;
+            };
+            /**
+             * @description The primary locale of the content
+             * @example en_US
+             */
+            primary_locale?: string | null;
+            /** @description This is true when the content is not embedded in another content through a content type reference field */
+            root_content: boolean;
+            /** @description Source of the content */
+            source?: string | null;
+            /** @description Source ID of the content */
+            source_id?: string | null;
+            /** @description Source metadata of the content */
+            source_metadata?: string | null;
+            /** @description Title of the content */
+            title: string;
+            /**
+             * Format: date-time
+             * @description Date and time on which the content was last updated, in ISO 8601 UTC format
+             */
+            updated_at: string;
+            /** @description Unique identifier of the user who last updated the content */
+            updated_by: string;
+        };
         TaskStructuredContentUpdateRequest: {
             /**
              * Expired
@@ -9932,10 +10049,15 @@ export type components = {
              */
             is_in_progress?: true;
             /**
-             * @description Whether the substep should be skipped; cannot be passed together with `is_in_progress`, `is_completed` or `assignee_id`
+             * @description Whether the substep should be skipped; cannot be passed together with `is_in_progress`, `is_completed` or `assignee_id`. Can be passed together with `skip_comment`.
              * @enum {boolean}
              */
             is_skipped?: true;
+            /**
+             * @description Reason for skipping the substep; can be passed only together with `is_skipped`. It is required when the task requires a comment to skip a step, and it is rejected with `400` when the task does not. The workflow detail shows this setting in `is_skip_comment_required`. The reason is posted as a comment on the substep. Markdown is supported. To mention a user belonging to the organization, use the `@[name](openapi-user-link)` format.
+             * @example Legal review is not needed for this piece
+             */
+            skip_comment?: string;
         };
         TaskUpdateRequest: {
             /**
@@ -10287,6 +10409,7 @@ export type components = {
              */
             type: "percentage_number";
         };
+        /** Classic template (version 1) */
         TemplateResponse: components["schemas"]["BaseTemplateResponse"] & {
             /** @description List of form fields */
             form_fields: (components["schemas"]["TemplateDefaultFormField"] | components["schemas"]["TemplateCurrencyNumberFormField"] | components["schemas"]["TemplateSimpleNumberFormField"] | components["schemas"]["TemplatePercentageNumberFormField"] | components["schemas"]["TemplateChoiceFormField"] | components["schemas"]["TemplateInstructionFormField"])[];
@@ -10298,6 +10421,11 @@ export type components = {
                  */
                 self: string;
             };
+            /**
+             * @description `1`: a classic form
+             * @enum {integer}
+             */
+            version?: 1;
         };
         TemplateSimpleNumberFormField: components["schemas"]["BaseTemplateFormField"] & {
             logic_rules: components["schemas"]["TemplateLogicRule"];
@@ -10320,6 +10448,225 @@ export type components = {
              * @enum {string}
              */
             type: "simple_number";
+        };
+        /** @description A connection drawn between two nodes of a Form Builder form. The walk follows it from `source` to `target` when no `jump_to` action of `source` fires. */
+        TemplateUnconfiguredEdge: {
+            /**
+             * @description Unique identifier of the connection
+             * @example edge-title-node-n-channel
+             */
+            id: string;
+            /**
+             * @description `association_id` of the node the connection starts at
+             * @example title-node
+             */
+            source: string;
+            /**
+             * @description `association_id` of the node the connection leads to
+             * @example n-channel
+             */
+            target: string;
+        };
+        /** @description One node of a Form Builder form, in stored order. Copies of a field share the same `identifier` and one answer; tell them apart by `association_id`. */
+        TemplateV2FormField: {
+            /**
+             * @description Unique identifier of the node. Logic rules and `unconfigured_edges` refer to nodes by it. The title node is `title-node`, or `title` in early templates.
+             * @example n-channel
+             */
+            association_id: string;
+            /**
+             * @description Number of the copy when the same field sits on the form more than once. Copies saved before numbering existed have null.
+             * @example null
+             */
+            copy_number: number | null;
+            /**
+             * @description Helper text of the node
+             * @example
+             */
+            helper_text: string;
+            /**
+             * @description Identifier of the field. The title node is `title` and the brief is `brief`.
+             * @example cf-channel
+             */
+            identifier: string;
+            /**
+             * @description Present, and true, only when the field of the node can't be found, usually because it was deleted. The node stays on the form and has no label or type. It keeps its stored `is_required`, which the walk still applies.
+             * @example true
+             */
+            is_deleted?: boolean;
+            /**
+             * @description True when only organization admins can change the answer
+             * @example false
+             */
+            is_protected: boolean;
+            /**
+             * @description True for sections, instructions and deleted fields, which take no answer
+             * @example false
+             */
+            is_readonly: boolean;
+            /**
+             * @description Whether an answer is required when the walk reaches the node
+             * @example true
+             */
+            is_required: boolean;
+            /**
+             * @description Label of the field. For a section, its heading. Null for an instruction and for a deleted field.
+             * @example Channel
+             */
+            label: string | null;
+            logic_rules: components["schemas"]["TemplateV2LogicRule"];
+            /**
+             * @description Present only on a repeatable section. Greatest number of responses.
+             * @example 3
+             */
+            max_responses?: number | null;
+            /**
+             * @description Present only on a repeatable section. Least number of responses.
+             * @example 1
+             */
+            min_responses?: number | null;
+            /**
+             * @description Present, and true, only on a repeatable section
+             * @example true
+             */
+            repeatable?: boolean;
+            /**
+             * @description `association_id` of the section the node sits in, or null
+             * @example null
+             */
+            section_id: string | null;
+            /**
+             * @description Position of the node in the stored order of the form
+             * @example 1
+             */
+            sort_order: number;
+            /**
+             * @description Type of the node. Null for a deleted field.
+             * @example radio_button
+             * @enum {string|null}
+             */
+            type: "title" | "section" | "instruction" | "brief" | "checkbox" | "currency_number" | "date" | "dropdown" | "file" | "label" | "percentage_number" | "radio_button" | "richtext" | "simple_number" | "text" | "text_area" | null;
+            /** @description Same as a version 1 field for answer fields: `is_multi_select` and `choices` for choice fields, and the number options for number fields. An instruction has its text in `description`. Null for other nodes. */
+            type_specific_meta: {
+                /** @description Choices of the field */
+                choices?: components["schemas"]["ResourceChoiceResponse"][];
+                /** @description Currency of a currency number field */
+                currency_code?: string | null;
+                /** @description Decimal places of a number field */
+                decimal_places?: number | null;
+                /** @description Text of an instruction */
+                description?: string;
+                /** @description Whether a number field shows a thousand separator */
+                has_thousand_separator?: boolean | null;
+                /** @description Whether more than one choice can be selected */
+                is_multi_select?: boolean;
+            } | null;
+        };
+        /** @description Logic rules of a Form Builder node. In each rule, the first condition that holds runs its actions, and the "else" condition is always last. */
+        TemplateV2LogicRule: {
+            conditions: components["schemas"]["TemplateV2LogicRuleCondition"][];
+        }[];
+        /** @description What happens when the condition holds. */
+        TemplateV2LogicRuleAction: {
+            /**
+             * @description Choice IDs for `show_values` and `hide_values`
+             * @example []
+             */
+            action_values: string[];
+            /**
+             * @description `association_id` of the target node. For `jump_to`, `end_of_form` ends the form.
+             * @example n-email
+             */
+            target_field_association_id: string;
+            /**
+             * @description `jump_to` moves the walk to the target node. `show_field` asks the target node even off the walked path. `hide_field` doesn't ask it; the walk still passes through it, and a hide wins over a show. `show_values` and `hide_values` narrow the choices of the target node to, or without, `action_values`.
+             * @example jump_to
+             * @enum {string}
+             */
+            type: "jump_to" | "show_values" | "hide_values" | "show_field" | "hide_field";
+        };
+        /** @description One test on the answer of a node. */
+        TemplateV2LogicRuleClause: {
+            /**
+             * @description Choice IDs to compare the answer with
+             * @example [
+             *       "ch-email"
+             *     ]
+             */
+            clause_values: string[];
+            /**
+             * @description `association_id` of the node whose answer is tested
+             * @example n-channel
+             */
+            field_id: string;
+            /**
+             * @description How the answer is compared with `clause_values`. `equal` and `not_equal` compare the selected values and `clause_values` as sets. `any_of` holds when the answer is not empty and every selected value is in `clause_values`. `contains_any_of` holds when one selected value is in `clause_values`, and `contains_all_of` when every value of a non-empty `clause_values` is selected; extra selections don't matter. `not_any_of` holds when no selected value is in `clause_values`. `empty` and `filled` take no values.
+             * @example equal
+             * @enum {string}
+             */
+            operator: "any_of" | "equal" | "not_equal" | "not_any_of" | "contains_any_of" | "contains_all_of" | "empty" | "filled";
+            /**
+             * @description Only for a node inside a repeatable section: `any` holds when one response passes, `all` when every response passes. Absent means `any`.
+             * @example any
+             * @enum {string}
+             */
+            responses?: "any" | "all";
+        };
+        /** @description A set of clauses and the actions to run when they hold. A condition with no clauses is the "else" condition and always holds. */
+        TemplateV2LogicRuleCondition: {
+            actions: components["schemas"]["TemplateV2LogicRuleAction"][];
+            clauses: components["schemas"]["TemplateV2LogicRuleClause"][];
+            /**
+             * @description How each clause joins the next one. `and` binds tighter than `or`, and there is one join fewer than there are clauses.
+             * @example []
+             */
+            joins: ("and" | "or")[];
+        };
+        /**
+         * Form Builder template (version 2)
+         * @description A version 2 (Form Builder) template
+         */
+        TemplateV2Response: {
+            /** @description List of resources the template is applicable to */
+            applicable_to: ("work_request" | "task_brief" | "campaign_brief")[];
+            /**
+             * @description Description of the template
+             * @example Ask the content team for a campaign.
+             */
+            description: string;
+            /** @description Every node of the form, in stored order */
+            form_fields: components["schemas"]["TemplateV2FormField"][];
+            /**
+             * @description Unique identifier of the template
+             * @example 9119a313057e401189407116fcd3aa24
+             */
+            id: string;
+            /**
+             * @description Active status of the template
+             * @example true
+             */
+            is_active: boolean;
+            /** @description Meta links */
+            links: {
+                /**
+                 * @description URL of the template
+                 * @example https://api.cmp.optimizely.com/v3/templates/9119a313057e401189407116fcd3aa24
+                 */
+                self: string;
+            };
+            /**
+             * @description Title of the template
+             * @example Campaign request
+             */
+            title: string;
+            /** @description Connections drawn between nodes */
+            unconfigured_edges: components["schemas"]["TemplateUnconfiguredEdge"][];
+            /**
+             * @description `2`: a Form Builder form
+             * @example 2
+             * @enum {integer}
+             */
+            version: 2;
         };
         TextFieldDefinition: {
             core: components["schemas"]["CoreFieldDef"];
@@ -11663,6 +12010,11 @@ export type components = {
              * @example true
              */
             is_resource_management_enabled: boolean;
+            /**
+             * @description Indicates whether a user must write a comment to skip a sub step in a task of this workflow. A task keeps the value that the workflow had when the task was created.
+             * @example false
+             */
+            is_skip_comment_required: boolean;
             /**
              * @description Indicates whether the smart duration of a workflow is enabled
              * @example true
@@ -17225,6 +17577,54 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
+    listTaskStructuredContents: {
+        parameters: {
+            query?: {
+                /**
+                 * @description Starting index of results (zero indexed)
+                 * @example 5
+                 */
+                offset?: components["parameters"]["offset"];
+                /**
+                 * @description Number of results to return per page, up to a maximum of 20
+                 * @example 10
+                 */
+                page_size?: number;
+                /** @description When `true`, each item includes its `content_type`, and contents referenced through reference fields are expanded in `latest_fields_version.fields`, as in [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent). When `false` (the default), `content_type` is `null` and reference fields contain only the referenced content identifiers. */
+                expanded?: boolean;
+            };
+            header?: never;
+            path: {
+                /** @example 5f857f30e1c4a2038d6179e9 */
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of structured contents of the task */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description List of structured contents */
+                        data: components["schemas"]["TaskStructuredContentResponse"][];
+                        /** @description Pagination links. The `expanded` query parameter is carried over into `next` and `previous` when it is set to `true`. */
+                        pagination: components["schemas"]["Pagination"] & {
+                            /** @example https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9/structured-contents?offset=10&page_size=10 */
+                            next?: string | null;
+                        };
+                    };
+                };
+            };
+            400: components["responses"]["ClientError"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
     addStructuredContentToTask: {
         parameters: {
             query?: never;
@@ -17248,7 +17648,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ContentDetailsModel"];
+                    "application/json": components["schemas"]["TaskStructuredContentResponse"];
                 };
             };
             400: components["responses"]["ClientError"];
@@ -17278,7 +17678,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ContentDetailsModel"];
+                    "application/json": components["schemas"]["TaskStructuredContentResponse"];
                 };
             };
             400: components["responses"]["ClientError"];
@@ -17340,7 +17740,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ContentDetailsModel"];
+                    "application/json": components["schemas"]["TaskStructuredContentResponse"];
                 };
             };
             400: components["responses"]["ClientError"];
@@ -17603,6 +18003,8 @@ export interface operations {
                 applicable_to?: "work_request" | "task_brief" | "campaign_brief";
                 /** @example true */
                 include_inactive?: boolean;
+                /** @description Form version to list. `1` is a classic form and `2` is a Form Builder form. Repeat the parameter to list both. Without it, only version 1 templates are returned for now. */
+                version?: (1 | 2)[];
                 /**
                  * @description Starting index of results (zero indexed)
                  * @example 5
@@ -17652,173 +18054,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /**
-                     * @example {
-                     *       "applicable_to": [
-                     *         "campaign_brief",
-                     *         "task_brief",
-                     *         "work_request"
-                     *       ],
-                     *       "description": "Sample Desciption",
-                     *       "form_fields": [
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "attachment",
-                     *           "is_readonly": false,
-                     *           "is_required": false,
-                     *           "label": "Attach a file...",
-                     *           "logic_rules": [
-                     *             {
-                     *               "action": {
-                     *                 "target_field": {
-                     *                   "identifier": "70ca0e8a954911ecb4be0242ac160014"
-                     *                 },
-                     *                 "type": "show_values",
-                     *                 "values": [
-                     *                   "73e05aa2b5d311eca17f0242ac160019"
-                     *                 ]
-                     *               },
-                     *               "condition": {
-                     *                 "operator": "any_of",
-                     *                 "values": [
-                     *                   "4a8b901e9fd911ecbefa0242ac160019"
-                     *                 ]
-                     *               }
-                     *             }
-                     *           ],
-                     *           "sort_order": 0,
-                     *           "type": "file",
-                     *           "type_specific_meta": null
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": false,
-                     *           "is_required": true,
-                     *           "label": "Select publish destination",
-                     *           "logic_rules": [],
-                     *           "sort_order": 1,
-                     *           "type": "dropdown",
-                     *           "type_specific_meta": {
-                     *             "choices": [
-                     *               {
-                     *                 "id": "62553abbb7def00b4e60ded5",
-                     *                 "name": "Sample Dropdown Field Choice"
-                     *               }
-                     *             ],
-                     *             "is_multi_select": false
-                     *           }
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": false,
-                     *           "is_required": false,
-                     *           "label": "Input value",
-                     *           "logic_rules": [],
-                     *           "sort_order": 2,
-                     *           "type": "simple_number",
-                     *           "type_specific_meta": {
-                     *             "decimal_places": 3,
-                     *             "has_thousand_separator": false
-                     *           }
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": false,
-                     *           "is_required": false,
-                     *           "label": "Input value",
-                     *           "logic_rules": [],
-                     *           "sort_order": 3,
-                     *           "type": "percentage_number",
-                     *           "type_specific_meta": {
-                     *             "decimal_places": 3
-                     *           }
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": false,
-                     *           "is_required": false,
-                     *           "label": "Input value",
-                     *           "logic_rules": [],
-                     *           "sort_order": 4,
-                     *           "type": "currency_number",
-                     *           "type_specific_meta": {
-                     *             "currency_code": "USD",
-                     *             "decimal_places": 2,
-                     *             "has_thousand_separator": true
-                     *           }
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": false,
-                     *           "is_required": false,
-                     *           "label": "Input value",
-                     *           "logic_rules": [],
-                     *           "sort_order": 5,
-                     *           "type": "richtext",
-                     *           "type_specific_meta": null
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": true,
-                     *           "is_required": false,
-                     *           "label": "Another section",
-                     *           "logic_rules": [],
-                     *           "sort_order": 5,
-                     *           "type": "section",
-                     *           "type_specific_meta": null
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": false,
-                     *           "is_required": false,
-                     *           "label": "select value",
-                     *           "logic_rules": [],
-                     *           "sort_order": 7,
-                     *           "type": "radio_button",
-                     *           "type_specific_meta": {
-                     *             "choices": [
-                     *               {
-                     *                 "id": "62553abbb7def00b4e60ded5",
-                     *                 "name": "Sample MultiChoice Field Choice"
-                     *               }
-                     *             ],
-                     *             "is_multi_select": false
-                     *           }
-                     *         },
-                     *         {
-                     *           "helper_text": "Sample helper text",
-                     *           "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                     *           "is_readonly": false,
-                     *           "is_required": false,
-                     *           "label": "select value",
-                     *           "logic_rules": [],
-                     *           "sort_order": 8,
-                     *           "type": "label",
-                     *           "type_specific_meta": {
-                     *             "choices": [
-                     *               {
-                     *                 "id": "9119a313057e401189407116fcd3",
-                     *                 "name": "Sample Label"
-                     *               }
-                     *             ],
-                     *             "is_multi_select": false
-                     *           }
-                     *         }
-                     *       ],
-                     *       "id": "9119a313057e401189407116fcd3aa24",
-                     *       "is_active": true,
-                     *       "title": "Sample Template Title",
-                     *       "version": 1
-                     *     }
-                     */
-                    "application/json": components["schemas"]["TemplateResponse"];
+                    "application/json": components["schemas"]["TemplateResponse"] | components["schemas"]["TemplateV2Response"];
                 };
             };
             401: components["responses"]["Unauthorized"];

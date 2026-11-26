@@ -1100,7 +1100,7 @@ export interface APIEndpoints {
      */
     addStructuredContentToTask: (
       params: Params.AddStructuredContentToTaskParams,
-    ) => Promise<Response<Schema.ContentDetailsModel>>;
+    ) => Promise<Response<Schema.TaskStructuredContentResponse>>;
     /**
      * **Experimental:** Adds a URL to a task.
      *
@@ -1122,7 +1122,7 @@ export interface APIEndpoints {
       params: Params.CreateTaskParams,
     ) => Promise<Response<Schema.TaskResponse>>;
     /**
-     * **Experimental:** Create a compose content in a task. The new content has no field values and the status `draft`. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.
+     * **Experimental:** Create a compose content in a task with the status `draft`. Fields that have a `default_value` in the content schema start with it, for the default locale; other fields have no value. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.
      *
      * `POST /tasks/{task_id}/compose-contents`
      *
@@ -1256,7 +1256,7 @@ export interface APIEndpoints {
      */
     getTaskStructuredContent: (
       params: Params.GetTaskStructuredContentParams,
-    ) => Promise<Response<Schema.ContentDetailsModel>>;
+    ) => Promise<Response<Schema.TaskStructuredContentResponse>>;
     /**
      * Get the substep of a task
      *
@@ -1372,6 +1372,16 @@ export interface APIEndpoints {
       params: Params.ListTasksParams,
     ) => Promise<Response<Schema.ListTasksResponse>>;
     /**
+     * **Experimental:** Get the structured contents of a task, including their latest field values, in one call. Each item has the same shape as [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent).
+     *
+     * `GET /tasks/{task_id}/structured-contents`
+     *
+     * @experimental
+     */
+    listTaskStructuredContents: (
+      params: Params.ListTaskStructuredContentsParams,
+    ) => Promise<Response<Schema.ListTaskStructuredContentsResponse>>;
+    /**
      * **Experimental:** Get the list of versions of a task structured content, newest first. These are the versions that CMP lists for the content.
      *
      * `GET /tasks/{task_id}/structured-contents/{content_id}/versions`
@@ -1467,7 +1477,7 @@ export interface APIEndpoints {
      */
     updateTaskStructuredContent: (
       params: Params.UpdateTaskStructuredContentParams,
-    ) => Promise<Response<Schema.ContentDetailsModel>>;
+    ) => Promise<Response<Schema.TaskStructuredContentResponse>>;
     /**
      * Update a substep of a step in a task
      *
@@ -1531,13 +1541,55 @@ export interface APIEndpoints {
     /**
      * **Experimental:** Get a template by ID.
      *
+     * The response shape depends on `version`. A version 1 (classic) template
+     * returns its answer fields. A version 2 (Form Builder) template returns every
+     * node of the form in stored order, including the title, sections and
+     * instructions, its logic rules, and the connections between nodes in
+     * `unconfigured_edges`.
+     *
+     * To find the questions a version 2 form asks, walk it the way the app does:
+     *
+     * 1. Start at the node with `type: title`.
+     * 2. Run the node's logic rules. In each rule, take the first condition whose
+     *    clauses hold (`and` binds tighter than `or`). The condition with no
+     *    clauses is the "else" condition and always comes last. A clause sees
+     *    only the answers of fields the walk has reached or shown and not
+     *    hidden; any other answer counts as empty. Reaching one copy of a field
+     *    reaches all of its copies.
+     * 3. Apply the actions of the chosen conditions. `show_field` also asks the
+     *    target node, but the walk doesn't move there or read its rules.
+     *    `hide_field` takes the target node out of the questions for the whole
+     *    walk, even when the walk passed it earlier; the walk still passes
+     *    through a hidden node. `show_values` and `hide_values` narrow the
+     *    choices of the target node.
+     * 4. Unless the node is hidden, the walk stops here when the node is
+     *    required, has no answer yet, has more than one way out (see step 5),
+     *    and its own rules test its answer.
+     * 5. Pick the next node. The first `jump_to` that fires wins, and a jump to
+     *    `end_of_form` ends the form. Otherwise, collect the ways out: the
+     *    distinct target nodes of the node's `unconfigured_edges` and of all its
+     *    `jump_to` actions, fired or not, leaving out `end_of_form`. With none,
+     *    the form ends. With one that a connection reaches, go there; with one
+     *    that only an unfired jump reaches, the form ends. With more than one,
+     *    the walk stops.
+     * 6. Repeat from step 2. The form ends when the walk comes back to a node it
+     *    already passed.
+     *
+     * A section node leads to its first member, the one no other member connects
+     * to, and the section's own connections leave from its last member. An empty
+     * section passes straight through. Hiding a section hides its members;
+     * showing one shows only its heading. A repeatable section is walked once for
+     * each response. Copies of a field share the same `identifier` and one
+     * answer. To answer the title in a create request, send the identifier
+     * `title` with the type `text`.
+     *
      * `GET /templates/{template_id}`
      *
      * @experimental
      */
     getTemplate: (
       params: Params.GetTemplateParams,
-    ) => Promise<Response<Schema.TemplateResponse>>;
+    ) => Promise<Response<Schema.TemplateResponse | Schema.TemplateV2Response>>;
     /**
      * **Experimental:** Get a list of templates.
      *
