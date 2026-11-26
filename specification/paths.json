@@ -8103,7 +8103,7 @@
   },
   "/tasks/{task_id}/compose-contents": {
     "post": {
-      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a compose content in a task. The new content has no field values and the status `draft`. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.",
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a compose content in a task with the status `draft`. Fields that have a `default_value` in the content schema start with it, for the default locale; other fields have no value. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.",
       "operationId": "createTaskComposeContent",
       "parameters": [
         {
@@ -9181,6 +9181,13 @@
                 "value": {
                   "is_in_progress": true
                 }
+              },
+              "is_skipped_with_comment": {
+                "summary": "Skip the substep with a reason",
+                "value": {
+                  "is_skipped": true,
+                  "skip_comment": "Legal review is not needed for this piece"
+                }
               }
             },
             "schema": {
@@ -9904,6 +9911,108 @@
     }
   },
   "/tasks/{task_id}/structured-contents": {
+    "get": {
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the structured contents of a task, including their latest field values, in one call. Each item has the same shape as [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent).",
+      "operationId": "listTaskStructuredContents",
+      "parameters": [
+        {
+          "example": "5f857f30e1c4a2038d6179e9",
+          "in": "path",
+          "name": "task_id",
+          "required": true,
+          "schema": {
+            "description": "Unique identifier of the task",
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/components/parameters/offset"
+        },
+        {
+          "description": "Number of results to return per page, up to a maximum of 20",
+          "example": 10,
+          "in": "query",
+          "name": "page_size",
+          "schema": {
+            "default": 10,
+            "maximum": 20,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "When `true`, each item includes its `content_type`, and contents referenced through reference fields are expanded in `latest_fields_version.fields`, as in [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent). When `false` (the default), `content_type` is `null` and reference fields contain only the referenced content identifiers.",
+          "in": "query",
+          "name": "expanded",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "data": {
+                    "description": "List of structured contents",
+                    "items": {
+                      "$ref": "#/components/schemas/TaskStructuredContentResponse"
+                    },
+                    "type": "array"
+                  },
+                  "pagination": {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Pagination"
+                      },
+                      {
+                        "properties": {
+                          "next": {
+                            "example": "https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9/structured-contents?offset=10&page_size=10",
+                            "nullable": true,
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    ],
+                    "description": "Pagination links. The `expanded` query parameter is carried over into `next` and `previous` when it is set to `true`."
+                  }
+                },
+                "required": [
+                  "data",
+                  "pagination"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "List of structured contents of the task"
+        },
+        "400": {
+          "$ref": "#/components/responses/ClientError"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        }
+      },
+      "summary": "GET /tasks/{task_id}/structured-contents",
+      "tags": [
+        "Tasks"
+      ],
+      "x-experimental": true
+    },
     "post": {
       "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a new structured content to task",
       "operationId": "addStructuredContentToTask",
@@ -10034,7 +10143,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContentDetailsModel"
+                "$ref": "#/components/schemas/TaskStructuredContentResponse"
               }
             }
           },
@@ -10145,7 +10254,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContentDetailsModel"
+                "$ref": "#/components/schemas/TaskStructuredContentResponse"
               }
             }
           },
@@ -10211,7 +10320,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContentDetailsModel"
+                "$ref": "#/components/schemas/TaskStructuredContentResponse"
               }
             }
           },
@@ -10710,6 +10819,41 @@
           }
         },
         {
+          "description": "Form version to list. `1` is a classic form and `2` is a Form Builder form. Repeat the parameter to list both. Without it, only version 1 templates are returned for now.",
+          "examples": {
+            "multiple": {
+              "summary": "List both versions",
+              "value": [
+                1,
+                2
+              ]
+            },
+            "single": {
+              "summary": "List Form Builder templates only",
+              "value": [
+                2
+              ]
+            }
+          },
+          "explode": true,
+          "in": "query",
+          "name": "version",
+          "schema": {
+            "default": [
+              1
+            ],
+            "items": {
+              "enum": [
+                1,
+                2
+              ],
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "style": "form"
+        },
+        {
           "$ref": "#/components/parameters/offset"
         },
         {
@@ -10746,7 +10890,7 @@
   },
   "/templates/{template_id}": {
     "get": {
-      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a template by ID. ",
+      "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a template by ID.\n\nThe response shape depends on `version`. A version 1 (classic) template\nreturns its answer fields. A version 2 (Form Builder) template returns every\nnode of the form in stored order, including the title, sections and\ninstructions, its logic rules, and the connections between nodes in\n`unconfigured_edges`.\n\nTo find the questions a version 2 form asks, walk it the way the app does:\n\n1. Start at the node with `type: title`.\n2. Run the node's logic rules. In each rule, take the first condition whose\n   clauses hold (`and` binds tighter than `or`). The condition with no\n   clauses is the \"else\" condition and always comes last. A clause sees\n   only the answers of fields the walk has reached or shown and not\n   hidden; any other answer counts as empty. Reaching one copy of a field\n   reaches all of its copies.\n3. Apply the actions of the chosen conditions. `show_field` also asks the\n   target node, but the walk doesn't move there or read its rules.\n   `hide_field` takes the target node out of the questions for the whole\n   walk, even when the walk passed it earlier; the walk still passes\n   through a hidden node. `show_values` and `hide_values` narrow the\n   choices of the target node.\n4. Unless the node is hidden, the walk stops here when the node is\n   required, has no answer yet, has more than one way out (see step 5),\n   and its own rules test its answer.\n5. Pick the next node. The first `jump_to` that fires wins, and a jump to\n   `end_of_form` ends the form. Otherwise, collect the ways out: the\n   distinct target nodes of the node's `unconfigured_edges` and of all its\n   `jump_to` actions, fired or not, leaving out `end_of_form`. With none,\n   the form ends. With one that a connection reaches, go there; with one\n   that only an unfired jump reaches, the form ends. With more than one,\n   the walk stops.\n6. Repeat from step 2. The form ends when the walk comes back to a node it\n   already passed.\n\nA section node leads to its first member, the one no other member connects\nto, and the section's own connections leave from its last member. An empty\nsection passes straight through. Hiding a section hides its members;\nshowing one shows only its heading. A repeatable section is walked once for\neach response. Copies of a field share the same `identifier` and one\nanswer. To answer the title in a create request, send the identifier\n`title` with the type `text`.",
       "operationId": "getTemplate",
       "parameters": [
         {
@@ -10764,172 +10908,23 @@
         "200": {
           "content": {
             "application/json": {
-              "example": {
-                "applicable_to": [
-                  "campaign_brief",
-                  "task_brief",
-                  "work_request"
-                ],
-                "description": "Sample Desciption",
-                "form_fields": [
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "attachment",
-                    "is_readonly": false,
-                    "is_required": false,
-                    "label": "Attach a file...",
-                    "logic_rules": [
-                      {
-                        "action": {
-                          "target_field": {
-                            "identifier": "70ca0e8a954911ecb4be0242ac160014"
-                          },
-                          "type": "show_values",
-                          "values": [
-                            "73e05aa2b5d311eca17f0242ac160019"
-                          ]
-                        },
-                        "condition": {
-                          "operator": "any_of",
-                          "values": [
-                            "4a8b901e9fd911ecbefa0242ac160019"
-                          ]
-                        }
-                      }
-                    ],
-                    "sort_order": 0,
-                    "type": "file",
-                    "type_specific_meta": null
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": false,
-                    "is_required": true,
-                    "label": "Select publish destination",
-                    "logic_rules": [],
-                    "sort_order": 1,
-                    "type": "dropdown",
-                    "type_specific_meta": {
-                      "choices": [
-                        {
-                          "id": "62553abbb7def00b4e60ded5",
-                          "name": "Sample Dropdown Field Choice"
-                        }
-                      ],
-                      "is_multi_select": false
-                    }
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": false,
-                    "is_required": false,
-                    "label": "Input value",
-                    "logic_rules": [],
-                    "sort_order": 2,
-                    "type": "simple_number",
-                    "type_specific_meta": {
-                      "decimal_places": 3,
-                      "has_thousand_separator": false
-                    }
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": false,
-                    "is_required": false,
-                    "label": "Input value",
-                    "logic_rules": [],
-                    "sort_order": 3,
-                    "type": "percentage_number",
-                    "type_specific_meta": {
-                      "decimal_places": 3
-                    }
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": false,
-                    "is_required": false,
-                    "label": "Input value",
-                    "logic_rules": [],
-                    "sort_order": 4,
-                    "type": "currency_number",
-                    "type_specific_meta": {
-                      "currency_code": "USD",
-                      "decimal_places": 2,
-                      "has_thousand_separator": true
-                    }
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": false,
-                    "is_required": false,
-                    "label": "Input value",
-                    "logic_rules": [],
-                    "sort_order": 5,
-                    "type": "richtext",
-                    "type_specific_meta": null
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": true,
-                    "is_required": false,
-                    "label": "Another section",
-                    "logic_rules": [],
-                    "sort_order": 5,
-                    "type": "section",
-                    "type_specific_meta": null
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": false,
-                    "is_required": false,
-                    "label": "select value",
-                    "logic_rules": [],
-                    "sort_order": 7,
-                    "type": "radio_button",
-                    "type_specific_meta": {
-                      "choices": [
-                        {
-                          "id": "62553abbb7def00b4e60ded5",
-                          "name": "Sample MultiChoice Field Choice"
-                        }
-                      ],
-                      "is_multi_select": false
-                    }
-                  },
-                  {
-                    "helper_text": "Sample helper text",
-                    "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                    "is_readonly": false,
-                    "is_required": false,
-                    "label": "select value",
-                    "logic_rules": [],
-                    "sort_order": 8,
-                    "type": "label",
-                    "type_specific_meta": {
-                      "choices": [
-                        {
-                          "id": "9119a313057e401189407116fcd3",
-                          "name": "Sample Label"
-                        }
-                      ],
-                      "is_multi_select": false
-                    }
-                  }
-                ],
-                "id": "9119a313057e401189407116fcd3aa24",
-                "is_active": true,
-                "title": "Sample Template Title",
-                "version": 1
+              "examples": {
+                "classic": {
+                  "$ref": "#/components/examples/template_classic"
+                },
+                "form_builder": {
+                  "$ref": "#/components/examples/template_form_builder"
+                }
               },
               "schema": {
-                "$ref": "#/components/schemas/TemplateResponse"
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TemplateResponse"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TemplateV2Response"
+                  }
+                ]
               }
             }
           },

@@ -1,5 +1,369 @@
 {
   "components": {
+    "examples": {
+      "template_classic": {
+        "summary": "A version 1 (classic) template",
+        "value": {
+          "applicable_to": [
+            "campaign_brief",
+            "task_brief",
+            "work_request"
+          ],
+          "description": "Sample Desciption",
+          "form_fields": [
+            {
+              "association_id": "attachment-aid-0",
+              "helper_text": "Sample helper text",
+              "identifier": "attachment",
+              "is_readonly": false,
+              "is_required": false,
+              "label": "Attach a file...",
+              "logic_rules": [
+                {
+                  "action": {
+                    "target_field": {
+                      "identifier": "70ca0e8a954911ecb4be0242ac160014"
+                    },
+                    "type": "show_values",
+                    "values": [
+                      "73e05aa2b5d311eca17f0242ac160019"
+                    ]
+                  },
+                  "condition": {
+                    "operator": "any_of",
+                    "values": [
+                      "4a8b901e9fd911ecbefa0242ac160019"
+                    ]
+                  }
+                }
+              ],
+              "sort_order": 0,
+              "type": "file",
+              "type_specific_meta": null
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-1",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": false,
+              "is_required": true,
+              "label": "Select publish destination",
+              "logic_rules": [],
+              "sort_order": 1,
+              "type": "dropdown",
+              "type_specific_meta": {
+                "choices": [
+                  {
+                    "id": "62553abbb7def00b4e60ded5",
+                    "name": "Sample Dropdown Field Choice"
+                  }
+                ],
+                "is_multi_select": false
+              }
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-2",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": false,
+              "is_required": false,
+              "label": "Input value",
+              "logic_rules": [],
+              "sort_order": 2,
+              "type": "simple_number",
+              "type_specific_meta": {
+                "decimal_places": 3,
+                "has_thousand_separator": false
+              }
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-3",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": false,
+              "is_required": false,
+              "label": "Input value",
+              "logic_rules": [],
+              "sort_order": 3,
+              "type": "percentage_number",
+              "type_specific_meta": {
+                "decimal_places": 3
+              }
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-4",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": false,
+              "is_required": false,
+              "label": "Input value",
+              "logic_rules": [],
+              "sort_order": 4,
+              "type": "currency_number",
+              "type_specific_meta": {
+                "currency_code": "USD",
+                "decimal_places": 2,
+                "has_thousand_separator": true
+              }
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-5",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": false,
+              "is_required": false,
+              "label": "Input value",
+              "logic_rules": [],
+              "sort_order": 5,
+              "type": "richtext",
+              "type_specific_meta": null
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-6",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": true,
+              "is_required": false,
+              "label": "Another section",
+              "logic_rules": [],
+              "sort_order": 5,
+              "type": "section",
+              "type_specific_meta": null
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-7",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": false,
+              "is_required": false,
+              "label": "select value",
+              "logic_rules": [],
+              "sort_order": 7,
+              "type": "radio_button",
+              "type_specific_meta": {
+                "choices": [
+                  {
+                    "id": "62553abbb7def00b4e60ded5",
+                    "name": "Sample MultiChoice Field Choice"
+                  }
+                ],
+                "is_multi_select": false
+              }
+            },
+            {
+              "association_id": "73e05aa2b54nda3c320242ac1d5291-aid-8",
+              "helper_text": "Sample helper text",
+              "identifier": "73e05aa2b54nda3c320242ac1d5291",
+              "is_readonly": false,
+              "is_required": false,
+              "label": "select value",
+              "logic_rules": [],
+              "sort_order": 8,
+              "type": "label",
+              "type_specific_meta": {
+                "choices": [
+                  {
+                    "id": "9119a313057e401189407116fcd3",
+                    "name": "Sample Label"
+                  }
+                ],
+                "is_multi_select": false
+              }
+            }
+          ],
+          "id": "9119a313057e401189407116fcd3aa24",
+          "is_active": true,
+          "title": "Sample Template Title",
+          "version": 1
+        }
+      },
+      "template_form_builder": {
+        "summary": "A version 2 (Form Builder) template",
+        "value": {
+          "applicable_to": [
+            "work_request"
+          ],
+          "description": "Ask the content team for a campaign.",
+          "form_fields": [
+            {
+              "association_id": "title-node",
+              "copy_number": null,
+              "helper_text": "Give the campaign a short name.",
+              "identifier": "title",
+              "is_protected": false,
+              "is_readonly": false,
+              "is_required": true,
+              "label": "Title",
+              "logic_rules": [],
+              "section_id": null,
+              "sort_order": 0,
+              "type": "title",
+              "type_specific_meta": null
+            },
+            {
+              "association_id": "n-channel",
+              "copy_number": 1,
+              "helper_text": "",
+              "identifier": "6a0c4835e43d432469c4c20d",
+              "is_protected": false,
+              "is_readonly": false,
+              "is_required": true,
+              "label": "Channel",
+              "logic_rules": [
+                {
+                  "conditions": [
+                    {
+                      "actions": [
+                        {
+                          "action_values": [],
+                          "target_field_association_id": "n-email",
+                          "type": "jump_to"
+                        }
+                      ],
+                      "clauses": [
+                        {
+                          "clause_values": [
+                            "6a0c4835e43d432469c4c20f"
+                          ],
+                          "field_id": "n-channel",
+                          "operator": "equal"
+                        }
+                      ],
+                      "joins": []
+                    },
+                    {
+                      "actions": [
+                        {
+                          "action_values": [],
+                          "target_field_association_id": "sec-details",
+                          "type": "jump_to"
+                        }
+                      ],
+                      "clauses": [],
+                      "joins": []
+                    }
+                  ]
+                }
+              ],
+              "section_id": null,
+              "sort_order": 1,
+              "type": "radio_button",
+              "type_specific_meta": {
+                "choices": [
+                  {
+                    "id": "6a0c4835e43d432469c4c20e",
+                    "name": "Social"
+                  },
+                  {
+                    "id": "6a0c4835e43d432469c4c20f",
+                    "name": "Email"
+                  }
+                ],
+                "is_multi_select": false
+              }
+            },
+            {
+              "association_id": "n-email",
+              "copy_number": null,
+              "helper_text": "",
+              "identifier": "6a0c4835e43d432469c4c210",
+              "is_protected": false,
+              "is_readonly": false,
+              "is_required": true,
+              "label": "Email list",
+              "logic_rules": [],
+              "section_id": null,
+              "sort_order": 2,
+              "type": "text",
+              "type_specific_meta": null
+            },
+            {
+              "association_id": "sec-details",
+              "copy_number": null,
+              "helper_text": "",
+              "identifier": "sec-details",
+              "is_protected": false,
+              "is_readonly": true,
+              "is_required": false,
+              "label": "Campaign details",
+              "logic_rules": [],
+              "section_id": null,
+              "sort_order": 3,
+              "type": "section",
+              "type_specific_meta": null
+            },
+            {
+              "association_id": "n-instruction",
+              "copy_number": null,
+              "helper_text": "",
+              "identifier": "n-instruction",
+              "is_protected": false,
+              "is_readonly": true,
+              "is_required": false,
+              "label": null,
+              "logic_rules": [],
+              "section_id": "sec-details",
+              "sort_order": 4,
+              "type": "instruction",
+              "type_specific_meta": {
+                "description": "Please attach your brand guide."
+              }
+            },
+            {
+              "association_id": "n-channel-2",
+              "copy_number": 2,
+              "helper_text": "",
+              "identifier": "6a0c4835e43d432469c4c20d",
+              "is_protected": false,
+              "is_readonly": false,
+              "is_required": false,
+              "label": "Channel",
+              "logic_rules": [],
+              "section_id": "sec-details",
+              "sort_order": 5,
+              "type": "radio_button",
+              "type_specific_meta": {
+                "choices": [
+                  {
+                    "id": "6a0c4835e43d432469c4c20e",
+                    "name": "Social"
+                  },
+                  {
+                    "id": "6a0c4835e43d432469c4c20f",
+                    "name": "Email"
+                  }
+                ],
+                "is_multi_select": false
+              }
+            }
+          ],
+          "id": "4c3f0a9e8b1d4f6a9e2b7c5d1a0f3e8b",
+          "is_active": true,
+          "links": {
+            "self": "https://api.cmp.optimizely.com/v3/templates/4c3f0a9e8b1d4f6a9e2b7c5d1a0f3e8b"
+          },
+          "title": "Campaign request",
+          "unconfigured_edges": [
+            {
+              "id": "edge-title-node-n-channel",
+              "source": "title-node",
+              "target": "n-channel"
+            },
+            {
+              "id": "edge-n-email-sec-details",
+              "source": "n-email",
+              "target": "sec-details"
+            },
+            {
+              "id": "edge-n-instruction-n-channel-2",
+              "source": "n-instruction",
+              "target": "n-channel-2"
+            }
+          ],
+          "version": 2
+        }
+      }
+    },
     "parameters": {
       "offset": {
         "description": "Starting index of results (zero indexed)",
@@ -1666,6 +2030,11 @@
       "BaseTemplateFormField": {
         "additionalProperties": false,
         "properties": {
+          "association_id": {
+            "description": "Identifier of the field on the template. Logic rules target fields by it.",
+            "example": "attachment-aid",
+            "type": "string"
+          },
           "helper_text": {
             "description": "Helper text of the field",
             "example": "Sample helper text",
@@ -1728,6 +2097,7 @@
         },
         "required": [
           "identifier",
+          "association_id",
           "label",
           "helper_text",
           "is_required",
@@ -2925,6 +3295,10 @@
             "example": "title",
             "type": "string"
           },
+          "default_value": {
+            "description": "Value a new compose content starts with when the field is not set, for the default locale. Its type matches the field type",
+            "example": "Untitled"
+          },
           "id": {
             "description": "Internal identifier of the field",
             "example": "db5lgh5h7f0s1otndp90",
@@ -3017,7 +3391,8 @@
           "localized",
           "items",
           "validations",
-          "link_type"
+          "link_type",
+          "default_value"
         ],
         "type": "object"
       },
@@ -3238,14 +3613,22 @@
           },
           "source_id": {
             "description": "Source ID of the version",
+            "nullable": true,
             "type": "string"
           },
           "source_metadata": {
             "description": "Source metadata of the version",
+            "nullable": true,
             "type": "string"
           },
           "validation": {
-            "$ref": "#/components/schemas/ContentFieldsVersionValidation"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ContentFieldsVersionValidation"
+              }
+            ],
+            "nullable": true,
+            "type": "object"
           },
           "version_guid": {
             "description": "Unique identifier of the version",
@@ -3271,6 +3654,7 @@
               "type": "object"
             },
             "description": "Validation for the fields",
+            "nullable": true,
             "type": "object"
           }
         },
@@ -13081,6 +13465,128 @@
         ],
         "type": "object"
       },
+      "TaskStructuredContentResponse": {
+        "description": "A structured content as returned by the task structured content endpoints. It is the same shape as the library `ContentDetailsModel`, except that `links` are task scoped and `template_guid` is not returned.",
+        "properties": {
+          "content_guid": {
+            "description": "Unique identifier of the content",
+            "type": "string"
+          },
+          "content_type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VersionedContentTypeModel"
+              }
+            ],
+            "description": "Definition of the content type this content is based on. It is `null` in the response to [POST /tasks/{task_id}/structured-contents](#operation/addStructuredContentToTask), and when the content is listed through [GET /tasks/{task_id}/structured-contents](#operation/listTaskStructuredContents) with `expanded=false`.",
+            "nullable": true,
+            "type": "object"
+          },
+          "content_type_guid": {
+            "description": "Unique identifier of the content type",
+            "type": "string"
+          },
+          "content_type_name": {
+            "description": "Name of the content type",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Date and time on which the content was created, in ISO 8601 UTC format",
+            "format": "date-time",
+            "type": "string"
+          },
+          "created_by": {
+            "description": "Unique identifier of the user who created the content",
+            "type": "string"
+          },
+          "expired": {
+            "description": "Expired status of the content",
+            "nullable": true,
+            "type": "boolean"
+          },
+          "expiry_datetime": {
+            "description": "Date and time on which the content will expire, in ISO 8601 UTC format",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "latest_fields_version": {
+            "$ref": "#/components/schemas/ContentFieldsVersionDetails"
+          },
+          "links": {
+            "description": "Meta links",
+            "properties": {
+              "self": {
+                "description": "URL of the content in the context of the task",
+                "example": "https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9/structured-contents/a24b834428a043ab8caed1ded4606f7d",
+                "type": "string"
+              },
+              "task": {
+                "description": "URL of the task the content belongs to",
+                "example": "https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9",
+                "type": "string"
+              }
+            },
+            "required": [
+              "self",
+              "task"
+            ],
+            "type": "object"
+          },
+          "primary_locale": {
+            "description": "The primary locale of the content",
+            "example": "en_US",
+            "nullable": true,
+            "type": "string"
+          },
+          "root_content": {
+            "description": "This is true when the content is not embedded in another content through a content type reference field",
+            "type": "boolean"
+          },
+          "source": {
+            "description": "Source of the content",
+            "nullable": true,
+            "type": "string"
+          },
+          "source_id": {
+            "description": "Source ID of the content",
+            "nullable": true,
+            "type": "string"
+          },
+          "source_metadata": {
+            "description": "Source metadata of the content",
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the content",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Date and time on which the content was last updated, in ISO 8601 UTC format",
+            "format": "date-time",
+            "type": "string"
+          },
+          "updated_by": {
+            "description": "Unique identifier of the user who last updated the content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "root_content",
+          "title",
+          "latest_fields_version",
+          "content_guid",
+          "created_by",
+          "updated_by",
+          "created_at",
+          "updated_at",
+          "content_type_guid",
+          "content_type_name",
+          "links"
+        ],
+        "type": "object"
+      },
       "TaskStructuredContentUpdateRequest": {
         "additionalProperties": false,
         "properties": {
@@ -13469,11 +13975,17 @@
             "type": "boolean"
           },
           "is_skipped": {
-            "description": "Whether the substep should be skipped; cannot be passed together with `is_in_progress`, `is_completed` or `assignee_id`",
+            "description": "Whether the substep should be skipped; cannot be passed together with `is_in_progress`, `is_completed` or `assignee_id`. Can be passed together with `skip_comment`.",
             "enum": [
               true
             ],
             "type": "boolean"
+          },
+          "skip_comment": {
+            "description": "Reason for skipping the substep; can be passed only together with `is_skipped`. It is required when the task requires a comment to skip a step, and it is rejected with `400` when the task does not. The workflow detail shows this setting in `is_skip_comment_required`. The reason is posted as a comment on the substep. Markdown is supported. To mention a user belonging to the organization, use the `@[name](openapi-user-link)` format.",
+            "example": "Legal review is not needed for this piece",
+            "minLength": 1,
+            "type": "string"
           }
         },
         "type": "object"
@@ -14198,6 +14710,13 @@
                   "self"
                 ],
                 "type": "object"
+              },
+              "version": {
+                "description": "`1`: a classic form",
+                "enum": [
+                  1
+                ],
+                "type": "integer"
               }
             },
             "required": [
@@ -14206,7 +14725,8 @@
             ],
             "type": "object"
           }
-        ]
+        ],
+        "title": "Classic template (version 1)"
       },
       "TemplateSimpleNumberFormField": {
         "allOf": [
@@ -14247,6 +14767,428 @@
             "type": "object"
           }
         ]
+      },
+      "TemplateUnconfiguredEdge": {
+        "additionalProperties": false,
+        "description": "A connection drawn between two nodes of a Form Builder form. The walk follows it from `source` to `target` when no `jump_to` action of `source` fires.",
+        "properties": {
+          "id": {
+            "description": "Unique identifier of the connection",
+            "example": "edge-title-node-n-channel",
+            "type": "string"
+          },
+          "source": {
+            "description": "`association_id` of the node the connection starts at",
+            "example": "title-node",
+            "type": "string"
+          },
+          "target": {
+            "description": "`association_id` of the node the connection leads to",
+            "example": "n-channel",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "source",
+          "target"
+        ],
+        "type": "object"
+      },
+      "TemplateV2FormField": {
+        "additionalProperties": false,
+        "description": "One node of a Form Builder form, in stored order. Copies of a field share the same `identifier` and one answer; tell them apart by `association_id`.",
+        "properties": {
+          "association_id": {
+            "description": "Unique identifier of the node. Logic rules and `unconfigured_edges` refer to nodes by it. The title node is `title-node`, or `title` in early templates.",
+            "example": "n-channel",
+            "type": "string"
+          },
+          "copy_number": {
+            "description": "Number of the copy when the same field sits on the form more than once. Copies saved before numbering existed have null.",
+            "example": null,
+            "nullable": true,
+            "type": "integer"
+          },
+          "helper_text": {
+            "description": "Helper text of the node",
+            "example": "",
+            "type": "string"
+          },
+          "identifier": {
+            "description": "Identifier of the field. The title node is `title` and the brief is `brief`.",
+            "example": "cf-channel",
+            "type": "string"
+          },
+          "is_deleted": {
+            "description": "Present, and true, only when the field of the node can't be found, usually because it was deleted. The node stays on the form and has no label or type. It keeps its stored `is_required`, which the walk still applies.",
+            "example": true,
+            "type": "boolean"
+          },
+          "is_protected": {
+            "description": "True when only organization admins can change the answer",
+            "example": false,
+            "type": "boolean"
+          },
+          "is_readonly": {
+            "description": "True for sections, instructions and deleted fields, which take no answer",
+            "example": false,
+            "type": "boolean"
+          },
+          "is_required": {
+            "description": "Whether an answer is required when the walk reaches the node",
+            "example": true,
+            "type": "boolean"
+          },
+          "label": {
+            "description": "Label of the field. For a section, its heading. Null for an instruction and for a deleted field.",
+            "example": "Channel",
+            "nullable": true,
+            "type": "string"
+          },
+          "logic_rules": {
+            "$ref": "#/components/schemas/TemplateV2LogicRule"
+          },
+          "max_responses": {
+            "description": "Present only on a repeatable section. Greatest number of responses.",
+            "example": 3,
+            "nullable": true,
+            "type": "integer"
+          },
+          "min_responses": {
+            "description": "Present only on a repeatable section. Least number of responses.",
+            "example": 1,
+            "nullable": true,
+            "type": "integer"
+          },
+          "repeatable": {
+            "description": "Present, and true, only on a repeatable section",
+            "example": true,
+            "type": "boolean"
+          },
+          "section_id": {
+            "description": "`association_id` of the section the node sits in, or null",
+            "example": null,
+            "nullable": true,
+            "type": "string"
+          },
+          "sort_order": {
+            "description": "Position of the node in the stored order of the form",
+            "example": 1,
+            "type": "integer"
+          },
+          "type": {
+            "description": "Type of the node. Null for a deleted field.",
+            "enum": [
+              "title",
+              "section",
+              "instruction",
+              "brief",
+              "checkbox",
+              "currency_number",
+              "date",
+              "dropdown",
+              "file",
+              "label",
+              "percentage_number",
+              "radio_button",
+              "richtext",
+              "simple_number",
+              "text",
+              "text_area",
+              null
+            ],
+            "example": "radio_button",
+            "nullable": true,
+            "type": "string"
+          },
+          "type_specific_meta": {
+            "additionalProperties": false,
+            "description": "Same as a version 1 field for answer fields: `is_multi_select` and `choices` for choice fields, and the number options for number fields. An instruction has its text in `description`. Null for other nodes.",
+            "nullable": true,
+            "properties": {
+              "choices": {
+                "description": "Choices of the field",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceChoiceResponse"
+                },
+                "type": "array"
+              },
+              "currency_code": {
+                "description": "Currency of a currency number field",
+                "nullable": true,
+                "type": "string"
+              },
+              "decimal_places": {
+                "description": "Decimal places of a number field",
+                "nullable": true,
+                "type": "integer"
+              },
+              "description": {
+                "description": "Text of an instruction",
+                "type": "string"
+              },
+              "has_thousand_separator": {
+                "description": "Whether a number field shows a thousand separator",
+                "nullable": true,
+                "type": "boolean"
+              },
+              "is_multi_select": {
+                "description": "Whether more than one choice can be selected",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "identifier",
+          "association_id",
+          "label",
+          "helper_text",
+          "is_required",
+          "is_readonly",
+          "is_protected",
+          "sort_order",
+          "type",
+          "logic_rules",
+          "type_specific_meta",
+          "section_id",
+          "copy_number"
+        ],
+        "type": "object"
+      },
+      "TemplateV2LogicRule": {
+        "description": "Logic rules of a Form Builder node. In each rule, the first condition that holds runs its actions, and the \"else\" condition is always last.",
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "conditions": {
+              "items": {
+                "$ref": "#/components/schemas/TemplateV2LogicRuleCondition"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "conditions"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "TemplateV2LogicRuleAction": {
+        "additionalProperties": false,
+        "description": "What happens when the condition holds.",
+        "properties": {
+          "action_values": {
+            "description": "Choice IDs for `show_values` and `hide_values`",
+            "example": [],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "target_field_association_id": {
+            "description": "`association_id` of the target node. For `jump_to`, `end_of_form` ends the form.",
+            "example": "n-email",
+            "type": "string"
+          },
+          "type": {
+            "description": "`jump_to` moves the walk to the target node. `show_field` asks the target node even off the walked path. `hide_field` doesn't ask it; the walk still passes through it, and a hide wins over a show. `show_values` and `hide_values` narrow the choices of the target node to, or without, `action_values`.",
+            "enum": [
+              "jump_to",
+              "show_values",
+              "hide_values",
+              "show_field",
+              "hide_field"
+            ],
+            "example": "jump_to",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "target_field_association_id",
+          "action_values"
+        ],
+        "type": "object"
+      },
+      "TemplateV2LogicRuleClause": {
+        "additionalProperties": false,
+        "description": "One test on the answer of a node.",
+        "properties": {
+          "clause_values": {
+            "description": "Choice IDs to compare the answer with",
+            "example": [
+              "ch-email"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "field_id": {
+            "description": "`association_id` of the node whose answer is tested",
+            "example": "n-channel",
+            "type": "string"
+          },
+          "operator": {
+            "description": "How the answer is compared with `clause_values`. `equal` and `not_equal` compare the selected values and `clause_values` as sets. `any_of` holds when the answer is not empty and every selected value is in `clause_values`. `contains_any_of` holds when one selected value is in `clause_values`, and `contains_all_of` when every value of a non-empty `clause_values` is selected; extra selections don't matter. `not_any_of` holds when no selected value is in `clause_values`. `empty` and `filled` take no values.",
+            "enum": [
+              "any_of",
+              "equal",
+              "not_equal",
+              "not_any_of",
+              "contains_any_of",
+              "contains_all_of",
+              "empty",
+              "filled"
+            ],
+            "example": "equal",
+            "type": "string"
+          },
+          "responses": {
+            "description": "Only for a node inside a repeatable section: `any` holds when one response passes, `all` when every response passes. Absent means `any`.",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "example": "any",
+            "type": "string"
+          }
+        },
+        "required": [
+          "field_id",
+          "operator",
+          "clause_values"
+        ],
+        "type": "object"
+      },
+      "TemplateV2LogicRuleCondition": {
+        "additionalProperties": false,
+        "description": "A set of clauses and the actions to run when they hold. A condition with no clauses is the \"else\" condition and always holds.",
+        "properties": {
+          "actions": {
+            "items": {
+              "$ref": "#/components/schemas/TemplateV2LogicRuleAction"
+            },
+            "type": "array"
+          },
+          "clauses": {
+            "items": {
+              "$ref": "#/components/schemas/TemplateV2LogicRuleClause"
+            },
+            "type": "array"
+          },
+          "joins": {
+            "description": "How each clause joins the next one. `and` binds tighter than `or`, and there is one join fewer than there are clauses.",
+            "example": [],
+            "items": {
+              "enum": [
+                "and",
+                "or"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "clauses",
+          "joins",
+          "actions"
+        ],
+        "type": "object"
+      },
+      "TemplateV2Response": {
+        "additionalProperties": false,
+        "description": "A version 2 (Form Builder) template",
+        "properties": {
+          "applicable_to": {
+            "description": "List of resources the template is applicable to",
+            "items": {
+              "enum": [
+                "work_request",
+                "task_brief",
+                "campaign_brief"
+              ],
+              "example": "work_request",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "description": {
+            "description": "Description of the template",
+            "example": "Ask the content team for a campaign.",
+            "type": "string"
+          },
+          "form_fields": {
+            "description": "Every node of the form, in stored order",
+            "items": {
+              "$ref": "#/components/schemas/TemplateV2FormField"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Unique identifier of the template",
+            "example": "9119a313057e401189407116fcd3aa24",
+            "type": "string"
+          },
+          "is_active": {
+            "description": "Active status of the template",
+            "example": true,
+            "type": "boolean"
+          },
+          "links": {
+            "additionalProperties": false,
+            "description": "Meta links",
+            "properties": {
+              "self": {
+                "description": "URL of the template",
+                "example": "https://api.cmp.optimizely.com/v3/templates/9119a313057e401189407116fcd3aa24",
+                "type": "string"
+              }
+            },
+            "required": [
+              "self"
+            ],
+            "type": "object"
+          },
+          "title": {
+            "description": "Title of the template",
+            "example": "Campaign request",
+            "type": "string"
+          },
+          "unconfigured_edges": {
+            "description": "Connections drawn between nodes",
+            "items": {
+              "$ref": "#/components/schemas/TemplateUnconfiguredEdge"
+            },
+            "type": "array"
+          },
+          "version": {
+            "description": "`2`: a Form Builder form",
+            "enum": [
+              2
+            ],
+            "example": 2,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "is_active",
+          "title",
+          "description",
+          "applicable_to",
+          "form_fields",
+          "unconfigured_edges",
+          "links"
+        ],
+        "title": "Form Builder template (version 2)",
+        "type": "object"
       },
       "TextFieldDefinition": {
         "properties": {
@@ -16763,6 +17705,11 @@
             "example": true,
             "type": "boolean"
           },
+          "is_skip_comment_required": {
+            "description": "Indicates whether a user must write a comment to skip a sub step in a task of this workflow. A task keeps the value that the workflow had when the task was created.",
+            "example": false,
+            "type": "boolean"
+          },
           "is_smart_duration_enabled": {
             "description": "Indicates whether the smart duration of a workflow is enabled",
             "example": true,
@@ -16936,6 +17883,7 @@
           "is_smart_duration_enabled",
           "is_asset_approval_enabled",
           "is_resource_management_enabled",
+          "is_skip_comment_required",
           "steps",
           "fields"
         ],
@@ -25191,7 +26139,7 @@
     },
     "/tasks/{task_id}/compose-contents": {
       "post": {
-        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a compose content in a task. The new content has no field values and the status `draft`. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Create a compose content in a task with the status `draft`. Fields that have a `default_value` in the content schema start with it, for the default locale; other fields have no value. Returns 403 if Compose is not enabled for the organization, and 422 if the task is completed or archived.",
         "operationId": "createTaskComposeContent",
         "parameters": [
           {
@@ -26269,6 +27217,13 @@
                   "value": {
                     "is_in_progress": true
                   }
+                },
+                "is_skipped_with_comment": {
+                  "summary": "Skip the substep with a reason",
+                  "value": {
+                    "is_skipped": true,
+                    "skip_comment": "Legal review is not needed for this piece"
+                  }
                 }
               },
               "schema": {
@@ -26992,6 +27947,108 @@
       }
     },
     "/tasks/{task_id}/structured-contents": {
+      "get": {
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get the structured contents of a task, including their latest field values, in one call. Each item has the same shape as [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent).",
+        "operationId": "listTaskStructuredContents",
+        "parameters": [
+          {
+            "example": "5f857f30e1c4a2038d6179e9",
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "description": "Unique identifier of the task",
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "description": "Number of results to return per page, up to a maximum of 20",
+            "example": 10,
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "default": 10,
+              "maximum": 20,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "When `true`, each item includes its `content_type`, and contents referenced through reference fields are expanded in `latest_fields_version.fields`, as in [GET /tasks/{task_id}/structured-contents/{content_id}](#operation/getTaskStructuredContent). When `false` (the default), `content_type` is `null` and reference fields contain only the referenced content identifiers.",
+            "in": "query",
+            "name": "expanded",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "description": "List of structured contents",
+                      "items": {
+                        "$ref": "#/components/schemas/TaskStructuredContentResponse"
+                      },
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/Pagination"
+                        },
+                        {
+                          "properties": {
+                            "next": {
+                              "example": "https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9/structured-contents?offset=10&page_size=10",
+                              "nullable": true,
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "description": "Pagination links. The `expanded` query parameter is carried over into `next` and `previous` when it is set to `true`."
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "pagination"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "List of structured contents of the task"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "summary": "GET /tasks/{task_id}/structured-contents",
+        "tags": [
+          "Tasks"
+        ],
+        "x-experimental": true
+      },
       "post": {
         "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Add a new structured content to task",
         "operationId": "addStructuredContentToTask",
@@ -27122,7 +28179,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContentDetailsModel"
+                  "$ref": "#/components/schemas/TaskStructuredContentResponse"
                 }
               }
             },
@@ -27233,7 +28290,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContentDetailsModel"
+                  "$ref": "#/components/schemas/TaskStructuredContentResponse"
                 }
               }
             },
@@ -27299,7 +28356,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContentDetailsModel"
+                  "$ref": "#/components/schemas/TaskStructuredContentResponse"
                 }
               }
             },
@@ -27798,6 +28855,41 @@
             }
           },
           {
+            "description": "Form version to list. `1` is a classic form and `2` is a Form Builder form. Repeat the parameter to list both. Without it, only version 1 templates are returned for now.",
+            "examples": {
+              "multiple": {
+                "summary": "List both versions",
+                "value": [
+                  1,
+                  2
+                ]
+              },
+              "single": {
+                "summary": "List Form Builder templates only",
+                "value": [
+                  2
+                ]
+              }
+            },
+            "explode": true,
+            "in": "query",
+            "name": "version",
+            "schema": {
+              "default": [
+                1
+              ],
+              "items": {
+                "enum": [
+                  1,
+                  2
+                ],
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "style": "form"
+          },
+          {
             "$ref": "#/components/parameters/offset"
           },
           {
@@ -27834,7 +28926,7 @@
     },
     "/templates/{template_id}": {
       "get": {
-        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a template by ID. ",
+        "description": "<span style=\"background-color:#e95f6a;padding:5px;border-radius:5px\">Experimental</span> Get a template by ID.\n\nThe response shape depends on `version`. A version 1 (classic) template\nreturns its answer fields. A version 2 (Form Builder) template returns every\nnode of the form in stored order, including the title, sections and\ninstructions, its logic rules, and the connections between nodes in\n`unconfigured_edges`.\n\nTo find the questions a version 2 form asks, walk it the way the app does:\n\n1. Start at the node with `type: title`.\n2. Run the node's logic rules. In each rule, take the first condition whose\n   clauses hold (`and` binds tighter than `or`). The condition with no\n   clauses is the \"else\" condition and always comes last. A clause sees\n   only the answers of fields the walk has reached or shown and not\n   hidden; any other answer counts as empty. Reaching one copy of a field\n   reaches all of its copies.\n3. Apply the actions of the chosen conditions. `show_field` also asks the\n   target node, but the walk doesn't move there or read its rules.\n   `hide_field` takes the target node out of the questions for the whole\n   walk, even when the walk passed it earlier; the walk still passes\n   through a hidden node. `show_values` and `hide_values` narrow the\n   choices of the target node.\n4. Unless the node is hidden, the walk stops here when the node is\n   required, has no answer yet, has more than one way out (see step 5),\n   and its own rules test its answer.\n5. Pick the next node. The first `jump_to` that fires wins, and a jump to\n   `end_of_form` ends the form. Otherwise, collect the ways out: the\n   distinct target nodes of the node's `unconfigured_edges` and of all its\n   `jump_to` actions, fired or not, leaving out `end_of_form`. With none,\n   the form ends. With one that a connection reaches, go there; with one\n   that only an unfired jump reaches, the form ends. With more than one,\n   the walk stops.\n6. Repeat from step 2. The form ends when the walk comes back to a node it\n   already passed.\n\nA section node leads to its first member, the one no other member connects\nto, and the section's own connections leave from its last member. An empty\nsection passes straight through. Hiding a section hides its members;\nshowing one shows only its heading. A repeatable section is walked once for\neach response. Copies of a field share the same `identifier` and one\nanswer. To answer the title in a create request, send the identifier\n`title` with the type `text`.",
         "operationId": "getTemplate",
         "parameters": [
           {
@@ -27852,172 +28944,23 @@
           "200": {
             "content": {
               "application/json": {
-                "example": {
-                  "applicable_to": [
-                    "campaign_brief",
-                    "task_brief",
-                    "work_request"
-                  ],
-                  "description": "Sample Desciption",
-                  "form_fields": [
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "attachment",
-                      "is_readonly": false,
-                      "is_required": false,
-                      "label": "Attach a file...",
-                      "logic_rules": [
-                        {
-                          "action": {
-                            "target_field": {
-                              "identifier": "70ca0e8a954911ecb4be0242ac160014"
-                            },
-                            "type": "show_values",
-                            "values": [
-                              "73e05aa2b5d311eca17f0242ac160019"
-                            ]
-                          },
-                          "condition": {
-                            "operator": "any_of",
-                            "values": [
-                              "4a8b901e9fd911ecbefa0242ac160019"
-                            ]
-                          }
-                        }
-                      ],
-                      "sort_order": 0,
-                      "type": "file",
-                      "type_specific_meta": null
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": false,
-                      "is_required": true,
-                      "label": "Select publish destination",
-                      "logic_rules": [],
-                      "sort_order": 1,
-                      "type": "dropdown",
-                      "type_specific_meta": {
-                        "choices": [
-                          {
-                            "id": "62553abbb7def00b4e60ded5",
-                            "name": "Sample Dropdown Field Choice"
-                          }
-                        ],
-                        "is_multi_select": false
-                      }
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": false,
-                      "is_required": false,
-                      "label": "Input value",
-                      "logic_rules": [],
-                      "sort_order": 2,
-                      "type": "simple_number",
-                      "type_specific_meta": {
-                        "decimal_places": 3,
-                        "has_thousand_separator": false
-                      }
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": false,
-                      "is_required": false,
-                      "label": "Input value",
-                      "logic_rules": [],
-                      "sort_order": 3,
-                      "type": "percentage_number",
-                      "type_specific_meta": {
-                        "decimal_places": 3
-                      }
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": false,
-                      "is_required": false,
-                      "label": "Input value",
-                      "logic_rules": [],
-                      "sort_order": 4,
-                      "type": "currency_number",
-                      "type_specific_meta": {
-                        "currency_code": "USD",
-                        "decimal_places": 2,
-                        "has_thousand_separator": true
-                      }
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": false,
-                      "is_required": false,
-                      "label": "Input value",
-                      "logic_rules": [],
-                      "sort_order": 5,
-                      "type": "richtext",
-                      "type_specific_meta": null
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": true,
-                      "is_required": false,
-                      "label": "Another section",
-                      "logic_rules": [],
-                      "sort_order": 5,
-                      "type": "section",
-                      "type_specific_meta": null
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": false,
-                      "is_required": false,
-                      "label": "select value",
-                      "logic_rules": [],
-                      "sort_order": 7,
-                      "type": "radio_button",
-                      "type_specific_meta": {
-                        "choices": [
-                          {
-                            "id": "62553abbb7def00b4e60ded5",
-                            "name": "Sample MultiChoice Field Choice"
-                          }
-                        ],
-                        "is_multi_select": false
-                      }
-                    },
-                    {
-                      "helper_text": "Sample helper text",
-                      "identifier": "73e05aa2b54nda3c320242ac1d5291",
-                      "is_readonly": false,
-                      "is_required": false,
-                      "label": "select value",
-                      "logic_rules": [],
-                      "sort_order": 8,
-                      "type": "label",
-                      "type_specific_meta": {
-                        "choices": [
-                          {
-                            "id": "9119a313057e401189407116fcd3",
-                            "name": "Sample Label"
-                          }
-                        ],
-                        "is_multi_select": false
-                      }
-                    }
-                  ],
-                  "id": "9119a313057e401189407116fcd3aa24",
-                  "is_active": true,
-                  "title": "Sample Template Title",
-                  "version": 1
+                "examples": {
+                  "classic": {
+                    "$ref": "#/components/examples/template_classic"
+                  },
+                  "form_builder": {
+                    "$ref": "#/components/examples/template_form_builder"
+                  }
                 },
                 "schema": {
-                  "$ref": "#/components/schemas/TemplateResponse"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/TemplateResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TemplateV2Response"
+                    }
+                  ]
                 }
               }
             },

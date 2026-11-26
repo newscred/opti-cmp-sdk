@@ -1546,6 +1546,11 @@
   "BaseTemplateFormField": {
     "additionalProperties": false,
     "properties": {
+      "association_id": {
+        "description": "Identifier of the field on the template. Logic rules target fields by it.",
+        "example": "attachment-aid",
+        "type": "string"
+      },
       "helper_text": {
         "description": "Helper text of the field",
         "example": "Sample helper text",
@@ -1608,6 +1613,7 @@
     },
     "required": [
       "identifier",
+      "association_id",
       "label",
       "helper_text",
       "is_required",
@@ -2805,6 +2811,10 @@
         "example": "title",
         "type": "string"
       },
+      "default_value": {
+        "description": "Value a new compose content starts with when the field is not set, for the default locale. Its type matches the field type",
+        "example": "Untitled"
+      },
       "id": {
         "description": "Internal identifier of the field",
         "example": "db5lgh5h7f0s1otndp90",
@@ -2897,7 +2907,8 @@
       "localized",
       "items",
       "validations",
-      "link_type"
+      "link_type",
+      "default_value"
     ],
     "type": "object"
   },
@@ -3118,14 +3129,22 @@
       },
       "source_id": {
         "description": "Source ID of the version",
+        "nullable": true,
         "type": "string"
       },
       "source_metadata": {
         "description": "Source metadata of the version",
+        "nullable": true,
         "type": "string"
       },
       "validation": {
-        "$ref": "#/components/schemas/ContentFieldsVersionValidation"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ContentFieldsVersionValidation"
+          }
+        ],
+        "nullable": true,
+        "type": "object"
       },
       "version_guid": {
         "description": "Unique identifier of the version",
@@ -3151,6 +3170,7 @@
           "type": "object"
         },
         "description": "Validation for the fields",
+        "nullable": true,
         "type": "object"
       }
     },
@@ -12961,6 +12981,128 @@
     ],
     "type": "object"
   },
+  "TaskStructuredContentResponse": {
+    "description": "A structured content as returned by the task structured content endpoints. It is the same shape as the library `ContentDetailsModel`, except that `links` are task scoped and `template_guid` is not returned.",
+    "properties": {
+      "content_guid": {
+        "description": "Unique identifier of the content",
+        "type": "string"
+      },
+      "content_type": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VersionedContentTypeModel"
+          }
+        ],
+        "description": "Definition of the content type this content is based on. It is `null` in the response to [POST /tasks/{task_id}/structured-contents](#operation/addStructuredContentToTask), and when the content is listed through [GET /tasks/{task_id}/structured-contents](#operation/listTaskStructuredContents) with `expanded=false`.",
+        "nullable": true,
+        "type": "object"
+      },
+      "content_type_guid": {
+        "description": "Unique identifier of the content type",
+        "type": "string"
+      },
+      "content_type_name": {
+        "description": "Name of the content type",
+        "type": "string"
+      },
+      "created_at": {
+        "description": "Date and time on which the content was created, in ISO 8601 UTC format",
+        "format": "date-time",
+        "type": "string"
+      },
+      "created_by": {
+        "description": "Unique identifier of the user who created the content",
+        "type": "string"
+      },
+      "expired": {
+        "description": "Expired status of the content",
+        "nullable": true,
+        "type": "boolean"
+      },
+      "expiry_datetime": {
+        "description": "Date and time on which the content will expire, in ISO 8601 UTC format",
+        "format": "date-time",
+        "nullable": true,
+        "type": "string"
+      },
+      "latest_fields_version": {
+        "$ref": "#/components/schemas/ContentFieldsVersionDetails"
+      },
+      "links": {
+        "description": "Meta links",
+        "properties": {
+          "self": {
+            "description": "URL of the content in the context of the task",
+            "example": "https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9/structured-contents/a24b834428a043ab8caed1ded4606f7d",
+            "type": "string"
+          },
+          "task": {
+            "description": "URL of the task the content belongs to",
+            "example": "https://api.cmp.optimizely.com/v3/tasks/5f857f30e1c4a2038d6179e9",
+            "type": "string"
+          }
+        },
+        "required": [
+          "self",
+          "task"
+        ],
+        "type": "object"
+      },
+      "primary_locale": {
+        "description": "The primary locale of the content",
+        "example": "en_US",
+        "nullable": true,
+        "type": "string"
+      },
+      "root_content": {
+        "description": "This is true when the content is not embedded in another content through a content type reference field",
+        "type": "boolean"
+      },
+      "source": {
+        "description": "Source of the content",
+        "nullable": true,
+        "type": "string"
+      },
+      "source_id": {
+        "description": "Source ID of the content",
+        "nullable": true,
+        "type": "string"
+      },
+      "source_metadata": {
+        "description": "Source metadata of the content",
+        "nullable": true,
+        "type": "string"
+      },
+      "title": {
+        "description": "Title of the content",
+        "type": "string"
+      },
+      "updated_at": {
+        "description": "Date and time on which the content was last updated, in ISO 8601 UTC format",
+        "format": "date-time",
+        "type": "string"
+      },
+      "updated_by": {
+        "description": "Unique identifier of the user who last updated the content",
+        "type": "string"
+      }
+    },
+    "required": [
+      "root_content",
+      "title",
+      "latest_fields_version",
+      "content_guid",
+      "created_by",
+      "updated_by",
+      "created_at",
+      "updated_at",
+      "content_type_guid",
+      "content_type_name",
+      "links"
+    ],
+    "type": "object"
+  },
   "TaskStructuredContentUpdateRequest": {
     "additionalProperties": false,
     "properties": {
@@ -13349,11 +13491,17 @@
         "type": "boolean"
       },
       "is_skipped": {
-        "description": "Whether the substep should be skipped; cannot be passed together with `is_in_progress`, `is_completed` or `assignee_id`",
+        "description": "Whether the substep should be skipped; cannot be passed together with `is_in_progress`, `is_completed` or `assignee_id`. Can be passed together with `skip_comment`.",
         "enum": [
           true
         ],
         "type": "boolean"
+      },
+      "skip_comment": {
+        "description": "Reason for skipping the substep; can be passed only together with `is_skipped`. It is required when the task requires a comment to skip a step, and it is rejected with `400` when the task does not. The workflow detail shows this setting in `is_skip_comment_required`. The reason is posted as a comment on the substep. Markdown is supported. To mention a user belonging to the organization, use the `@[name](openapi-user-link)` format.",
+        "example": "Legal review is not needed for this piece",
+        "minLength": 1,
+        "type": "string"
       }
     },
     "type": "object"
@@ -14078,6 +14226,13 @@
               "self"
             ],
             "type": "object"
+          },
+          "version": {
+            "description": "`1`: a classic form",
+            "enum": [
+              1
+            ],
+            "type": "integer"
           }
         },
         "required": [
@@ -14086,7 +14241,8 @@
         ],
         "type": "object"
       }
-    ]
+    ],
+    "title": "Classic template (version 1)"
   },
   "TemplateSimpleNumberFormField": {
     "allOf": [
@@ -14127,6 +14283,428 @@
         "type": "object"
       }
     ]
+  },
+  "TemplateUnconfiguredEdge": {
+    "additionalProperties": false,
+    "description": "A connection drawn between two nodes of a Form Builder form. The walk follows it from `source` to `target` when no `jump_to` action of `source` fires.",
+    "properties": {
+      "id": {
+        "description": "Unique identifier of the connection",
+        "example": "edge-title-node-n-channel",
+        "type": "string"
+      },
+      "source": {
+        "description": "`association_id` of the node the connection starts at",
+        "example": "title-node",
+        "type": "string"
+      },
+      "target": {
+        "description": "`association_id` of the node the connection leads to",
+        "example": "n-channel",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "source",
+      "target"
+    ],
+    "type": "object"
+  },
+  "TemplateV2FormField": {
+    "additionalProperties": false,
+    "description": "One node of a Form Builder form, in stored order. Copies of a field share the same `identifier` and one answer; tell them apart by `association_id`.",
+    "properties": {
+      "association_id": {
+        "description": "Unique identifier of the node. Logic rules and `unconfigured_edges` refer to nodes by it. The title node is `title-node`, or `title` in early templates.",
+        "example": "n-channel",
+        "type": "string"
+      },
+      "copy_number": {
+        "description": "Number of the copy when the same field sits on the form more than once. Copies saved before numbering existed have null.",
+        "example": null,
+        "nullable": true,
+        "type": "integer"
+      },
+      "helper_text": {
+        "description": "Helper text of the node",
+        "example": "",
+        "type": "string"
+      },
+      "identifier": {
+        "description": "Identifier of the field. The title node is `title` and the brief is `brief`.",
+        "example": "cf-channel",
+        "type": "string"
+      },
+      "is_deleted": {
+        "description": "Present, and true, only when the field of the node can't be found, usually because it was deleted. The node stays on the form and has no label or type. It keeps its stored `is_required`, which the walk still applies.",
+        "example": true,
+        "type": "boolean"
+      },
+      "is_protected": {
+        "description": "True when only organization admins can change the answer",
+        "example": false,
+        "type": "boolean"
+      },
+      "is_readonly": {
+        "description": "True for sections, instructions and deleted fields, which take no answer",
+        "example": false,
+        "type": "boolean"
+      },
+      "is_required": {
+        "description": "Whether an answer is required when the walk reaches the node",
+        "example": true,
+        "type": "boolean"
+      },
+      "label": {
+        "description": "Label of the field. For a section, its heading. Null for an instruction and for a deleted field.",
+        "example": "Channel",
+        "nullable": true,
+        "type": "string"
+      },
+      "logic_rules": {
+        "$ref": "#/components/schemas/TemplateV2LogicRule"
+      },
+      "max_responses": {
+        "description": "Present only on a repeatable section. Greatest number of responses.",
+        "example": 3,
+        "nullable": true,
+        "type": "integer"
+      },
+      "min_responses": {
+        "description": "Present only on a repeatable section. Least number of responses.",
+        "example": 1,
+        "nullable": true,
+        "type": "integer"
+      },
+      "repeatable": {
+        "description": "Present, and true, only on a repeatable section",
+        "example": true,
+        "type": "boolean"
+      },
+      "section_id": {
+        "description": "`association_id` of the section the node sits in, or null",
+        "example": null,
+        "nullable": true,
+        "type": "string"
+      },
+      "sort_order": {
+        "description": "Position of the node in the stored order of the form",
+        "example": 1,
+        "type": "integer"
+      },
+      "type": {
+        "description": "Type of the node. Null for a deleted field.",
+        "enum": [
+          "title",
+          "section",
+          "instruction",
+          "brief",
+          "checkbox",
+          "currency_number",
+          "date",
+          "dropdown",
+          "file",
+          "label",
+          "percentage_number",
+          "radio_button",
+          "richtext",
+          "simple_number",
+          "text",
+          "text_area",
+          null
+        ],
+        "example": "radio_button",
+        "nullable": true,
+        "type": "string"
+      },
+      "type_specific_meta": {
+        "additionalProperties": false,
+        "description": "Same as a version 1 field for answer fields: `is_multi_select` and `choices` for choice fields, and the number options for number fields. An instruction has its text in `description`. Null for other nodes.",
+        "nullable": true,
+        "properties": {
+          "choices": {
+            "description": "Choices of the field",
+            "items": {
+              "$ref": "#/components/schemas/ResourceChoiceResponse"
+            },
+            "type": "array"
+          },
+          "currency_code": {
+            "description": "Currency of a currency number field",
+            "nullable": true,
+            "type": "string"
+          },
+          "decimal_places": {
+            "description": "Decimal places of a number field",
+            "nullable": true,
+            "type": "integer"
+          },
+          "description": {
+            "description": "Text of an instruction",
+            "type": "string"
+          },
+          "has_thousand_separator": {
+            "description": "Whether a number field shows a thousand separator",
+            "nullable": true,
+            "type": "boolean"
+          },
+          "is_multi_select": {
+            "description": "Whether more than one choice can be selected",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "identifier",
+      "association_id",
+      "label",
+      "helper_text",
+      "is_required",
+      "is_readonly",
+      "is_protected",
+      "sort_order",
+      "type",
+      "logic_rules",
+      "type_specific_meta",
+      "section_id",
+      "copy_number"
+    ],
+    "type": "object"
+  },
+  "TemplateV2LogicRule": {
+    "description": "Logic rules of a Form Builder node. In each rule, the first condition that holds runs its actions, and the \"else\" condition is always last.",
+    "items": {
+      "additionalProperties": false,
+      "properties": {
+        "conditions": {
+          "items": {
+            "$ref": "#/components/schemas/TemplateV2LogicRuleCondition"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "conditions"
+      ],
+      "type": "object"
+    },
+    "type": "array"
+  },
+  "TemplateV2LogicRuleAction": {
+    "additionalProperties": false,
+    "description": "What happens when the condition holds.",
+    "properties": {
+      "action_values": {
+        "description": "Choice IDs for `show_values` and `hide_values`",
+        "example": [],
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "target_field_association_id": {
+        "description": "`association_id` of the target node. For `jump_to`, `end_of_form` ends the form.",
+        "example": "n-email",
+        "type": "string"
+      },
+      "type": {
+        "description": "`jump_to` moves the walk to the target node. `show_field` asks the target node even off the walked path. `hide_field` doesn't ask it; the walk still passes through it, and a hide wins over a show. `show_values` and `hide_values` narrow the choices of the target node to, or without, `action_values`.",
+        "enum": [
+          "jump_to",
+          "show_values",
+          "hide_values",
+          "show_field",
+          "hide_field"
+        ],
+        "example": "jump_to",
+        "type": "string"
+      }
+    },
+    "required": [
+      "type",
+      "target_field_association_id",
+      "action_values"
+    ],
+    "type": "object"
+  },
+  "TemplateV2LogicRuleClause": {
+    "additionalProperties": false,
+    "description": "One test on the answer of a node.",
+    "properties": {
+      "clause_values": {
+        "description": "Choice IDs to compare the answer with",
+        "example": [
+          "ch-email"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "field_id": {
+        "description": "`association_id` of the node whose answer is tested",
+        "example": "n-channel",
+        "type": "string"
+      },
+      "operator": {
+        "description": "How the answer is compared with `clause_values`. `equal` and `not_equal` compare the selected values and `clause_values` as sets. `any_of` holds when the answer is not empty and every selected value is in `clause_values`. `contains_any_of` holds when one selected value is in `clause_values`, and `contains_all_of` when every value of a non-empty `clause_values` is selected; extra selections don't matter. `not_any_of` holds when no selected value is in `clause_values`. `empty` and `filled` take no values.",
+        "enum": [
+          "any_of",
+          "equal",
+          "not_equal",
+          "not_any_of",
+          "contains_any_of",
+          "contains_all_of",
+          "empty",
+          "filled"
+        ],
+        "example": "equal",
+        "type": "string"
+      },
+      "responses": {
+        "description": "Only for a node inside a repeatable section: `any` holds when one response passes, `all` when every response passes. Absent means `any`.",
+        "enum": [
+          "any",
+          "all"
+        ],
+        "example": "any",
+        "type": "string"
+      }
+    },
+    "required": [
+      "field_id",
+      "operator",
+      "clause_values"
+    ],
+    "type": "object"
+  },
+  "TemplateV2LogicRuleCondition": {
+    "additionalProperties": false,
+    "description": "A set of clauses and the actions to run when they hold. A condition with no clauses is the \"else\" condition and always holds.",
+    "properties": {
+      "actions": {
+        "items": {
+          "$ref": "#/components/schemas/TemplateV2LogicRuleAction"
+        },
+        "type": "array"
+      },
+      "clauses": {
+        "items": {
+          "$ref": "#/components/schemas/TemplateV2LogicRuleClause"
+        },
+        "type": "array"
+      },
+      "joins": {
+        "description": "How each clause joins the next one. `and` binds tighter than `or`, and there is one join fewer than there are clauses.",
+        "example": [],
+        "items": {
+          "enum": [
+            "and",
+            "or"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "clauses",
+      "joins",
+      "actions"
+    ],
+    "type": "object"
+  },
+  "TemplateV2Response": {
+    "additionalProperties": false,
+    "description": "A version 2 (Form Builder) template",
+    "properties": {
+      "applicable_to": {
+        "description": "List of resources the template is applicable to",
+        "items": {
+          "enum": [
+            "work_request",
+            "task_brief",
+            "campaign_brief"
+          ],
+          "example": "work_request",
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "description": {
+        "description": "Description of the template",
+        "example": "Ask the content team for a campaign.",
+        "type": "string"
+      },
+      "form_fields": {
+        "description": "Every node of the form, in stored order",
+        "items": {
+          "$ref": "#/components/schemas/TemplateV2FormField"
+        },
+        "type": "array"
+      },
+      "id": {
+        "description": "Unique identifier of the template",
+        "example": "9119a313057e401189407116fcd3aa24",
+        "type": "string"
+      },
+      "is_active": {
+        "description": "Active status of the template",
+        "example": true,
+        "type": "boolean"
+      },
+      "links": {
+        "additionalProperties": false,
+        "description": "Meta links",
+        "properties": {
+          "self": {
+            "description": "URL of the template",
+            "example": "https://api.cmp.optimizely.com/v3/templates/9119a313057e401189407116fcd3aa24",
+            "type": "string"
+          }
+        },
+        "required": [
+          "self"
+        ],
+        "type": "object"
+      },
+      "title": {
+        "description": "Title of the template",
+        "example": "Campaign request",
+        "type": "string"
+      },
+      "unconfigured_edges": {
+        "description": "Connections drawn between nodes",
+        "items": {
+          "$ref": "#/components/schemas/TemplateUnconfiguredEdge"
+        },
+        "type": "array"
+      },
+      "version": {
+        "description": "`2`: a Form Builder form",
+        "enum": [
+          2
+        ],
+        "example": 2,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "id",
+      "version",
+      "is_active",
+      "title",
+      "description",
+      "applicable_to",
+      "form_fields",
+      "unconfigured_edges",
+      "links"
+    ],
+    "title": "Form Builder template (version 2)",
+    "type": "object"
   },
   "TextFieldDefinition": {
     "properties": {
@@ -16643,6 +17221,11 @@
         "example": true,
         "type": "boolean"
       },
+      "is_skip_comment_required": {
+        "description": "Indicates whether a user must write a comment to skip a sub step in a task of this workflow. A task keeps the value that the workflow had when the task was created.",
+        "example": false,
+        "type": "boolean"
+      },
       "is_smart_duration_enabled": {
         "description": "Indicates whether the smart duration of a workflow is enabled",
         "example": true,
@@ -16816,6 +17399,7 @@
       "is_smart_duration_enabled",
       "is_asset_approval_enabled",
       "is_resource_management_enabled",
+      "is_skip_comment_required",
       "steps",
       "fields"
     ],
