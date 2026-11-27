@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/newscred/opti-cmp-sdk/compare/js-0.1.2...js-0.1.3) (2026-11-27)
+
+
+### Features
+
+* **js:** generate from latest specification ([c2962aa](https://github.com/newscred/opti-cmp-sdk/commit/c2962aac03bba74f10ae7043f31dbf35e2afb572))
+
 ## [0.1.2](https://github.com/newscred/opti-cmp-sdk/compare/js-0.1.1...js-0.1.2) (2026-11-18)
 
 
